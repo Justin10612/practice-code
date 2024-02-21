@@ -15,12 +15,14 @@ public class IntakeCommand extends Command {
   private double setpoint;
   private boolean intakeNeedTurn;
   private boolean shooterTransportNeedTurn;
-  public IntakeCommand(IntakeSubsystem _intakeSubsystem, ShooterSubsystem _shooterSubsystem, double _setpoint, boolean _intakeNeedTurn, boolean _shooterTransportNeedTurn) {
+  private boolean r;
+  public IntakeCommand(IntakeSubsystem _intakeSubsystem, ShooterSubsystem _shooterSubsystem, double _setpoint, boolean _intakeNeedTurn, boolean _shooterTransportNeedTurn,boolean reverse) {
     this.intakeSubsystem = _intakeSubsystem;
     this.shooterSubsystem = _shooterSubsystem;
     this.setpoint = _setpoint;
     this.intakeNeedTurn = _intakeNeedTurn;
     this.shooterTransportNeedTurn = _shooterTransportNeedTurn;
+    r = reverse;
     addRequirements(intakeSubsystem, shooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -34,7 +36,7 @@ public class IntakeCommand extends Command {
   public void execute() {
     intakeSubsystem.getintakeShaftSetpoint(setpoint);
     intakeSubsystem.shouldturn(intakeNeedTurn);
-    shooterSubsystem.shouldTransportTurn(shooterTransportNeedTurn, true);
+    shooterSubsystem.shouldTransportTurn(shooterTransportNeedTurn, r);
     if(shooterTransportNeedTurn == false){
       shooterSubsystem.transportMotorStop();
     }

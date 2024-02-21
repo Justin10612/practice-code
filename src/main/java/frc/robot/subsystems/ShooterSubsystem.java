@@ -73,11 +73,11 @@ public class ShooterSubsystem extends SubsystemBase {
   public void shooterMotorTurn(){
     transportreverse = true;
     if(shooterTurnSpeed >= ShooterConstants.shooterSpeedSetpoint-100){
-      shooterTurnMotor.setVoltage(10);
+      shooterTurnMotor.setVoltage(4.2);
       shooterTransportMotor.setVoltage(6);
     }
     else{
-      shooterTurnMotor.setVoltage(10 + shooterTurnPIDOutput);
+      shooterTurnMotor.setVoltage(4.2 + shooterTurnPIDOutput);
       shooterTransportMotor.setVoltage(0);
     }
   }
@@ -127,6 +127,12 @@ public class ShooterSubsystem extends SubsystemBase {
     // shooterShaftErrorvalue = shooterShaftSetpoint - shooterShaftAngle;
 
     shooterTurnPIDOutput = shooterTurnPID.calculate(shooterTurnSpeed, ShooterConstants.shooterSpeedSetpoint);
+    if(shouldTransportTurn){
+      transportMotorTurn();
+    }
+    else{
+      transportMotorStop();
+    }
     // shooterShaftPIDOutput = shooterShaftPID.calculate(shooterShaftAngle, shooterShaftSetpoint);
 
     // if(shouldShafTurn){
