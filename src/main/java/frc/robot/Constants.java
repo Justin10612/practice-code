@@ -17,6 +17,17 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static double min(double measure,double set){
+      if (set > measure && measure >0){
+        return 0;
+      }
+      else if(-set<measure&& measure <0){
+        return 0;
+      }
+      else{
+        return measure;
+      }
+  }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }

@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSubsystem;
 import static frc.robot.RobotContainer.*;
 public class ManualDriveCommand extends Command {
@@ -26,8 +27,8 @@ public class ManualDriveCommand extends Command {
   @Override
   public void execute() {
     if(baseJoystick.rightBumper().getAsBoolean()){
-      xSpeed = baseJoystick.getRawAxis(1)*-0.4;
-      ySpeed = baseJoystick.getRawAxis(0)*0.4;
+      xSpeed = Constants.min(baseJoystick.getRawAxis(1), 0.15)*-0.4;
+      ySpeed = Constants.min(baseJoystick.getRawAxis(0),0.15)*0.4;
       zSpeed = baseJoystick.getRawAxis(4)*0.4;
     }
     else{
