@@ -6,14 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.IntakeBackCommand;
 // import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManualDriveCommand;
-import frc.robot.commands.ShooterCommand;
 // import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -37,6 +35,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_swerveSubsystem.setDefaultCommand(new ManualDriveCommand(m_swerveSubsystem));
+    // m_shooterSubsystem.setDefaultCommand(new IntakeBackCommand(m_intakeSubsystem, m_shooterSubsystem));
     // m_climbSubsystem.setDefaultCommand(new ClimbCommand(m_climbSubsystem));
     configureBindings();
   }
@@ -54,14 +53,6 @@ public class RobotContainer {
       m_shooterSubsystem.shooterMotorstop();
     }, m_shooterSubsystem));
 
-    armJoystick.b().whileTrue(Commands.run(()->{
-      m_shooterSubsystem.back();
-    }, m_shooterSubsystem));
-
-    armJoystick.b().onFalse(Commands.runOnce(()->{
-      m_shooterSubsystem.transportMotorStop();
-    }, m_shooterSubsystem));
-
 
     // shooterJoystick.button(6).whileTrue(Commands.run(()->{
     //   m_shooterSubsystem.shaftTurn(shooterJoystick.getRawAxis(1)*0.2);
@@ -71,10 +62,9 @@ public class RobotContainer {
     //   m_shooterSubsystem.shaftStop();
     // }, m_shooterSubsystem));
 
-    armJoystick.x().onTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true, true,true));
+    armJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true, true,true));
+    // armJoystick.b().onTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true, true,false));
     armJoystick.a().onTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakePrimetivePosition, false, false,true));
-    armJoystick.y().onTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakePrimetivePosition, false, true,false));
-    armJoystick.button(6).onTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakePrimetivePosition, false, true,true));
     // armJoystick.y().onTrue(new ShooterCommand(m_shooterSubsystem, ShooterConstants.shooterAMPSetpoint));
     // armJoystick.b().onTrue(new ShooterCommand(m_shooterSubsystem, ShooterConstants.shooterPrimetivePosition));
 

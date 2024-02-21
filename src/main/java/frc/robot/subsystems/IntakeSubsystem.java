@@ -17,6 +17,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private final CANSparkMax intakeTurnMotor = new CANSparkMax(13, MotorType.kBrushless);
@@ -31,7 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private final RelativeEncoder intakeTurnEncoder = intakeTurnMotor.getEncoder();
 
   private double intakeShaftAngle;
-  private double intakeTurnSpeedSetpoint = 2800;
+  private double intakeTurnSpeedSetpoint = 2840;
   private double intakeShaftMaxPIDOutput = 0.1;
   private double intakeTurnSpeed;
   private double intakeShaftPIDOutput;
@@ -82,7 +83,7 @@ public class IntakeSubsystem extends SubsystemBase {
     
     //Motor move
     if(turn){
-      intakeTurnMotor.setVoltage(intakeTurnSpeedSetpoint/5676*12 + intakeTurnPIDOutput);
+      intakeTurnMotor.setVoltage(6);
     }
     else{
       intakeTurnMotor.setVoltage(0);
@@ -100,6 +101,11 @@ public class IntakeSubsystem extends SubsystemBase {
     else{
       intakeShaftMaxPIDOutput = 0.15;
     }
+    if(ShooterSubsystem.haveNote){
+      intakeShaftSetpoint = IntakeConstants.intakePrimetivePosition;
+      turn = false;
+    }
 
+    SmartDashboard.putNumber("intakeSetpoint", intakeShaftSetpoint);
   }
 }

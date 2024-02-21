@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -14,6 +15,8 @@ public class ManualDriveCommand extends Command {
   private double xSpeed;
   private double ySpeed;
   private double zSpeed;
+  private final SlewRateLimiter xLimmiter = new SlewRateLimiter(4);
+  private final SlewRateLimiter yLimiter = new SlewRateLimiter(4);
   public ManualDriveCommand(SwerveSubsystem _swerveSubsystem) {
     this.swerveSubsystem = _swerveSubsystem;
     addRequirements(swerveSubsystem);
@@ -27,14 +30,14 @@ public class ManualDriveCommand extends Command {
   @Override
   public void execute() {
     if(baseJoystick.rightBumper().getAsBoolean()){
-      xSpeed = Constants.min(baseJoystick.getRawAxis(1), 0.15)*-0.4;
-      ySpeed = Constants.min(baseJoystick.getRawAxis(0),0.15)*0.4;
+      xSpeed = Constants.min(baseJoystick.getRawAxis(1), 0.1)*-0.4;
+      ySpeed = Constants.min(baseJoystick.getRawAxis(0),0.1)*0.4;
       zSpeed = baseJoystick.getRawAxis(4)*0.4;
     }
     else{
-      xSpeed = baseJoystick.getRawAxis(1)*-0.8;
-      ySpeed = baseJoystick.getRawAxis(0)*0.8;
-      zSpeed = baseJoystick.getRawAxis(4)*0.8;
+      xSpeed = xLimmiter.calculate(Constants.min(baseJoystick.getRawAxis(1), 0.1)*-0.4);
+      ySpeed = yLimiter.calculate(Constants.min(baseJoystick.getRawAxis(0), 0.1)*-0.4);
+      zSpeed = Constants.min(baseJoystick.getRawAxis(4), 0.1)*-0.8;
     }
     swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, true);
   }

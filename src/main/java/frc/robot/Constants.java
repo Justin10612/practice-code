@@ -55,7 +55,7 @@ public final class Constants {
   public static final class ShooterConstants{
     public static final double shooterPrimetivePosition = 0.0;
     public static final double shooterAMPSetpoint = 0.0;
-    public static final double shooterSpeedSetpoint = 4200;
+    public static final double shooterSpeedSetpoint = 4540;
   }
 
   public static final class ApriltagConstants{
