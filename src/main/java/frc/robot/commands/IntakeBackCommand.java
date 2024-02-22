@@ -29,7 +29,7 @@ public class IntakeBackCommand extends Command {
     if(shooterSubsystem.detectNote() == true){
       intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
       intakeSubsystem.shouldturn(false);
-      shooterSubsystem.shouldTransportTurn(false, false);
+      shooterSubsystem.shouldTransportTurn(false);
     }
   }
 

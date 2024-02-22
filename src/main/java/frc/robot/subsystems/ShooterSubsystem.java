@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
@@ -13,14 +12,11 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
@@ -39,6 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final DigitalInput NoteGet = new DigitalInput(0);
   private final Timer time = new Timer();
 
+  private double transportMotorSpeed = 4;
   private double shooterTurnSpeed;
   private double shooterShaftPIDOutput;
   private double shooterTurnPIDOutput;
@@ -78,15 +75,21 @@ public class ShooterSubsystem extends SubsystemBase {
     // shooterShaftCancoder.getConfigurator().apply(shooterShaftCancoderCofig);
   }
 
-  public void shooterMotorTurn(){
-    transportreverse = true;
-    if(shooterTurnSpeed >= ShooterConstants.shooterSpeedSetpoint-500){
-      shooterTurnMotor.setVoltage(9.6);
-      shouldTransportTurn(true, true);
+  public void shooterMotorTurn(double shooterSpeed){
+    if(haveNote){
+      if(shooterTurnSpeed >= shooterSpeed-500){
+        shooterTurnMotor.setVoltage(shooterSpeed);
+        shouldTransportTurn(true);
+        transportMotorSpeed = 4;
+      }
+      else{
+        shooterTurnMotor.setVoltage(shooterSpeed);
+        shouldTransportTurn(false);
+      }
     }
     else{
-      shooterTurnMotor.setVoltage(9.6);
-      shouldTransportTurn(false, true);
+      shooterTurnMotor.setVoltage(0);
+      shouldTransportTurn(false);
     }
     // shooterTurnMotor.setVoltage(9.6);
     // shouldTransportTurn = true;
@@ -95,21 +98,20 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shooterMotorstop(){
     shooterTurnMotor.set(0);
-    shouldTransportTurn(false, true);
+    shouldTransportTurn(false);
   }
 
-  public void transportMotorTurn(){
-    shooterTransportMotor.setVoltage(4);
-  }
-
-  public void back(){
-    shooterTransportMotor.setVoltage(-6);
+  public void transportMotorTurn(double speed){
+    shooterTransportMotor.setVoltage(speed);
   }
 
   public void transportMotorStop(){
     shooterTransportMotor.setVoltage(0);
   }
 
+  public void transportMotorTurn(){
+    transportMotorSpeed = 4;
+  }
 
   public void getShooterShaftsetpoint(double angleSetpoint){
     shooterShaftSetpoint = angleSetpoint;
@@ -117,6 +119,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean detectNote(){
     return haveNote;
+  }
+
+  public void transportMotorReverse(){
+    transportMotorSpeed = -4;
   }
 
   // public void shaftTurn(double value){
@@ -128,10 +134,10 @@ public class ShooterSubsystem extends SubsystemBase {
   //   shouldShafTurn = false;
   // }
 
-  public void shouldTransportTurn(boolean shouldTurn, boolean reverse){
+  public void shouldTransportTurn(boolean shouldTurn){
     shouldTransportTurn = shouldTurn;
-    transportreverse = reverse;
   }
+
 
   @Override
   public void periodic() {
@@ -141,8 +147,8 @@ public class ShooterSubsystem extends SubsystemBase {
     else{
       time.stop();
     }
-    if(haveNote){
-      shouldTransportTurn(false, false);
+    if(haveNote && shooterTurnSpeed <= 1000){
+      shouldTransportTurn(false);
     }
     haveNote = NoteGet.get();
     SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
@@ -151,9 +157,8 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterTransportMotor.setInverted(transportreverse);
     // shooterShaftErrorvalue = shooterShaftSetpoint - shooterShaftAngle;
 
-    shooterTurnPIDOutput = shooterTurnPID.calculate(shooterTurnSpeed, ShooterConstants.shooterSpeedSetpoint);
     if(shouldTransportTurn){
-      transportMotorTurn();
+      transportMotorTurn(transportMotorSpeed);
     }
     else{
       transportMotorStop();

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.commands.IntakeBackCommand;
+import frc.robot.Constants.ShooterConstants;
 // import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManualDriveCommand;
@@ -28,7 +28,7 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
 
-  private final CommandXboxController armJoystick = new CommandXboxController(1);
+  public static final CommandXboxController armJoystick = new CommandXboxController(1);
   public static final CommandXboxController baseJoystick = new CommandXboxController(0);
   // private final CommandJoystick shooterJoystick = new CommandJoystick(2);
 
@@ -46,12 +46,29 @@ public class RobotContainer {
     }));
 
     armJoystick.rightTrigger(0.4).whileTrue(Commands.run(()->{
-      m_shooterSubsystem.shooterMotorTurn();
+      m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterSpeakerSpeedSetpoint);
     }, m_shooterSubsystem));
 
-    armJoystick.rightTrigger(0.4).onFalse(Commands.run(()->{
-      m_shooterSubsystem.shooterMotorstop();
+    armJoystick.leftTrigger(0.4).whileTrue(Commands.run(()->{
+      m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMPSpeedSetpoint);
     }, m_shooterSubsystem));
+
+    armJoystick.b().whileTrue(Commands.run(()->{
+      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakeInPosition);
+      m_intakeSubsystem.shouldturn(true);
+      m_intakeSubsystem.turnReverse();
+      m_shooterSubsystem.shouldTransportTurn(true);
+    }, m_intakeSubsystem, m_shooterSubsystem));
+
+    armJoystick.y().whileTrue(Commands.run(()->{
+      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
+      m_intakeSubsystem.shouldturn(true);
+      m_intakeSubsystem.turnReverse();
+      m_shooterSubsystem.shouldTransportTurn(true);
+    }, m_intakeSubsystem, m_shooterSubsystem));
+
+
+
 
 
     // shooterJoystick.button(6).whileTrue(Commands.run(()->{
@@ -62,9 +79,8 @@ public class RobotContainer {
     //   m_shooterSubsystem.shaftStop();
     // }, m_shooterSubsystem));
 
-    armJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true, true,true));
-    // armJoystick.b().onTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true, true,false));
-    armJoystick.a().onTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakePrimetivePosition, false, false,true));
+    armJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true, true));
+    armJoystick.a().onTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakePrimetivePosition, false, false));
     // armJoystick.y().onTrue(new ShooterCommand(m_shooterSubsystem, ShooterConstants.shooterAMPSetpoint));
     // armJoystick.b().onTrue(new ShooterCommand(m_shooterSubsystem, ShooterConstants.shooterPrimetivePosition));
 

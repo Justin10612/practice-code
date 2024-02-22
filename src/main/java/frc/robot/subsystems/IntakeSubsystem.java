@@ -9,7 +9,6 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -27,17 +26,12 @@ public class IntakeSubsystem extends SubsystemBase {
   private final CANcoderConfiguration intakeShaftCancoderCofig = new CANcoderConfiguration();
 
   private final PIDController intaleShaftPID = new PIDController(0.005, 0, 0);
-  private final PIDController intakeTurnPID = new PIDController(0, 0, 0);
-
-  private final RelativeEncoder intakeTurnEncoder = intakeTurnMotor.getEncoder();
 
   private double intakeShaftAngle;
-  private double intakeTurnSpeedSetpoint = 2840;
   private double intakeShaftMaxPIDOutput = 0.1;
-  private double intakeTurnSpeed;
   private double intakeShaftPIDOutput;
-  private double intakeTurnPIDOutput;
   private double intakeShaftSetpoint = 12;
+  private double intaketurnSpeed = 6;
   private final double intakeShaftCancoderOffset = 0.266;
   private double intakeShaftErrorValue;
   private boolean turn;
@@ -67,6 +61,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void shouldturn(boolean shouldTurn){
     turn = shouldTurn;
+    intaketurnSpeed = 5;
+  }
+
+  public void turnReverse(){
+    turn = true;
+    intaketurnSpeed = -6;
   }
 
 
@@ -74,16 +74,14 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("intakeAngle", intakeShaftAngle);
     intakeShaftAngle = intakeShaftCancoder.getAbsolutePosition().getValueAsDouble()*360;
-    intakeTurnSpeed = intakeTurnEncoder.getVelocity();
     intakeShaftErrorValue = intakeShaftSetpoint - intakeShaftAngle;
 
     intakeShaftPIDOutput = intaleShaftPID.calculate(intakeShaftAngle, intakeShaftSetpoint);
-    intakeTurnPIDOutput = intakeTurnPID.calculate(intakeTurnSpeed, intakeTurnSpeedSetpoint);
     intakeShaftPIDOutput = Constants.setMaxOutput(intakeShaftPIDOutput, intakeShaftMaxPIDOutput);
     
     //Motor move
     if(turn){
-      intakeTurnMotor.setVoltage(6);
+      intakeTurnMotor.setVoltage(intaketurnSpeed);
     }
     else{
       intakeTurnMotor.setVoltage(0);
@@ -105,7 +103,5 @@ public class IntakeSubsystem extends SubsystemBase {
       intakeShaftSetpoint = IntakeConstants.intakePrimetivePosition;
       turn = false;
     }
-
-    SmartDashboard.putNumber("intakeSetpoint", intakeShaftSetpoint);
   }
 }
