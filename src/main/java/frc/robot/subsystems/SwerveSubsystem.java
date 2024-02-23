@@ -177,13 +177,13 @@ public class SwerveSubsystem extends SubsystemBase{
     public void periodic(){
         mOdometry.update(gyro.getRotation2d(), getModulePosition());
         field.setRobotPose(mOdometry.getPoseMeters());
-        SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
-        SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
-        SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
-        SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
-        SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
-        SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
-        SmartDashboard.putNumber("robotAngle", gyro.getRotation2d().getDegrees());
+        // SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
+        // SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
+        // SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
+        // SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
+        // SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
+        // SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
+        // SmartDashboard.putNumber("robotAngle", gyro.getRotation2d().getDegrees());
     }
   
 }

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AutoShooterOutCommnd;
+import frc.robot.commands.AutoTwoNoteCommand;
 import frc.robot.commands.ClimbCommand;
 // import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
   private final AutoShooterOutCommnd m_autoShootrOutCommand = new AutoShooterOutCommnd(m_shooterSubsystem, m_swerveSubsystem);
+  private final AutoTwoNoteCommand m_autoTwoNoteCommand = new AutoTwoNoteCommand(m_shooterSubsystem, m_intakeSubsystem, m_swerveSubsystem);
 
   // private final SendableChooser<Command> autoChooser;
   private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
@@ -131,7 +133,9 @@ public class RobotContainer {
     }, m_shooterSubsystem));
 
     autoChooser.setDefaultOption("none", null);
-    autoChooser.addOption("shooterOut", m_autoShootrOutCommand);
+    autoChooser.addOption("ShooterOut", m_autoShootrOutCommand);
+    autoChooser.addOption("TwoNoteAuto", m_autoTwoNoteCommand);
+    SmartDashboard.putData(autoChooser);
 
 
 

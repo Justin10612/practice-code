@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -108,6 +109,8 @@ public class ClimbSubsystem extends SubsystemBase {
   public void periodic() {
     climbRightPosition = climbRightEncoder.getPosition();
     climbLeftPosition = climbLeftEncoder.getPosition();
+    SmartDashboard.putNumber("climbRightPosition", climbRightPosition);
+    SmartDashboard.putNumber("climbLeftPosition", climbLeftPosition);
     
     if(climbLeftLimitSwitch.get()){
       climbLeftEncoder.setPosition(0);

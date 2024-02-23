@@ -156,8 +156,8 @@ public class ShooterSubsystem extends SubsystemBase {
       transportMotorStop();
     }
     SmartDashboard.putBoolean("haveNote", haveNote);
-    SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
-    SmartDashboard.putNumber("time", time.get());
+    // SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
+    // SmartDashboard.putNumber("time", time.get());
 
   }
 }

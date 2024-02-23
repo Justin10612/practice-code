@@ -108,7 +108,7 @@ public class SwerveModule extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("angle", angle);
-        SmartDashboard.putNumber("setpoint", setpointangle);
+        // SmartDashboard.putNumber("angle", angle);
+        // SmartDashboard.putNumber("setpoint", setpointangle);
     }
 }
