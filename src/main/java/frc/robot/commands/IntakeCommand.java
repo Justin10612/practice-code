@@ -36,6 +36,7 @@ public class IntakeCommand extends Command {
     intakeSubsystem.shouldturn(intakeNeedTurn);
     shooterSubsystem.shouldTransportTurn(shooterTransportNeedTurn);
     shooterSubsystem.transportMotorTurn();
+    shooterSubsystem.isNoteIn(intakeNeedTurn);
     if(shooterTransportNeedTurn == false){
       shooterSubsystem.transportMotorStop();
     }

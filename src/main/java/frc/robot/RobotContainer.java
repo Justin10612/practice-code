@@ -4,14 +4,23 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.AutoShooterOutCommnd;
+import frc.robot.commands.ClimbCommand;
 // import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManualDriveCommand;
+import frc.robot.subsystems.ClimbSubsystem;
 // import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -27,6 +36,11 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
+  private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
+  private final AutoShooterOutCommnd m_autoShootrOutCommand = new AutoShooterOutCommnd(m_shooterSubsystem, m_swerveSubsystem);
+
+  // private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
   public static final CommandXboxController armJoystick = new CommandXboxController(1);
   public static final CommandXboxController baseJoystick = new CommandXboxController(0);
@@ -34,10 +48,46 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // autoChooser = AutoBuilder.buildAutoChooser();
+    // SmartDashboard.putData("Auto mode", autoChooser);
     m_swerveSubsystem.setDefaultCommand(new ManualDriveCommand(m_swerveSubsystem));
-    // m_shooterSubsystem.setDefaultCommand(new IntakeBackCommand(m_intakeSubsystem, m_shooterSubsystem));
-    // m_climbSubsystem.setDefaultCommand(new ClimbCommand(m_climbSubsystem));
+    m_climbSubsystem.setDefaultCommand(new ClimbCommand(m_climbSubsystem));
+
     configureBindings();
+
+    NamedCommands.registerCommand("ShooterTurn", Commands.runOnce(()->{
+      m_shooterSubsystem.shooterMotorTurn(9.6);
+    }));
+
+    NamedCommands.registerCommand("NoteIn", Commands.runOnce(()->{
+      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakeInPosition);
+      m_shooterSubsystem.shouldTransportTurn(true);
+    }));
+
+    NamedCommands.registerCommand("IntakeOut", Commands.runOnce(()->{
+      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakeInPosition);
+      m_intakeSubsystem.shouldturn(true);
+      m_shooterSubsystem.shouldTransportTurn(true);
+    }));
+
+    NamedCommands.registerCommand("IntakeBack", Commands.runOnce(()->{
+      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
+      m_intakeSubsystem.shouldturn(false);
+      m_shooterSubsystem.shouldTransportTurn(false);
+    }));
+
+    NamedCommands.registerCommand("AllStop", Commands.runOnce(()->{
+      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
+      m_intakeSubsystem.shouldturn(false);
+      m_shooterSubsystem.shooterMotorstop();
+      m_shooterSubsystem.shouldTransportTurn(false);
+    }));
+
+    NamedCommands.registerCommand("BaseStop", Commands.runOnce(()->{
+      m_swerveSubsystem.drive_auto(new ChassisSpeeds(0, 0, 0));
+    }));
+
+    
   }
 
   private void configureBindings() {
@@ -46,11 +96,15 @@ public class RobotContainer {
     }));
 
     armJoystick.rightTrigger(0.4).whileTrue(Commands.run(()->{
-      m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterSpeakerSpeedSetpoint);
+      m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterSpeakerSpeedSetpoint);;
+    }, m_shooterSubsystem));
+
+    armJoystick.rightTrigger(0.4).and(armJoystick.leftTrigger(0.4)).and(armJoystick.rightBumper()).whileFalse(Commands.runOnce(()->{
+      m_shooterSubsystem.shooterMotorstop();
     }, m_shooterSubsystem));
 
     armJoystick.leftTrigger(0.4).whileTrue(Commands.run(()->{
-      m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMPSpeedSetpoint);
+      m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMPSpeedSetpoint);;
     }, m_shooterSubsystem));
 
     armJoystick.b().whileTrue(Commands.run(()->{
@@ -67,7 +121,17 @@ public class RobotContainer {
       m_shooterSubsystem.shouldTransportTurn(true);
     }, m_intakeSubsystem, m_shooterSubsystem));
 
+    armJoystick.leftBumper().whileTrue(Commands.run(()->{
+      m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMPSpeedSetpoint);
+      m_shooterSubsystem.transportMotorTurn();
+    }, m_shooterSubsystem));
 
+    armJoystick.rightBumper().whileTrue(Commands.run(()->{
+      m_shooterSubsystem.shoot();
+    }, m_shooterSubsystem));
+
+    autoChooser.setDefaultOption("none", null);
+    autoChooser.addOption("shooterOut", m_autoShootrOutCommand);
 
 
 
@@ -93,6 +157,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return autoChooser.getSelected();
   }
 }

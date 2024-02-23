@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.24,
+      "y": 5.555088802485298
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterTurn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Hit"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AllStop"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

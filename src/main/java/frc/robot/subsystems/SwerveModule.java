@@ -70,19 +70,19 @@ public class SwerveModule extends SubsystemBase{
 
    
     public double getDrivePosition(){
-        return driveEncoder.getPosition();
+        return driveEncoder.getPosition()*SwerveModuleConstants.driveEncoderRot2Meter;
     }
     public double getTurningPosition(){
         return absoluteEncoder.getAbsolutePosition().getValue()*360;
     }
     public double getTurnintEncoderPosition(){
-        return turningEncoder.getPosition();
+        return turningEncoder.getPosition()*SwerveModuleConstants.turningEncoderRot2Rad;
     }
     public double getDriveVelocity(){
-        return driveEncoder.getVelocity();
+        return driveEncoder.getVelocity()*SwerveModuleConstants.driveEncoderRPM2MeterPerSec;
     }
     public double getTurningVelocity(){
-        return turningEncoder.getVelocity();
+        return turningEncoder.getVelocity()*SwerveModuleConstants.turningEncoderRPM2RadPerSec;
     }
     public void resetEncoders(){
         driveEncoder.setPosition(0);

@@ -1,0 +1,97 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.24,
+      "y": 5.54
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterTurn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Hit"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeOut"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Note Take"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeBack"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Note Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AllStop"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

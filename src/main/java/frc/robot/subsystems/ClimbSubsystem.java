@@ -10,7 +10,6 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -19,8 +18,8 @@ public class ClimbSubsystem extends SubsystemBase {
   private final CANSparkMax climbRightMotor = new CANSparkMax(31, MotorType.kBrushless);
   private final CANSparkMax climbLeftMotot = new CANSparkMax(8, MotorType.kBrushless);
 
-  private final DigitalInput climbRightLimitSwitch = new DigitalInput(0);
-  private final DigitalInput climbLeftLimitSwitch = new DigitalInput(3);
+  private final DigitalInput climbRightLimitSwitch = new DigitalInput(1);
+  private final DigitalInput climbLeftLimitSwitch = new DigitalInput(2);
 
   private final RelativeEncoder climbRightEncoder = climbRightMotor.getEncoder();
   private final RelativeEncoder climbLeftEncoder = climbLeftMotot.getEncoder();

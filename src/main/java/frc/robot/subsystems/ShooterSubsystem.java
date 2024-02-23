@@ -37,6 +37,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private double transportMotorSpeed = 4;
   private double shooterTurnSpeed;
+  private double shooterturnSetpoint;
   private double shooterShaftPIDOutput;
   private double shooterTurnPIDOutput;
   private double shooterShaftAngle;
@@ -45,10 +46,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private boolean shouldShafTurn = false;
   private boolean shouldTransportTurn = false;
+  private boolean needShoot;
 
   private final double shooterCancoderOffset = 0;
   private boolean transportreverse = true;
   public static boolean haveNote = false;
+
+  private boolean noteING;
 
   public ShooterSubsystem() {
     time.reset();
@@ -75,25 +79,28 @@ public class ShooterSubsystem extends SubsystemBase {
     // shooterShaftCancoder.getConfigurator().apply(shooterShaftCancoderCofig);
   }
 
-  public void shooterMotorTurn(double shooterSpeed){
+  public void shoot(){
     if(haveNote){
-      if(shooterTurnSpeed >= shooterSpeed-500){
-        shooterTurnMotor.setVoltage(shooterSpeed);
+      if(shooterTurnSpeed >= shooterturnSetpoint-500){
+        shooterTurnMotor.setVoltage(shooterturnSetpoint/5676*12);
         shouldTransportTurn(true);
         transportMotorSpeed = 4;
+        needShoot = true;
       }
       else{
-        shooterTurnMotor.setVoltage(shooterSpeed);
+        shooterTurnMotor.setVoltage(shooterturnSetpoint/5676*12);
         shouldTransportTurn(false);
       }
     }
     else{
       shooterTurnMotor.setVoltage(0);
       shouldTransportTurn(false);
+      needShoot = false;
     }
-    // shooterTurnMotor.setVoltage(9.6);
-    // shouldTransportTurn = true;
-    
+  }
+
+  public void isNoteIn(boolean noteIn){
+    noteING = noteIn;
   }
 
   public void shooterMotorstop(){
@@ -101,8 +108,10 @@ public class ShooterSubsystem extends SubsystemBase {
     shouldTransportTurn(false);
   }
 
-  public void transportMotorTurn(double speed){
-    shooterTransportMotor.setVoltage(speed);
+  //for auto
+  public void shooterMotorTurn(double speed){
+    shooterturnSetpoint = speed;
+    shooterTurnMotor.setVoltage(speed);
   }
 
   public void transportMotorStop(){
@@ -125,15 +134,6 @@ public class ShooterSubsystem extends SubsystemBase {
     transportMotorSpeed = -4;
   }
 
-  // public void shaftTurn(double value){
-  //   shouldShafTurn = true;
-  //   shooterShaftPIDOutput = value;
-  // }
-
-  // public void shaftStop(){
-  //   shouldShafTurn = false;
-  // }
-
   public void shouldTransportTurn(boolean shouldTurn){
     shouldTransportTurn = shouldTurn;
   }
@@ -141,36 +141,20 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(haveNote){
-      time.start();
-    }
-    else{
-      time.stop();
-    }
-    if(haveNote && shooterTurnSpeed <= 1000){
+    if(haveNote && noteING){
       shouldTransportTurn(false);
+      noteING = false;
     }
     haveNote = NoteGet.get();
     SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
-    // shooterShaftAngle = shooterShaftCancoder.getAbsolutePosition().getValueAsDouble();
     shooterTurnSpeed = shooterTurnEncoder.getVelocity();
     shooterTransportMotor.setInverted(transportreverse);
-    // shooterShaftErrorvalue = shooterShaftSetpoint - shooterShaftAngle;
-
     if(shouldTransportTurn){
-      transportMotorTurn(transportMotorSpeed);
+      shooterTransportMotor.setVoltage(transportMotorSpeed);
     }
     else{
       transportMotorStop();
     }
-    // shooterShaftPIDOutput = shooterShaftPID.calculate(shooterShaftAngle, shooterShaftSetpoint);
-
-    // if(shouldShafTurn){
-    //   shooterShafMotor.set(shooterShaftPIDOutput);
-    // }
-    // else{
-    //   shooterShafMotor.set(0);
-    // }
     SmartDashboard.putBoolean("haveNote", haveNote);
     SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
     SmartDashboard.putNumber("time", time.get());

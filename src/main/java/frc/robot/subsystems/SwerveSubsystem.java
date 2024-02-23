@@ -39,7 +39,7 @@ public class SwerveSubsystem extends SubsystemBase{
     
     
     public SwerveSubsystem(){
-        gyroConfig.MountPose.MountPoseYaw = -135;
+        gyroConfig.MountPose.MountPoseYaw = -10;
         // gyroConfig.withMountPose(new MountPoseConfigs().withMountPoseYaw(180));
         gyro.getConfigurator().apply(gyroConfig);
         // Module Set
@@ -83,7 +83,7 @@ public class SwerveSubsystem extends SubsystemBase{
             this::getSpeeds, 
             this::drive_auto,
             new HolonomicPathFollowerConfig(
-                new PIDConstants(1, 0, 0), // Translation constants 
+                new PIDConstants(0.4, 0, 0), // Translation constants 
                 new PIDConstants(2, 0, 0.002), // Rotation constants 
                 SwerveModuleConstants.maxDriveMotorSpeed, 
                 Units.inchesToMeters(14.32), // Drive base radius (distance from center to furthest module) 
@@ -150,6 +150,9 @@ public class SwerveSubsystem extends SubsystemBase{
     // Auto Drive
     public void drive_auto(ChassisSpeeds robotRelativeSpeeds){
         ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
+        System.out.println(targetSpeeds.vxMetersPerSecond);
+        SmartDashboard.putNumber("Xspeed", targetSpeeds.vxMetersPerSecond);
+        SmartDashboard.putNumber("Yspeed", targetSpeeds.vyMetersPerSecond);
         SwerveModuleState[] states = swerveKinematics.toSwerveModuleStates(targetSpeeds);
         setModuleStates(states);
     }
@@ -160,6 +163,14 @@ public class SwerveSubsystem extends SubsystemBase{
     // Set Odometer Pose
     public void setPose(Pose2d pose){
         mOdometry.resetPosition(gyro.getRotation2d(), getModulePosition(), pose);
+    }
+
+    public double leftModulePosition(){
+        return leftFrontModule.getDrivePosition();
+    }
+
+    public void resetEncoder(){
+        leftFrontModule.resetEncoders();
     }
     //
     @Override
