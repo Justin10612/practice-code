@@ -37,7 +37,7 @@ public class ManualDriveCommand extends Command {
     else{
       xSpeed = xLimmiter.calculate(Constants.min(baseJoystick.getRawAxis(1), 0.1)*-0.8);
       ySpeed = yLimiter.calculate(Constants.min(baseJoystick.getRawAxis(0), 0.1)*-0.8);
-      zSpeed = Constants.min(baseJoystick.getRawAxis(4), 0.1)*-0.8;
+      zSpeed = Constants.min(baseJoystick.getRawAxis(4), 0.1)*-1;
     }
     swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, true);
   }

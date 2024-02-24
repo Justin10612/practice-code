@@ -56,9 +56,9 @@ public final class Constants {
     public static final double shooterPrimetivePosition = 0.0;
     public static final double shooterAMPSetpoint = 0.0;
     public static final double shooterSpeakerVoltageSetpoint = 9.6;
-    public static final double shooterAMPVoltageSetpoint = 14.2;
+    public static final double shooterAMPVoltageSetpoint = 3;
     public static final double shooterSpeakerRPMSetpoint = 4000;
-    public static final double shooterAMPRPMSetpoint = 2000;
+    public static final double shooterAMPRPMSetpoint = 1000;
   }
 
   public static final class ApriltagConstants{

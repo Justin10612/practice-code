@@ -5,23 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ExcludeNoteCommand extends Command {
-  /** Creates a new ExcludeNoteCommand. */
-  private final IntakeSubsystem intakeSubsystem;
+public class NoteBackCommand extends Command {
+  /** Creates a new NoteBackCommand. */
   private final ShooterSubsystem shooterSubsystem;
-  private double intakeShaftSetpoint;
-  private boolean intakeNeedTurn;
-  public ExcludeNoteCommand(IntakeSubsystem _intakeSubsysyem, ShooterSubsystem _shooterSubsystem, double _intakeShaftSetpoint, boolean _intakeNeedTurn) {
+  public NoteBackCommand(ShooterSubsystem _shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.intakeSubsystem = _intakeSubsysyem;
     this.shooterSubsystem = _shooterSubsystem;
-    this.intakeShaftSetpoint = _intakeShaftSetpoint;
-    this.intakeNeedTurn = _intakeNeedTurn;
-    addRequirements(intakeSubsystem, shooterSubsystem);
+    addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -31,18 +23,14 @@ public class ExcludeNoteCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.getintakeShaftSetpoint(intakeShaftSetpoint);
-    intakeSubsystem.shouldturn(intakeNeedTurn);
-    intakeSubsystem.turnReverse();
+    shooterSubsystem.shouldTransportTurn(true);
     shooterSubsystem.transportMotorReverse();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
-    intakeSubsystem.shouldturn(false);
-    shooterSubsystem.shooterMotorstop();
+    shooterSubsystem.shouldTransportTurn(false);
   }
 
   // Returns true when the command should end.

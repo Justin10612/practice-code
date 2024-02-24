@@ -20,6 +20,7 @@ import frc.robot.commands.ExcludeNoteCommand;
 // import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManualDriveCommand;
+import frc.robot.commands.NoteBackCommand;
 import frc.robot.commands.NoteShootSpeakerCommand;
 import frc.robot.commands.ShooterPreparingCommand;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -128,6 +129,7 @@ public class RobotContainer {
     armJoystick.leftTrigger(0.4).whileTrue(new ShooterPreparingCommand(m_shooterSubsystem, ShooterConstants.shooterAMPVoltageSetpoint, ShooterConstants.shooterAMPRPMSetpoint));
     armJoystick.a().whileTrue(new ExcludeNoteCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true));
     armJoystick.b().whileTrue(new ExcludeNoteCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakePrimetivePosition, true));
+    armJoystick.y().whileTrue(new NoteBackCommand(m_shooterSubsystem));
     // armJoystick.y().onTrue(new ShooterCommand(m_shooterSubsystem, ShooterConstants.shooterAMPSetpoint));
     // armJoystick.b().onTrue(new ShooterCommand(m_shooterSubsystem, ShooterConstants.shooterPrimetivePosition));
 

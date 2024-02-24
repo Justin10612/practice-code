@@ -145,6 +145,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // }
     haveNote = false;
     SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
+    SmartDashboard.putNumber("shooterMotorTurnSetpoint", shooterVoltageSetpoint);
     shooterTurnSpeed = shooterTurnEncoder.getVelocity();
     shooterTransportMotor.setInverted(transportreverse);
     if(shouldTransportTurn){
