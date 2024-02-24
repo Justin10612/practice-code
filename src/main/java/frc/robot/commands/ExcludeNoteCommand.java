@@ -9,13 +9,18 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class IntakeBackCommand extends Command {
-  /** Creates a new IntakeBackCommand. */
+public class ExcludeNoteCommand extends Command {
+  /** Creates a new ExcludeNoteCommand. */
   private final IntakeSubsystem intakeSubsystem;
   private final ShooterSubsystem shooterSubsystem;
-  public IntakeBackCommand(IntakeSubsystem _intakeSubsystem, ShooterSubsystem _shooterSubsystem) {
-    this.intakeSubsystem = _intakeSubsystem;
+  private double intakeShaftSetpoint;
+  private boolean intakeNeedTurn;
+  public ExcludeNoteCommand(IntakeSubsystem _intakeSubsysyem, ShooterSubsystem _shooterSubsystem, double _intakeShaftSetpoint, boolean _intakeNeedTurn) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.intakeSubsystem = _intakeSubsysyem;
     this.shooterSubsystem = _shooterSubsystem;
+    this.intakeShaftSetpoint = _intakeShaftSetpoint;
+    this.intakeNeedTurn = _intakeNeedTurn;
     addRequirements(intakeSubsystem, shooterSubsystem);
   }
 
@@ -26,16 +31,18 @@ public class IntakeBackCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(shooterSubsystem.detectNote() == true){
-      intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
-      intakeSubsystem.shouldturn(false);
-      shooterSubsystem.shouldTransportTurn(false);
-    }
+    intakeSubsystem.getintakeShaftSetpoint(intakeShaftSetpoint);
+    intakeSubsystem.shouldturn(intakeNeedTurn);
+    shooterSubsystem.transportMotorReverse();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
+    intakeSubsystem.shouldturn(false);
+    shooterSubsystem.shooterMotorstop();
+  }
 
   // Returns true when the command should end.
   @Override

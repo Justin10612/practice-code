@@ -5,18 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.Constants.SwerveConstants;
-import frc.robot.subsystems.ClimbSubsystem;
-import static frc.robot.RobotContainer.*;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class ClimbCommand extends Command {
-  /** Creates a new ClimbCommand. */
-  private final ClimbSubsystem climbSubsystem;
-  public ClimbCommand(ClimbSubsystem _climbSubsystem) {
-    this.climbSubsystem = _climbSubsystem;
-    addRequirements(climbSubsystem);
+public class NoteShootSpeakerCommand extends Command {
+  /** Creates a new NoteShootSpeakerCommand. */
+  private final ShooterSubsystem shooterSubsystem;
+  public NoteShootSpeakerCommand(ShooterSubsystem _shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.shooterSubsystem = _shooterSubsystem;
   }
 
   // Called when the command is initially scheduled.
@@ -26,19 +23,14 @@ public class ClimbCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(armJoystick.leftBumper().getAsBoolean()){
-      climbSubsystem.rightturn(armJoystick.getRightY()*-0.6);
-      climbSubsystem.leftTurn(armJoystick.getLeftY()*-0.6);
-    }
-    else{
-      climbSubsystem.rightturn(0);
-      climbSubsystem.leftTurn(0);
-    }
+    shooterSubsystem.shoot();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shooterSubsystem.shooterMotorstop();;
+  }
 
   // Returns true when the command should end.
   @Override

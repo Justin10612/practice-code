@@ -32,7 +32,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   private final RelativeEncoder shooterTurnEncoder = shooterTurnMotor.getEncoder();
 
-  private final DigitalInput NoteGet = new DigitalInput(0);
+  private final DigitalInput NoteGet = new DigitalInput(4);
   private final Timer time = new Timer();
 
   private double transportMotorSpeed = 4;
@@ -49,6 +49,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private boolean needShoot;
 
   private final double shooterCancoderOffset = 0;
+  private double shooterVoltageSetpoint;
+  private double shooterRPMSetpoint;
   private boolean transportreverse = true;
   public static boolean haveNote = false;
 
@@ -80,38 +82,34 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shoot(){
-    if(haveNote){
-      if(shooterTurnSpeed >= shooterturnSetpoint-500){
-        shooterTurnMotor.setVoltage(shooterturnSetpoint/5676*12);
+    if(shooterTurnSpeed >= shooterRPMSetpoint - 800){
+        shooterTurnMotor.setVoltage(shooterVoltageSetpoint);
+        shooterTransportMotor.setVoltage(4);
         shouldTransportTurn(true);
         transportMotorSpeed = 4;
         needShoot = true;
+        // System.out.println("shooting");
       }
       else{
-        shooterTurnMotor.setVoltage(shooterturnSetpoint/5676*12);
+        shooterTurnMotor.setVoltage(shooterVoltageSetpoint);
         shouldTransportTurn(false);
+        shooterTransportMotor.setVoltage(0);
+        // System.out.println("preparing");
       }
-    }
-    else{
-      shooterTurnMotor.setVoltage(0);
-      shouldTransportTurn(false);
-      needShoot = false;
-    }
   }
 
-  public void isNoteIn(boolean noteIn){
-    noteING = noteIn;
-  }
 
   public void shooterMotorstop(){
     shooterTurnMotor.set(0);
     shouldTransportTurn(false);
+    // System.out.println("stop");
   }
 
   //for auto
-  public void shooterMotorTurn(double speed){
-    shooterturnSetpoint = speed;
-    shooterTurnMotor.setVoltage(speed);
+  public void shooterMotorTurn(double voltage, double rpm){
+    shooterVoltageSetpoint = voltage;
+    shooterRPMSetpoint = rpm;
+    shooterTurnMotor.setVoltage(voltage);
   }
 
   public void transportMotorStop(){
@@ -141,11 +139,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(haveNote && noteING){
-      shouldTransportTurn(false);
-      noteING = false;
-    }
-    haveNote = NoteGet.get();
+    // if(haveNote && noteING){
+    //   shouldTransportTurn(false);
+    //   noteING = false;
+    // }
+    haveNote = false;
     SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
     shooterTurnSpeed = shooterTurnEncoder.getVelocity();
     shooterTransportMotor.setInverted(transportreverse);
@@ -156,6 +154,7 @@ public class ShooterSubsystem extends SubsystemBase {
       transportMotorStop();
     }
     SmartDashboard.putBoolean("haveNote", haveNote);
+    SmartDashboard.putBoolean("shouleTrasportMotorTurn", shouldTransportTurn);
     // SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
     // SmartDashboard.putNumber("time", time.get());
 

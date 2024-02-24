@@ -43,74 +43,64 @@ public class ClimbSubsystem extends SubsystemBase {
 
   }
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public Command exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
-  }
-
   public void resetEncoder(){
     climbRightMotor.getEncoder().setPosition(0);
     climbLeftMotot.getEncoder().setPosition(0);
   }
   public void rightturn(double value){//152
-    if(climbRightPosition >= 139){
-      if(value > 0){
-        climbRightMotor.setVoltage(0);
-      }
-      else{
-        climbRightMotor.setVoltage(value*12);
-      }
-    }
-    else if(climbRightLimitSwitch.get()){
-      if(value < 0){
-        climbRightMotor.setVoltage(0);
-      }
-      else{
-        climbRightMotor.setVoltage(value*12);
-      }
-    }
-    else{
-      climbRightMotor.setVoltage(value*12);
-    }
+    // if(climbRightPosition >= 139){
+    //   if(value > 0){
+    //     climbRightMotor.setVoltage(0);
+    //   }
+    //   else{
+    //     climbRightMotor.setVoltage(value*12);
+    //   }
+    // }
+    // else if(climbRightLimitSwitch.get()){
+    //   if(value < 0){
+    //     climbRightMotor.setVoltage(0);
+    //   }
+    //   else{
+    //     climbRightMotor.setVoltage(value*12);
+    //   }
+    // }
+    // else{
+    //   climbRightMotor.setVoltage(value*12);
+    // }
+    climbRightMotor.setVoltage(value*12);
   }
 
   public void leftTurn(double value){
-    if(climbLeftPosition >= 152){
-      if(value > 0){
-        climbLeftMotot.setVoltage(0);
-      }
-      else{
-        climbLeftMotot.setVoltage(value*12);
-      }
-    }
-    else if(climbLeftLimitSwitch.get()){
-      if(value < 0){
-        climbLeftMotot.setVoltage(0);
-      }
-      else{
-        climbLeftMotot.setVoltage(value*12);
-      }
-    }
-    else{
-      climbLeftMotot.setVoltage(value*12);
-    }
+    // if(climbLeftPosition >= 152){
+    //   if(value > 0){
+    //     climbLeftMotot.setVoltage(0);
+    //   }
+    //   else{
+    //     climbLeftMotot.setVoltage(value*12);
+    //   }
+    // }
+    // else if(climbLeftLimitSwitch.get()){
+    //   if(value < 0){
+    //     climbLeftMotot.setVoltage(0);
+    //   }
+    //   else{
+    //     climbLeftMotot.setVoltage(value*12);
+    //   }
+    // }
+    // else{
+    //   climbLeftMotot.setVoltage(value*12);
+    // }
+    climbLeftMotot.setVoltage(value*12);
   }
 
   @Override
   public void periodic() {
+    // climbLeftMotot.set(0);
     climbRightPosition = climbRightEncoder.getPosition();
     climbLeftPosition = climbLeftEncoder.getPosition();
     SmartDashboard.putNumber("climbRightPosition", climbRightPosition);
     SmartDashboard.putNumber("climbLeftPosition", climbLeftPosition);
+    SmartDashboard.putBoolean("rightLimit", climbRightLimitSwitch.get());
     
     if(climbLeftLimitSwitch.get()){
       climbLeftEncoder.setPosition(0);

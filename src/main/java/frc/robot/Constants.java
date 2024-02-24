@@ -55,8 +55,10 @@ public final class Constants {
   public static final class ShooterConstants{
     public static final double shooterPrimetivePosition = 0.0;
     public static final double shooterAMPSetpoint = 0.0;
-    public static final double shooterSpeakerSpeedSetpoint = 4540;
-    public static final double shooterAMPSpeedSetpoint = 1987;
+    public static final double shooterSpeakerVoltageSetpoint = 9.6;
+    public static final double shooterAMPVoltageSetpoint = 14.2;
+    public static final double shooterSpeakerRPMSetpoint = 4000;
+    public static final double shooterAMPRPMSetpoint = 2000;
   }
 
   public static final class ApriltagConstants{
@@ -129,7 +131,7 @@ public final class Constants {
     public static final double maxDriveMotorSpeed = 4.0;
   }
   public static final class SwerveConstants{
-    public static final int leftFrontDriveID = 21;
+    public static final int leftFrontDriveID = 19;
     public static final int leftFrontTurningID = 17;
     public static final int rightFrontDriveID = 11;
     public static final int rightFrontTurningID = 24;  
