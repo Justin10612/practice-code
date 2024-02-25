@@ -11,44 +11,30 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class IntakeCommand extends Command {
   /** Creates a new IntakeCommand. */
-  private final IntakeSubsystem intakeSubsystem;
-  private final ShooterSubsystem shooterSubsystem;
-  private double setpoint;
-  private boolean intakeNeedTurn;
-  private boolean shooterTransportNeedTurn;
-  public IntakeCommand(IntakeSubsystem _intakeSubsystem, ShooterSubsystem _shooterSubsystem, double _setpoint, boolean _intakeNeedTurn, boolean _shooterTransportNeedTurn) {
-    this.intakeSubsystem = _intakeSubsystem;
-    this.shooterSubsystem = _shooterSubsystem;
-    this.setpoint = _setpoint;
-    this.intakeNeedTurn = _intakeNeedTurn;
-    this.shooterTransportNeedTurn = _shooterTransportNeedTurn;
-    addRequirements(intakeSubsystem, shooterSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
+  private final IntakeSubsystem m_intakeSubsystem;
+  private final ShooterSubsystem m_shooterSubsystem;
+
+  public IntakeCommand(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+    this.m_intakeSubsystem = intakeSubsystem;
+    this.m_shooterSubsystem = shooterSubsystem;
+    addRequirements(m_intakeSubsystem, m_shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    intakeSubsystem.getintakeShaftSetpoint(setpoint);
-    intakeSubsystem.shouldturn(intakeNeedTurn);
-    shooterSubsystem.shouldTransportTurn(shooterTransportNeedTurn);
-    shooterSubsystem.transportMotorTurn();
-    if(shooterTransportNeedTurn == false){
-      shooterSubsystem.transportMotorStop();
-    }
+  public void initialize() {
+    m_intakeSubsystem.setIntakeAngle();
+    m_intakeSubsystem.WheelIntaking();
+    m_shooterSubsystem.transportMotorTurn();
+    m_shooterSubsystem.shouldTransportTurn(true);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
-    intakeSubsystem.shouldturn(false);
-    shooterSubsystem.shouldTransportTurn(false);
-    shooterSubsystem.shooterMotorstop();
+    m_intakeSubsystem.setIdleAngle();
+    m_intakeSubsystem.WheelStop();
+    m_shooterSubsystem.shouldTransportTurn(false);
   }
 
   // Returns true when the command should end.

@@ -136,7 +136,6 @@ public class ShooterSubsystem extends SubsystemBase {
     shouldTransportTurn = shouldTurn;
   }
 
-
   @Override
   public void periodic() {
     // if(haveNote && noteING){

@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ClimbCommand;
-import frc.robot.commands.ExcludeNoteCommand;
+import frc.robot.commands.EjectNoteIdelPose;
+import frc.robot.commands.EjectNoteIntakePose;
 // import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManualDriveCommand;
@@ -61,13 +62,13 @@ public class RobotContainer {
     }));
 
     NamedCommands.registerCommand("NoteIn", Commands.runOnce(()->{
-      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakeInPosition);
+      // m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakeInPosition);
       m_shooterSubsystem.shouldTransportTurn(true);
     }));
 
     NamedCommands.registerCommand("IntakeOut", Commands.runOnce(()->{
-      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakeInPosition);
-      m_intakeSubsystem.shouldturn(true);
+      // m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakeInPosition);
+      // m_intakeSubsystem.shouldturn(true);
       m_shooterSubsystem.shouldTransportTurn(true);
     }));
 
@@ -76,14 +77,14 @@ public class RobotContainer {
     }, m_shooterSubsystem));
 
     NamedCommands.registerCommand("IntakeBack", Commands.runOnce(()->{
-      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
-      m_intakeSubsystem.shouldturn(false);
+      // m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
+      // m_intakeSubsystem.shouldturn(false);
       m_shooterSubsystem.shouldTransportTurn(false);
     }));
 
     NamedCommands.registerCommand("AllStop", Commands.runOnce(()->{
-      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
-      m_intakeSubsystem.shouldturn(false);
+      // m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
+      // m_intakeSubsystem.shouldturn(false);
       m_shooterSubsystem.shooterMotorstop();
       m_shooterSubsystem.shouldTransportTurn(false);
     }));
@@ -100,12 +101,12 @@ public class RobotContainer {
       m_swerveSubsystem.resetGyro();
     }));
 
-    armJoystick.y().whileTrue(Commands.run(()->{
-      m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
-      m_intakeSubsystem.shouldturn(true);
-      m_intakeSubsystem.turnReverse();
-      m_shooterSubsystem.shouldTransportTurn(true);
-    }, m_intakeSubsystem, m_shooterSubsystem));
+    // armJoystick.y().whileTrue(Commands.run(()->{
+    //   m_intakeSubsystem.getintakeShaftSetpoint(IntakeConstants.intakePrimetivePosition);
+    //   m_intakeSubsystem.shouldturn(true);
+    //   m_intakeSubsystem.turnReverse();
+    //   m_shooterSubsystem.shouldTransportTurn(true);
+    // }, m_intakeSubsystem, m_shooterSubsystem));
 
     // armJoystick.leftBumper().whileTrue(Commands.run(()->{
     //   m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMPSpeedSetpoint);
@@ -123,12 +124,12 @@ public class RobotContainer {
     //   m_shooterSubsystem.shaftStop();
     // }, m_shooterSubsystem));
 
-    armJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true, true));
+    armJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
     armJoystick.rightBumper().whileTrue(new NoteShootSpeakerCommand(m_shooterSubsystem));
     armJoystick.rightTrigger(0.4).whileTrue(new ShooterPreparingCommand(m_shooterSubsystem, ShooterConstants.shooterSpeakerVoltageSetpoint, ShooterConstants.shooterSpeakerRPMSetpoint));
     armJoystick.leftTrigger(0.4).whileTrue(new ShooterPreparingCommand(m_shooterSubsystem, ShooterConstants.shooterAMPVoltageSetpoint, ShooterConstants.shooterAMPRPMSetpoint));
-    armJoystick.a().whileTrue(new ExcludeNoteCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakeInPosition, true));
-    armJoystick.b().whileTrue(new ExcludeNoteCommand(m_intakeSubsystem, m_shooterSubsystem, IntakeConstants.intakePrimetivePosition, true));
+    armJoystick.a().whileTrue(new EjectNoteIntakePose(m_intakeSubsystem, m_shooterSubsystem));
+    armJoystick.b().whileTrue(new EjectNoteIdelPose(m_intakeSubsystem, m_shooterSubsystem));
     armJoystick.y().whileTrue(new NoteBackCommand(m_shooterSubsystem));
     // armJoystick.y().onTrue(new ShooterCommand(m_shooterSubsystem, ShooterConstants.shooterAMPSetpoint));
     // armJoystick.b().onTrue(new ShooterCommand(m_shooterSubsystem, ShooterConstants.shooterPrimetivePosition));

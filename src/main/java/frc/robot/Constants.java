@@ -48,8 +48,13 @@ public final class Constants {
   }
 
   public static final class IntakeConstants{
-    public static final double intakeInPosition = -110;
-    public static final double intakePrimetivePosition = 12;
+    // Pivot Angle
+    public static final double kIntakingAngle = -110;
+    public static final double kIntakeIdleAngle = 12;
+    // Motor Setting 
+    public static final double kPivotMaxOutput = 0.12;
+    public static final double kIntakingMotorVoltage = 5;
+    public static final double kEjectingMotorVoltage = -6;
   }
 
   public static final class ShooterConstants{
