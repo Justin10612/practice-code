@@ -24,18 +24,15 @@ public class EjectNoteIntakePose extends Command {
   public void initialize() {
     m_IntakeSubsystem.setIntakeAngle();
     m_IntakeSubsystem.WheelEject();
-    m_ShooterSubsystem.transportMotorTurn();
-    m_ShooterSubsystem.shouldTransportTurn(true);
+    m_ShooterSubsystem.Feeding();
   }
-
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_IntakeSubsystem.WheelStop();
     m_IntakeSubsystem.setIdleAngle();
-    m_ShooterSubsystem.transportMotorTurn();
-    m_ShooterSubsystem.shouldTransportTurn(false);
+    m_ShooterSubsystem.StopTranportMotor();
   }
 
   // Returns true when the command should end.

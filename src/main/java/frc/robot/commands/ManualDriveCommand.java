@@ -11,15 +11,15 @@ import frc.robot.subsystems.SwerveSubsystem;
 import static frc.robot.RobotContainer.*;
 public class ManualDriveCommand extends Command {
   /** Creates a new ManualDriveCommand. */
-  private final SwerveSubsystem swerveSubsystem;
+  private final SwerveSubsystem m_swerveSubsystem;
   private double xSpeed;
   private double ySpeed;
   private double zSpeed;
   private final SlewRateLimiter xLimmiter = new SlewRateLimiter(4);
   private final SlewRateLimiter yLimiter = new SlewRateLimiter(4);
-  public ManualDriveCommand(SwerveSubsystem _swerveSubsystem) {
-    this.swerveSubsystem = _swerveSubsystem;
-    addRequirements(swerveSubsystem);
+  public ManualDriveCommand(SwerveSubsystem swerveSubsystem) {
+    this.m_swerveSubsystem = swerveSubsystem;
+    addRequirements(m_swerveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -35,11 +35,11 @@ public class ManualDriveCommand extends Command {
       zSpeed = baseJoystick.getRawAxis(4)*-0.4;
     }
     else{
-      xSpeed = xLimmiter.calculate(Constants.min(baseJoystick.getRawAxis(1), 0.1)*-0.8);
-      ySpeed = yLimiter.calculate(Constants.min(baseJoystick.getRawAxis(0), 0.1)*-0.8);
+      xSpeed = xLimmiter.calculate(Constants.min(baseJoystick.getRawAxis(1), 0.1)*-0.85);
+      ySpeed = yLimiter.calculate(Constants.min(baseJoystick.getRawAxis(0), 0.1)*-0.85);
       zSpeed = Constants.min(baseJoystick.getRawAxis(4), 0.1)*-1;
     }
-    swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, true);
+    m_swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, true);
   }
 
   // Called once the command ends or is interrupted.

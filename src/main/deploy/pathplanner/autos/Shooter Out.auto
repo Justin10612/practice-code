@@ -40,12 +40,6 @@
           "data": {
             "waitTime": 0.5
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AllStop"
-          }
         }
       ]
     }

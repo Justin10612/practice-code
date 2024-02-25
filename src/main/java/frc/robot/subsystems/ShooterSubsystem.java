@@ -17,146 +17,101 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
-  private final CANSparkMax shooterTurnMotor = new CANSparkMax(33, MotorType.kBrushless);
-  // private final CANSparkMax shooterShafMotor = new CANSparkMax(48, MotorType.kBrushed);
-  private final CANSparkMax shooterTransportMotor = new CANSparkMax(12, MotorType.kBrushless);
+  private final CANSparkMax shooterTurnMotor;
+  private final CANSparkMax shooterIndaxerMotor;
 
-  // private final CANcoder shooterShaftCancoder = new CANcoder(54);
-  private final CANcoderConfiguration shooterShaftCancoderCofig = new CANcoderConfiguration();
-
-  // private final PIDController shooterShaftPID = new PIDController(0, 0, 0);
   private final PIDController shooterTurnPID = new PIDController(0, 0, 0);
   
-  private final RelativeEncoder shooterTurnEncoder = shooterTurnMotor.getEncoder();
+  private final RelativeEncoder shooterTurnEncoder;
 
-  private final DigitalInput NoteGet = new DigitalInput(4);
-  private final Timer time = new Timer();
+  private final DigitalInput noteGet = new DigitalInput(4);
 
-  private double transportMotorSpeed = 4;
   private double shooterTurnSpeed;
-  private double shooterturnSetpoint;
-  private double shooterShaftPIDOutput;
-  private double shooterTurnPIDOutput;
-  private double shooterShaftAngle;
-  private double shooterShaftSetpoint = 0;
-  private double shooterShaftErrorvalue;
-
-  private boolean shouldShafTurn = false;
-  private boolean shouldTransportTurn = false;
-  private boolean needShoot;
 
   private final double shooterCancoderOffset = 0;
-  private double shooterVoltageSetpoint;
-  private double shooterRPMSetpoint;
-  private boolean transportreverse = true;
+  private double shooterVoltageSetpoint = ShooterConstants.shooterSpeakerVoltageSetpoint;
+  private double shooterRPMSetpoint = ShooterConstants.shooterSpeakerRPMSetpoint;
   public static boolean haveNote = false;
-
-  private boolean noteING;
-
   public ShooterSubsystem() {
-    time.reset();
+    shooterTurnMotor = new CANSparkMax(33, MotorType.kBrushless);
+    shooterIndaxerMotor = new CANSparkMax(12, MotorType.kBrushless);
+    shooterTurnEncoder = shooterTurnMotor.getEncoder();
     shooterTurnMotor.restoreFactoryDefaults();
     // shooterShafMotor.restoreFactoryDefaults();
-    shooterTransportMotor.restoreFactoryDefaults();
+    shooterIndaxerMotor.restoreFactoryDefaults();
 
     shooterTurnMotor.setInverted(true);
     // shooterShafMotor.setInverted(false);
-    shooterTransportMotor.setInverted(true);
+    shooterIndaxerMotor.setInverted(true);
 
     shooterTurnMotor.setIdleMode(IdleMode.kCoast);
     // shooterShafMotor.setIdleMode(IdleMode.kBrake);
-    shooterTransportMotor.setIdleMode(IdleMode.kCoast);
+    shooterIndaxerMotor.setIdleMode(IdleMode.kCoast);
 
     shooterTurnMotor.burnFlash();
     // shooterShafMotor.burnFlash();
-    shooterTransportMotor.burnFlash();
-
-    shooterShaftCancoderCofig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
-    shooterShaftCancoderCofig.MagnetSensor.MagnetOffset = shooterCancoderOffset;
-    shooterShaftCancoderCofig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
-
-    // shooterShaftCancoder.getConfigurator().apply(shooterShaftCancoderCofig);
+    shooterIndaxerMotor.burnFlash();
   }
 
   public void shoot(){
     if(shooterTurnSpeed >= shooterRPMSetpoint - 800){
         shooterTurnMotor.setVoltage(shooterVoltageSetpoint);
-        shooterTransportMotor.setVoltage(4);
-        shouldTransportTurn(true);
-        transportMotorSpeed = 4;
-        needShoot = true;
-        // System.out.println("shooting");
+        shooterIndaxerMotor.setVoltage(4);
       }
       else{
         shooterTurnMotor.setVoltage(shooterVoltageSetpoint);
-        shouldTransportTurn(false);
-        shooterTransportMotor.setVoltage(0);
-        // System.out.println("preparing");
+        shooterIndaxerMotor.setVoltage(0);
       }
   }
 
-
-  public void shooterMotorstop(){
-    shooterTurnMotor.set(0);
-    shouldTransportTurn(false);
-    // System.out.println("stop");
+  public void InverseShoot(){
+    shooterTurnMotor.setVoltage(-shooterVoltageSetpoint);
+    if(shooterTurnSpeed <= shooterRPMSetpoint + 800){
+        shooterIndaxerMotor.setVoltage(4);
+      }
+      else{
+        shooterIndaxerMotor.setVoltage(0);
+      }
   }
 
-  //for auto
+  public void shooterMotorstop(){
+    shooterTurnMotor.setVoltage(0);
+    shooterIndaxerMotor.setVoltage(0);
+  }
+
   public void shooterMotorTurn(double voltage, double rpm){
     shooterVoltageSetpoint = voltage;
     shooterRPMSetpoint = rpm;
     shooterTurnMotor.setVoltage(voltage);
   }
 
-  public void transportMotorStop(){
-    shooterTransportMotor.setVoltage(0);
-  }
-
-  public void transportMotorTurn(){
-    transportMotorSpeed = 4;
-  }
-
-  public void getShooterShaftsetpoint(double angleSetpoint){
-    shooterShaftSetpoint = angleSetpoint;
-  }
-
   public boolean detectNote(){
     return haveNote;
   }
 
-  public void transportMotorReverse(){
-    transportMotorSpeed = -4;
+  public void Feeding(){
+    shooterIndaxerMotor.setVoltage(4);
   }
 
-  public void shouldTransportTurn(boolean shouldTurn){
-    shouldTransportTurn = shouldTurn;
+  public void Ejecting(){
+    shooterIndaxerMotor.setVoltage(-4);
+  }
+
+  public void StopTranportMotor(){
+    shooterIndaxerMotor.setVoltage(0);
   }
 
   @Override
   public void periodic() {
-    // if(haveNote && noteING){
-    //   shouldTransportTurn(false);
-    //   noteING = false;
-    // }
     haveNote = false;
+    shooterTurnSpeed = shooterTurnEncoder.getVelocity();
     SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
     SmartDashboard.putNumber("shooterMotorTurnSetpoint", shooterVoltageSetpoint);
-    shooterTurnSpeed = shooterTurnEncoder.getVelocity();
-    shooterTransportMotor.setInverted(transportreverse);
-    if(shouldTransportTurn){
-      shooterTransportMotor.setVoltage(transportMotorSpeed);
-    }
-    else{
-      transportMotorStop();
-    }
     SmartDashboard.putBoolean("haveNote", haveNote);
-    SmartDashboard.putBoolean("shouleTrasportMotorTurn", shouldTransportTurn);
-    // SmartDashboard.putNumber("shooterSpeed", shooterTurnSpeed);
-    // SmartDashboard.putNumber("time", time.get());
 
   }
 }

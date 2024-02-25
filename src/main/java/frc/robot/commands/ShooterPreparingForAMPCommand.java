@@ -5,12 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class NoteBackCommand extends Command {
-  /** Creates a new NoteBackCommand. */
+public class ShooterPreparingForAMPCommand extends Command {
+  /** Creates a new ShooterPreparingFrAMPCommand. */
   private final ShooterSubsystem m_shooterSubsystem;
-  public NoteBackCommand(ShooterSubsystem shooterSubsystem) {
+  public ShooterPreparingForAMPCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_shooterSubsystem = shooterSubsystem;
     addRequirements(m_shooterSubsystem);
@@ -19,7 +20,7 @@ public class NoteBackCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooterSubsystem.Ejecting();
+    m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMPVoltageSetpoint, ShooterConstants.shooterAMPRPMSetpoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -29,7 +30,7 @@ public class NoteBackCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.StopTranportMotor();
+    m_shooterSubsystem.shooterMotorstop();
   }
 
   // Returns true when the command should end.

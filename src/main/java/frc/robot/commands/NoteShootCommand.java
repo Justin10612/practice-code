@@ -7,30 +7,29 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterCommand extends Command {
-  /** Creates a new shooterCommand. */
+public class NoteShootCommand extends Command {
+  /** Creates a new NoteShootSpeakerCommand. */
   private final ShooterSubsystem shooterSubsystem;
-  private double setpoint;
-  public ShooterCommand(ShooterSubsystem _shooterSubsystem, double _setpoint) {
+  public NoteShootCommand(ShooterSubsystem _shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooterSubsystem = _shooterSubsystem;
-    this.setpoint = _setpoint;
-    addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    shooterSubsystem.shoot();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    shooterSubsystem.getShooterShaftsetpoint(setpoint);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shooterSubsystem.shooterMotorstop();;
+  }
 
   // Returns true when the command should end.
   @Override

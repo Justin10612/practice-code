@@ -23,8 +23,7 @@ public class EjectNoteIdelPose extends Command {
   public void initialize() {
     m_IntakeSubsystem.setIdleAngle();
     m_IntakeSubsystem.WheelEject();
-    m_ShooterSubsystem.transportMotorTurn();
-    m_ShooterSubsystem.shouldTransportTurn(true);
+    m_ShooterSubsystem.Feeding();
   }
 
 
@@ -33,8 +32,7 @@ public class EjectNoteIdelPose extends Command {
   public void end(boolean interrupted) {
     m_IntakeSubsystem.setIdleAngle();
     m_IntakeSubsystem.WheelStop();
-    m_ShooterSubsystem.transportMotorTurn();
-    m_ShooterSubsystem.shouldTransportTurn(false);
+    m_ShooterSubsystem.StopTranportMotor();
   }
 
   // Returns true when the command should end.

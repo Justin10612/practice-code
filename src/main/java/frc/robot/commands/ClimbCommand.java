@@ -5,17 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.Constants.SwerveConstants;
 import frc.robot.subsystems.ClimbSubsystem;
 import static frc.robot.RobotContainer.*;
 
 public class ClimbCommand extends Command {
   /** Creates a new ClimbCommand. */
-  private final ClimbSubsystem climbSubsystem;
-  public ClimbCommand(ClimbSubsystem _climbSubsystem) {
-    this.climbSubsystem = _climbSubsystem;
-    addRequirements(climbSubsystem);
+  private final ClimbSubsystem m_climbSubsystem;
+  public ClimbCommand(ClimbSubsystem climbSubsystem) {
+    this.m_climbSubsystem = climbSubsystem;
+    addRequirements(m_climbSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,12 +25,12 @@ public class ClimbCommand extends Command {
   @Override
   public void execute() {
     if(armJoystick.leftBumper().getAsBoolean()){
-      climbSubsystem.rightturn(armJoystick.getRightY()*-0.6);
-      climbSubsystem.leftTurn(armJoystick.getLeftY()*-0.6);
+      m_climbSubsystem.rightturn(armJoystick.getRightY()*-0.8);
+      m_climbSubsystem.leftTurn(armJoystick.getLeftY()*-0.8);
     }
     else{
-      climbSubsystem.rightturn(0);
-      climbSubsystem.leftTurn(0);
+      m_climbSubsystem.rightturn(0);
+      m_climbSubsystem.leftTurn(0);
     }
   }
 

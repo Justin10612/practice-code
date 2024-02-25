@@ -24,8 +24,7 @@ public class IntakeCommand extends Command {
   public void initialize() {
     m_intakeSubsystem.setIntakeAngle();
     m_intakeSubsystem.WheelIntaking();
-    m_shooterSubsystem.transportMotorTurn();
-    m_shooterSubsystem.shouldTransportTurn(true);
+    m_shooterSubsystem.Feeding();
   }
 
   // Called once the command ends or is interrupted.
@@ -33,7 +32,7 @@ public class IntakeCommand extends Command {
   public void end(boolean interrupted) {
     m_intakeSubsystem.setIdleAngle();
     m_intakeSubsystem.WheelStop();
-    m_shooterSubsystem.shouldTransportTurn(false);
+    m_shooterSubsystem.StopTranportMotor();
   }
 
   // Returns true when the command should end.

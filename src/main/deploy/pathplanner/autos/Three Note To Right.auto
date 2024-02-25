@@ -42,15 +42,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Center Note Take"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterTurn"
           }
         },
         {
@@ -75,12 +75,6 @@
           "type": "wait",
           "data": {
             "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
           }
         },
         {
@@ -111,12 +105,6 @@
           "type": "wait",
           "data": {
             "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AllStop"
           }
         }
       ]
