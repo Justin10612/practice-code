@@ -52,10 +52,6 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto mode", autoChooser);
     
-    m_climbSubsystem.setDefaultCommand(new ClimbCommand(m_climbSubsystem));
-
-    configureBindings();
-
     NamedCommands.registerCommand("ShooterTurn", new ShooterPreparingForSpeakerCommand(m_shooterSubsystem).beforeStarting(new ShooterPreparingForSpeakerCommand(m_shooterSubsystem)));
 
     NamedCommands.registerCommand("NoteIn", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem).withTimeout(2));
@@ -65,6 +61,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("BaseStop", Commands.runOnce(()->{
       m_swerveSubsystem.drive_auto(new ChassisSpeeds(0, 0, 0));
     }));
+
+    configureBindings();
   }
 
   private void configureBindings() {
@@ -82,6 +80,10 @@ public class RobotContainer {
     }));
 
     /* Operator */
+    /* Climb */
+    DoubleSupplier lInputFunc = () -> OperatorJoystick.getLeftY();
+    DoubleSupplier rInputFunc = () -> OperatorJoystick.getRightY();
+    OperatorJoystick.leftBumper().whileTrue(new ClimbCommand(m_climbSubsystem, lInputFunc, rInputFunc));
     /* Intake Note */
     OperatorJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
     /* Feed Note */
