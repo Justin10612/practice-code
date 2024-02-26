@@ -12,21 +12,32 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClimbConstants;
 
 public class ClimbSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private final CANSparkMax climbRightMotor = new CANSparkMax(31, MotorType.kBrushless);
-  private final CANSparkMax climbLeftMotot = new CANSparkMax(8, MotorType.kBrushless);
+  private final CANSparkMax climbRightMotor;
+  private final CANSparkMax climbLeftMotot;
 
-  private final DigitalInput climbRightLimitSwitch = new DigitalInput(1);
-  private final DigitalInput climbLeftLimitSwitch = new DigitalInput(2);
+  private final DigitalInput climbRightLimitSwitch;
+  private final DigitalInput climbLeftLimitSwitch;
 
-  private final RelativeEncoder climbRightEncoder = climbRightMotor.getEncoder();
-  private final RelativeEncoder climbLeftEncoder = climbLeftMotot.getEncoder();
+  private final RelativeEncoder climbRightEncoder;
+  private final RelativeEncoder climbLeftEncoder;
 
   private double climbRightPosition;
   private double climbLeftPosition;
   public ClimbSubsystem() {
+    // Motor Controllers
+    climbRightMotor = new CANSparkMax(ClimbConstants.kClimbRightMotorID, MotorType.kBrushless);
+    climbLeftMotot = new CANSparkMax(ClimbConstants.kClimbLeftMotorID, MotorType.kBrushless);
+    //LimitSwitch
+    climbRightLimitSwitch = new DigitalInput(ClimbConstants.kRightLimitSwitchPort);
+    climbLeftLimitSwitch = new DigitalInput(ClimbConstants.kLeftLimitSwitchPort);
+    //RelativeEncoder
+    climbRightEncoder = climbRightMotor.getEncoder();
+    climbLeftEncoder = climbLeftMotot.getEncoder();
+
     climbRightMotor.restoreFactoryDefaults();
     climbLeftMotot.restoreFactoryDefaults();
 

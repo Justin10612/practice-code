@@ -20,7 +20,7 @@ public class ShooterPreparingForAMPCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMPVoltageSetpoint, ShooterConstants.shooterAMPRPMSetpoint);
+    m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMP_VoltageSetpoint, ShooterConstants.shooterAMP_RPMSetpoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

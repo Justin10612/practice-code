@@ -36,21 +36,17 @@ public final class Constants {
   public static double setMaxOutput(double value, double maxOutput){
     return Math.min(maxOutput, Math.max(value, -maxOutput));
   }
-
-  public static final class JoystickButtonNumbers{
-    public static final int shootButtonNumber = 6;
-    public static final int inButtonNumber = 2;
-    public static final int ampButtonNumber = 3;
-    public static final int primetiveButtonNumber = 4;
-    public static final int climbDoneButtonNumber = 5;
-    public static final int aimButtonNumber = 5;
-    public static final int resetGyroButtonNumber = 2;
-  }
-
   public static final class IntakeConstants{
+    //CanCoder ID
+    public static final int kIntakePivotCancoderID = 45;
+    //Cancoder Setting
+    public static final double kIntakePivotCancoderOffset = 0.266;
     // Pivot Angle
     public static final double kIntakingAngle = -110;
     public static final double kIntakeIdleAngle = 12;
+    //Motor ID
+    public static final int kIntakePivotMotorID = 13;
+    public static final int kIntakeMotorID = 27;
     // Motor Setting 
     public static final double kPivotMaxOutput = 0.12;
     public static final double kIntakingMotorVoltage = 5;
@@ -58,12 +54,25 @@ public final class Constants {
   }
 
   public static final class ShooterConstants{
-    public static final double shooterPrimetivePosition = 0.0;
-    public static final double shooterAMPSetpoint = 0.0;
+    //Motor ID
+    public static final int kShooterMotorID = 33;
+    public static final int kIndexerMotorID = 13;
+    //IR ID
+    public static final int kIRPort = 4;
+    //Motor Setting
     public static final double shooterSpeakerVoltageSetpoint = 9.6;
-    public static final double shooterAMPVoltageSetpoint = 3;
+    public static final double shooterAMP_VoltageSetpoint = 3;
     public static final double shooterSpeakerRPMSetpoint = 4000;
-    public static final double shooterAMPRPMSetpoint = 1000;
+    public static final double shooterAMP_RPMSetpoint = 1000;
+  }
+
+  public static final class ClimbConstants{
+    //Motor ID
+    public static final int kClimbRightMotorID = 31;
+    public static final int kClimbLeftMotorID = 8;
+    //limitSwitch Port
+    public static final int kRightLimitSwitchPort = 1;
+    public static final int kLeftLimitSwitchPort = 2;
   }
 
   public static final class ApriltagConstants{

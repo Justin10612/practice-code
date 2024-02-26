@@ -13,21 +13,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.EjectNoteIdelPose;
 import frc.robot.commands.EjectNoteIntakePose;
-// import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManualDriveCommand;
 import frc.robot.commands.NoteBackCommand;
 import frc.robot.commands.NoteShootInverseCommand;
-import frc.robot.commands.ShooterMotorStopCommand;
 import frc.robot.commands.ShooterPreparingForAMPCommand;
 import frc.robot.commands.NoteShootCommand;
 import frc.robot.commands.ShooterPreparingForSpeakerCommand;
 import frc.robot.subsystems.ClimbSubsystem;
-// import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -38,18 +34,14 @@ import frc.robot.subsystems.SwerveSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
-  // private final SendableChooser<Command> autoChooser;
   private final SendableChooser<Command> autoChooser;
 
   public static final CommandXboxController armJoystick = new CommandXboxController(1);
   public static final CommandXboxController baseJoystick = new CommandXboxController(0);
-  // private final CommandJoystick shooterJoystick = new CommandJoystick(2);
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -68,8 +60,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("BaseStop", Commands.runOnce(()->{
       m_swerveSubsystem.drive_auto(new ChassisSpeeds(0, 0, 0));
     }));
-
-    
   }
 
   private void configureBindings() {

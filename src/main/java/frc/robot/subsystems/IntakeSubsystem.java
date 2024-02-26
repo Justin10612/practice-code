@@ -19,41 +19,41 @@ import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
-  private final CANSparkMax intakeTurnMotor; 
+  private final CANSparkMax intakeMotor; 
   private final CANSparkMax intakePivotMotor; 
 
   private final CANcoder intakPivotCancoder;
-  private final CANcoderConfiguration intakeShaftCancoderCofig;
+  private final CANcoderConfiguration intakePivotCancoderCofig;
 
   private final PIDController intakePivotPID = new PIDController(0.005, 0, 0);
 
   private double PivotAngleSetpoint = IntakeConstants.kIntakeIdleAngle;
-  private final double intakeShaftCancoderOffset = 0.266;
 
   public IntakeSubsystem() {
     // CAN coder
-    intakPivotCancoder = new CANcoder(45);
-    intakeShaftCancoderCofig = new CANcoderConfiguration();
+    intakPivotCancoder = new CANcoder(IntakeConstants.kIntakePivotCancoderID);
+    intakePivotCancoderCofig = new CANcoderConfiguration();
     // Motor Controllers
-    intakeTurnMotor = new CANSparkMax(13, MotorType.kBrushless);
-    intakePivotMotor = new CANSparkMax(27, MotorType.kBrushless);
-    intakeTurnMotor.restoreFactoryDefaults();
+    intakeMotor = new CANSparkMax(IntakeConstants.kIntakePivotMotorID, MotorType.kBrushless);
+    intakePivotMotor = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
+    
+    intakeMotor.restoreFactoryDefaults();
     intakePivotMotor.restoreFactoryDefaults();
 
-    intakeTurnMotor.setInverted(false);
+    intakeMotor.setInverted(false);
     intakePivotMotor.setInverted(false);
 
-    intakeTurnMotor.setIdleMode(IdleMode.kCoast);
+    intakeMotor.setIdleMode(IdleMode.kCoast);
     intakePivotMotor.setIdleMode(IdleMode.kBrake);
 
-    intakeTurnMotor.burnFlash();
+    intakeMotor.burnFlash();
     intakePivotMotor.burnFlash();
 
-    intakeShaftCancoderCofig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
-    intakeShaftCancoderCofig.MagnetSensor.MagnetOffset = intakeShaftCancoderOffset;
-    intakeShaftCancoderCofig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
+    intakePivotCancoderCofig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
+    intakePivotCancoderCofig.MagnetSensor.MagnetOffset = IntakeConstants.kIntakePivotCancoderOffset;
+    intakePivotCancoderCofig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
 
-    intakPivotCancoder.getConfigurator().apply(intakeShaftCancoderCofig);
+    intakPivotCancoder.getConfigurator().apply(intakePivotCancoderCofig);
   }
 
   public void setIntakeShaftSetpoint(double angleSetpoint){
@@ -73,17 +73,16 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void WheelIntaking(){
-    intakeTurnMotor.setVoltage(IntakeConstants.kIntakingMotorVoltage);
+    intakeMotor.setVoltage(IntakeConstants.kIntakingMotorVoltage);
   }
 
   public void WheelEject(){
-    intakeTurnMotor.setVoltage(IntakeConstants.kEjectingMotorVoltage);
+    intakeMotor.setVoltage(IntakeConstants.kEjectingMotorVoltage);
   }
 
   public void WheelStop(){
-    intakeTurnMotor.setVoltage(0);
+    intakeMotor.setVoltage(0);
   }
-
   @Override
   public void periodic() {
     // Display Data
