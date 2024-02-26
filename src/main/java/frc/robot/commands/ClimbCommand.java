@@ -8,13 +8,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
 import static frc.robot.RobotContainer.*;
 
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
 public class ClimbCommand extends Command {
   /** Creates a new ClimbCommand. */
   private final ClimbSubsystem m_climbSubsystem;
-  public ClimbCommand(ClimbSubsystem climbSubsystem) {
+  private final Boolean climberEnable;
+  private final DoubleSupplier m_leftInput;
+  private final double m_rightInput;
+
+  public ClimbCommand(ClimbSubsystem climbSubsystem, DoubleSupplier leftInput, DoubleSupplier RightInput) {
     this.m_climbSubsystem = climbSubsystem;
+    this.
     addRequirements(m_climbSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -25,12 +32,11 @@ public class ClimbCommand extends Command {
   @Override
   public void execute() {
     if(armJoystick.leftBumper().getAsBoolean()){
-      m_climbSubsystem.rightturn(armJoystick.getRightY()*-0.8);
-      m_climbSubsystem.leftTurn(armJoystick.getLeftY()*-0.8);
+      m_climbSubsystem.setRightMotor(armJoystick.getRightY()*-0.8);
+      m_climbSubsystem.setLeftMotor(armJoystick.getLeftY()*-0.8);
     }
     else{
-      m_climbSubsystem.rightturn(0);
-      m_climbSubsystem.leftTurn(0);
+      m_climbSubsystem.StopMotors();
     }
   }
 

@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -13,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.EjectNoteIdelPose;
 import frc.robot.commands.EjectNoteIntakePose;
@@ -38,15 +42,16 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
+  
   private final SendableChooser<Command> autoChooser;
 
-  public static final CommandXboxController armJoystick = new CommandXboxController(1);
-  public static final CommandXboxController baseJoystick = new CommandXboxController(0);
+  private final CommandXboxController DriverJoystick = new CommandXboxController(OperatorConstants.kDriverJoystickPort);
+  private final CommandXboxController OperatorJoystick = new CommandXboxController(OperatorConstants.kOperatorJoystickPort);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto mode", autoChooser);
-    m_swerveSubsystem.setDefaultCommand(new ManualDriveCommand(m_swerveSubsystem));
+    
     m_climbSubsystem.setDefaultCommand(new ClimbCommand(m_climbSubsystem));
 
     configureBindings();
@@ -63,18 +68,36 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    baseJoystick.b().onTrue(Commands.runOnce(()->{
-      m_swerveSubsystem.resetGyro();
+    /* Driver Part */
+    /* Manual Drive */
+    DoubleSupplier xSpeedFunc = () -> DriverJoystick.getRawAxis(1);
+    DoubleSupplier ySpeedFunc = () -> DriverJoystick.getRawAxis(0);
+    DoubleSupplier zSppedFunc = () -> DriverJoystick.getRawAxis(4);
+    BooleanSupplier isSlowModeFunc = () -> DriverJoystick.rightBumper().getAsBoolean();
+    m_swerveSubsystem.setDefaultCommand(new ManualDriveCommand(m_swerveSubsystem, xSpeedFunc, ySpeedFunc, zSppedFunc, isSlowModeFunc));
+    /* Reset Gyro */
+    DriverJoystick.b().onTrue(
+      Commands.runOnce(()->{
+        m_swerveSubsystem.resetGyro();
     }));
 
-    armJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
-    armJoystick.rightBumper().whileTrue(new NoteShootCommand(m_shooterSubsystem));
-    armJoystick.rightTrigger(0.4).whileTrue(new ShooterPreparingForSpeakerCommand(m_shooterSubsystem));
-    armJoystick.leftTrigger(0.4).whileTrue(new ShooterPreparingForAMPCommand(m_shooterSubsystem));
-    armJoystick.a().whileTrue(new EjectNoteIntakePose(m_intakeSubsystem, m_shooterSubsystem));
-    armJoystick.b().whileTrue(new EjectNoteIdelPose(m_intakeSubsystem, m_shooterSubsystem));
-    armJoystick.y().whileTrue(new NoteBackCommand(m_shooterSubsystem));
-    armJoystick.pov(0).whileTrue(new NoteShootInverseCommand(m_shooterSubsystem));
+    /* Operator */
+    /* Intake Note */
+    OperatorJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
+    /* Feed Note */
+    OperatorJoystick.rightBumper().whileTrue(new NoteShootCommand(m_shooterSubsystem));
+    /* Spin Shooter for Speaker */
+    OperatorJoystick.rightTrigger(0.4).whileTrue(new ShooterPreparingForSpeakerCommand(m_shooterSubsystem));
+    /* Spin Shooter for AMP */
+    OperatorJoystick.leftTrigger(0.4).whileTrue(new ShooterPreparingForAMPCommand(m_shooterSubsystem));
+    /* Eject Note when Intake is at down position. */
+    OperatorJoystick.a().whileTrue(new EjectNoteIntakePose(m_intakeSubsystem, m_shooterSubsystem));
+    /* Eject Note when Intake is at idle position. */
+    OperatorJoystick.b().whileTrue(new EjectNoteIdelPose(m_intakeSubsystem, m_shooterSubsystem));
+    /* Move Note backward */
+    OperatorJoystick.y().whileTrue(new NoteBackCommand(m_shooterSubsystem));
+    /* Magic:Inverse your inveerse */
+    OperatorJoystick.pov(0).whileTrue(new NoteShootInverseCommand(m_shooterSubsystem));
   }
 
   /**
