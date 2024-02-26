@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterPreparingForAMPCommand extends Command {
+public class ShooterPrepForAMP extends Command {
   /** Creates a new ShooterPreparingFrAMPCommand. */
   private final ShooterSubsystem m_shooterSubsystem;
-  public ShooterPreparingForAMPCommand(ShooterSubsystem shooterSubsystem) {
+  
+  public ShooterPrepForAMP(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_shooterSubsystem = shooterSubsystem;
     addRequirements(m_shooterSubsystem);
@@ -20,7 +21,7 @@ public class ShooterPreparingForAMPCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterAMP_VoltageSetpoint, ShooterConstants.shooterAMP_RPMSetpoint);
+    m_shooterSubsystem.EnableShooter(ShooterConstants.shooterAMP_VoltageSetpoint, ShooterConstants.shooterAMP_RPMSetpoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,7 +31,7 @@ public class ShooterPreparingForAMPCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.shooterMotorstop();
+    m_shooterSubsystem.StopMotors();
   }
 
   // Returns true when the command should end.

@@ -5,15 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.networktables.BooleanSubscriber;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.SwerveSubsystem;
-import static frc.robot.RobotContainer.*;
-
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+
 public class ManualDriveCommand extends Command {
   /** Creates a new ManualDriveCommand. */
   private final SwerveSubsystem m_swerveSubsystem;
@@ -69,7 +67,7 @@ public class ManualDriveCommand extends Command {
     // Output
     m_swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, true);
   }
-  
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

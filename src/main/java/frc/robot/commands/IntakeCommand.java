@@ -32,7 +32,7 @@ public class IntakeCommand extends Command {
   public void end(boolean interrupted) {
     m_intakeSubsystem.setIdleAngle();
     m_intakeSubsystem.WheelStop();
-    m_shooterSubsystem.StopTranportMotor();
+    m_shooterSubsystem.StopIndexerMotor();
   }
 
   // Returns true when the command should end.
