@@ -29,7 +29,7 @@ public class NoteBackCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.StopTranportMotor();
+    m_shooterSubsystem.StopIndexerMotor();
   }
 
   // Returns true when the command should end.

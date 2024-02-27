@@ -6,15 +6,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
-import static frc.robot.RobotContainer.*;
+import java.util.function.DoubleSupplier;
 
 public class ClimbCommand extends Command {
   /** Creates a new ClimbCommand. */
   private final ClimbSubsystem m_climbSubsystem;
-  public ClimbCommand(ClimbSubsystem climbSubsystem) {
+  private final DoubleSupplier m_leftFunc;
+  private final DoubleSupplier m_rightFunc;
+
+  public ClimbCommand(ClimbSubsystem climbSubsystem, DoubleSupplier leftFunc, DoubleSupplier rightFunc) {
     this.m_climbSubsystem = climbSubsystem;
+    this.m_leftFunc= leftFunc;
+    this.m_rightFunc = rightFunc;
     addRequirements(m_climbSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -24,19 +28,20 @@ public class ClimbCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(armJoystick.leftBumper().getAsBoolean()){
-      m_climbSubsystem.rightturn(armJoystick.getRightY()*-0.8);
-      m_climbSubsystem.leftTurn(armJoystick.getLeftY()*-0.8);
-    }
-    else{
-      m_climbSubsystem.rightturn(0);
-      m_climbSubsystem.leftTurn(0);
-    }
+    // Inputs
+    double leftInputVal = m_leftFunc.getAsDouble();
+    double rightInputVal = m_rightFunc.getAsDouble();
+    // Output
+    // 如果這裡加負號，是不是代表Subsystem那邊要SetInverted?
+    m_climbSubsystem.setRightMotor(leftInputVal*-0.8);
+    m_climbSubsystem.setLeftMotor(rightInputVal*-0.8);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_climbSubsystem.StopMotors();
+  }
 
   // Returns true when the command should end.
   @Override

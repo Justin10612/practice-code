@@ -17,22 +17,17 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static double min(double measure,double set){
-      if (set > measure && measure >0){
-        return 0;
-      }
-      else if(-set<measure&& measure <0){
-        return 0;
-      }
-      else{
-        return measure;
-      }
+  public static double DeadBandLimit(double input, double deadBand){
+    return Math.abs(input)>deadBand ? input : 0;
   }
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int kDriverJoystickPort = 0;
+    public static final int kOperatorJoystickPort = 1;
+    public static final double kJoystickDeadBand = 0.1;
   }
   public static final double robotLength = Units.inchesToMeters(25.5);
   public static final double robotWidth = Units.inchesToMeters(25.5);
+
   public static double setMaxOutput(double value, double maxOutput){
     return Math.min(maxOutput, Math.max(value, -maxOutput));
   }

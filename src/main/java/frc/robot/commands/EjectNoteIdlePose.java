@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class EjectNoteIdelPose extends Command {
+public class EjectNoteIdlePose extends Command {
   private final ShooterSubsystem m_ShooterSubsystem;
   private final IntakeSubsystem m_IntakeSubsystem;
 
-  public EjectNoteIdelPose(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+  public EjectNoteIdlePose(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
     this.m_IntakeSubsystem = intakeSubsystem;
     this.m_ShooterSubsystem = shooterSubsystem;
     addRequirements(m_IntakeSubsystem, m_ShooterSubsystem);
@@ -32,7 +32,7 @@ public class EjectNoteIdelPose extends Command {
   public void end(boolean interrupted) {
     m_IntakeSubsystem.setIdleAngle();
     m_IntakeSubsystem.WheelStop();
-    m_ShooterSubsystem.StopTranportMotor();
+    m_ShooterSubsystem.StopIndexerMotor();
   }
 
   // Returns true when the command should end.
