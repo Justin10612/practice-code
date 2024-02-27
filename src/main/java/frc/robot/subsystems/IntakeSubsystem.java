@@ -9,11 +9,9 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,13 +22,10 @@ public class IntakeSubsystem extends SubsystemBase {
   private final CANSparkMax intakeMotor; 
   private final CANSparkMax intakePivotMotor; 
 
-  private final RelativeEncoder intakePivotEncoder;
-
   private final CANcoder intakPivotCancoder;
   private final CANcoderConfiguration intakePivotCancoderCofig;
 
   private final PIDController intakePivotPID = new PIDController(0.005, 0, 0);
-  private final ArmFeedforward intakePivotFeedforward = new ArmFeedforward(0, 0, 0);
 
   private double PivotAngleSetpoint = IntakeConstants.kIntakeIdleAngle;
 
@@ -41,8 +36,6 @@ public class IntakeSubsystem extends SubsystemBase {
     // Motor Controllers
     intakeMotor = new CANSparkMax(IntakeConstants.kIntakePivotMotorID, MotorType.kBrushless);
     intakePivotMotor = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
-    //RelativeEncoder
-    intakePivotEncoder = intakePivotMotor.getEncoder();
     
     intakeMotor.restoreFactoryDefaults();
     intakePivotMotor.restoreFactoryDefaults();
@@ -103,8 +96,5 @@ public class IntakeSubsystem extends SubsystemBase {
     }else{
       intakePivotMotor.set(PidOutput);
     }
-    // Intake Feedforward Calculation
-    double feedforwardOutput = intakePivotFeedforward.calculate(Math.toRadians(getAngle()), PidOutput);
   }
-
 }

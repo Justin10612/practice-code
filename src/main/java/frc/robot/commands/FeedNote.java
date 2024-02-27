@@ -5,31 +5,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterPreparingForSpeakerCommand extends Command {
-  /** Creates a new ShooterPreparingCommand. */
-  private final ShooterSubsystem shooterSubsystem;
-  public ShooterPreparingForSpeakerCommand(ShooterSubsystem _shooterSubsystem) {
-    this.shooterSubsystem = _shooterSubsystem;
-    addRequirements(shooterSubsystem);
+public class FeedNote extends Command {
+  /** Creates a new NoteShootSpeakerCommand. */
+  private final ShooterSubsystem m_ShooterSubsystem;
+
+  public FeedNote(ShooterSubsystem shooterSubsystem) {
+    this.m_ShooterSubsystem = shooterSubsystem;
+    addRequirements(m_ShooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    shooterSubsystem.shooterMotorTurn(ShooterConstants.shooterSpeakerVoltageSetpoint, ShooterConstants.shooterSpeakerRPMSetpoint);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    // 把它放在這，因為他需要時時監看是否到達目標轉速。
+    m_ShooterSubsystem.Shoot();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.shooterMotorstop();
+    m_ShooterSubsystem.StopIndexerMotor();
   }
 
   // Returns true when the command should end.

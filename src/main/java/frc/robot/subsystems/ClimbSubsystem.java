@@ -17,46 +17,64 @@ import frc.robot.Constants.ClimbConstants;
 public class ClimbSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   private final CANSparkMax climbRightMotor;
-  private final CANSparkMax climbLeftMotot;
+  private final CANSparkMax climbLeftMotor;
 
-  private final DigitalInput climbRightLimitSwitch;
-  private final DigitalInput climbLeftLimitSwitch;
+  private final DigitalInput climberRightLimitSW;
+  private final DigitalInput climberLeftLimitSW;
 
   private final RelativeEncoder climbRightEncoder;
   private final RelativeEncoder climbLeftEncoder;
 
-  private double climbRightPosition;
-  private double climbLeftPosition;
   public ClimbSubsystem() {
     // Motor Controllers
     climbRightMotor = new CANSparkMax(ClimbConstants.kClimbRightMotorID, MotorType.kBrushless);
-    climbLeftMotot = new CANSparkMax(ClimbConstants.kClimbLeftMotorID, MotorType.kBrushless);
+    climbLeftMotor = new CANSparkMax(ClimbConstants.kClimbLeftMotorID, MotorType.kBrushless);
     //LimitSwitch
-    climbRightLimitSwitch = new DigitalInput(ClimbConstants.kRightLimitSwitchPort);
-    climbLeftLimitSwitch = new DigitalInput(ClimbConstants.kLeftLimitSwitchPort);
+    climberRightLimitSW = new DigitalInput(ClimbConstants.kRightLimitSwitchPort);
+    climberLeftLimitSW = new DigitalInput(ClimbConstants.kLeftLimitSwitchPort);
     //RelativeEncoder
     climbRightEncoder = climbRightMotor.getEncoder();
-    climbLeftEncoder = climbLeftMotot.getEncoder();
+    climbLeftEncoder = climbLeftMotor.getEncoder();
 
     climbRightMotor.restoreFactoryDefaults();
-    climbLeftMotot.restoreFactoryDefaults();
+    climbLeftMotor.restoreFactoryDefaults();
 
     climbRightMotor.setIdleMode(IdleMode.kBrake);
-    climbLeftMotot.setIdleMode(IdleMode.kBrake);
-
+    climbLeftMotor.setIdleMode(IdleMode.kBrake);
 
     climbRightMotor.setInverted(false);
-    climbLeftMotot.setInverted(true);
+    climbLeftMotor.setInverted(true);
 
     climbRightMotor.burnFlash();
-    climbLeftMotot.burnFlash();
+    climbLeftMotor.burnFlash();
   }
 
   public void resetEncoder(){
-    climbRightMotor.getEncoder().setPosition(0);
-    climbLeftMotot.getEncoder().setPosition(0);
+    climbRightEncoder.setPosition(0);
+    climbLeftEncoder.setPosition(0);
   }
-  public void rightturn(double value){//152
+
+  public double getLeftPosition(){
+    return climbLeftEncoder.getPosition();
+  }
+
+  public double getRightPosition(){
+    return climbRightEncoder.getPosition();
+  }
+
+  /** 若壓到的話是True 
+  */
+  public boolean getLeftLimitState(){
+    return !climberLeftLimitSW.get();
+  }
+
+  /** 若壓到的話是True 
+  */
+  public boolean getRightLimitState(){
+    return !climberRightLimitSW.get();
+  }
+
+  public void setRightMotor(double value){//152
     // if(climbRightPosition >= 139){
     //   if(value > 0){
     //     climbRightMotor.setVoltage(0);
@@ -79,42 +97,47 @@ public class ClimbSubsystem extends SubsystemBase {
     climbRightMotor.setVoltage(value*12);
   }
 
-  public void leftTurn(double value){
+  public void setLeftMotor(double value){
     // if(climbLeftPosition >= 152){
     //   if(value > 0){
-    //     climbLeftMotot.setVoltage(0);
+    //     climbLeftMotor.setVoltage(0);
     //   }
     //   else{
-    //     climbLeftMotot.setVoltage(value*12);
+    //     climbLeftMotor.setVoltage(value*12);
     //   }
     // }
     // else if(climbLeftLimitSwitch.get()){
     //   if(value < 0){
-    //     climbLeftMotot.setVoltage(0);
+    //     climbLeftMotor.setVoltage(0);
     //   }
     //   else{
-    //     climbLeftMotot.setVoltage(value*12);
+    //     climbLeftMotor.setVoltage(value*12);
     //   }
     // }
     // else{
-    //   climbLeftMotot.setVoltage(value*12);
+    //   climbLeftMotor.setVoltage(value*12);
     // }
-    climbLeftMotot.setVoltage(value*12);
+    climbLeftMotor.setVoltage(value*12);
+  }
+
+  public void StopMotors(){
+    climbLeftMotor.setVoltage(0);
+    climbRightMotor.setVoltage(0);
   }
 
   @Override
   public void periodic() {
-    // climbLeftMotot.set(0);
-    climbRightPosition = climbRightEncoder.getPosition();
-    climbLeftPosition = climbLeftEncoder.getPosition();
-    SmartDashboard.putNumber("climbRightPosition", climbRightPosition);
-    SmartDashboard.putNumber("climbLeftPosition", climbLeftPosition);
-    SmartDashboard.putBoolean("rightLimit", climbRightLimitSwitch.get());
+    // ClimberPose
+    SmartDashboard.putNumber("climbRightPosition", getRightPosition());
+    SmartDashboard.putNumber("climbLeftPosition", getLeftPosition());
+    // LimitSwitch
+    SmartDashboard.putBoolean("Right Limit", getRightLimitState());
+    SmartDashboard.putBoolean("Left Limit", getLeftLimitState());
     
-    if(climbLeftLimitSwitch.get()){
+    if(getLeftLimitState()){
       climbLeftEncoder.setPosition(0);
     }
-    if(climbRightLimitSwitch.get()){
+    if(getRightLimitState()){
       climbRightEncoder.setPosition(0);
     }
   }

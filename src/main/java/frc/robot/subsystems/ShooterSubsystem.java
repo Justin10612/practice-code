@@ -20,26 +20,25 @@ public class ShooterSubsystem extends SubsystemBase {
   private final CANSparkMax shooterMotor;
   private final CANSparkMax indexerMotor;
 
-  private final PIDController shooterTurnPID;
+  private final PIDController shooterPID;
   
-  private final RelativeEncoder shooterTurnEncoder;
+  private final RelativeEncoder shooterEncoder;
 
-  private final DigitalInput noteGetRight;
-  private final DigitalInput noteGetLeft;
+  private final DigitalInput noteGet;
 
-  private double shooterVoltageSetpoint = ShooterConstants.shooterSpeakerVoltageSetpoint;
-  private double shooterRPMSetpoint = ShooterConstants.shooterSpeakerRPMSetpoint;
+  private double Voltage_Setpoint;
+  private double RPM_Setpoint;
+
   public ShooterSubsystem() {
     // Motor Controllers
     shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorID, MotorType.kBrushless);
     indexerMotor = new CANSparkMax(ShooterConstants.kIndexerMotorID, MotorType.kBrushless);
+    // Encoder
+    shooterEncoder = shooterMotor.getEncoder();
+    // Note Sensor
+    noteGet = new DigitalInput(ShooterConstants.kIRPort);
 
-    shooterTurnEncoder = shooterMotor.getEncoder();
-    //ID Sensor
-    noteGetRight = new DigitalInput(ShooterConstants.kShooterLimitSwitchRightPort);
-    noteGetLeft = new DigitalInput(ShooterConstants.kShooterLimitSwitchLeftPort);
-
-    shooterTurnPID = new PIDController(0, 0, 0);
+    shooterPID = new PIDController(0, 0, 0);
 
     shooterMotor.restoreFactoryDefaults();
     indexerMotor.restoreFactoryDefaults();
@@ -54,24 +53,30 @@ public class ShooterSubsystem extends SubsystemBase {
     indexerMotor.burnFlash();
   }
 
-  public double getShooterMotorTurnSpeed(){
-    return shooterTurnEncoder.getVelocity();
+  /**
+   * 給定馬達的目標電壓以及轉速，驅動Shooter馬達轉動。
+   */
+  public void EnableShooter(double targetVoltage, double targetRPM){
+    // Without PID
+    Voltage_Setpoint = targetVoltage;
+    RPM_Setpoint = targetRPM;
+    shooterMotor.setVoltage(targetVoltage);
   }
 
-  public void shoot(){
-    if(getShooterMotorTurnSpeed() >= shooterRPMSetpoint - 800){
-        shooterMotor.setVoltage(shooterVoltageSetpoint);
-        indexerMotor.setVoltage(4);
-      }
-      else{
-        shooterMotor.setVoltage(shooterVoltageSetpoint);
-        indexerMotor.setVoltage(0);
-      }
+  /**
+   * When Shooter Velocity reach the setpoint, feed Note into it.
+   */
+  public void Shoot(){
+    if(getShooterSpeed() >= RPM_Setpoint - 800){
+      Feeding();
+    }else{
+      StopIndexerMotor();
+    }
   }
 
   public void InverseShoot(){
-    shooterMotor.setVoltage(-shooterVoltageSetpoint);
-    if(getShooterMotorTurnSpeed() <= shooterRPMSetpoint + 800){
+    shooterMotor.setVoltage(-Voltage_Setpoint);
+    if(getShooterSpeed() <= RPM_Setpoint + 800){
         indexerMotor.setVoltage(4);
       }
       else{
@@ -79,13 +84,7 @@ public class ShooterSubsystem extends SubsystemBase {
       }
   }
 
-    public void shooterMotorTurn(double voltage, double rpm){
-    shooterVoltageSetpoint = voltage;
-    shooterRPMSetpoint = rpm;
-    shooterMotor.setVoltage(voltage);
-  }
-
-  public void shooterMotorstop(){
+  public void StopMotors(){
     shooterMotor.setVoltage(0);
     indexerMotor.setVoltage(0);
   }
@@ -98,22 +97,27 @@ public class ShooterSubsystem extends SubsystemBase {
     indexerMotor.setVoltage(-4);
   }
 
-  public void StopTranportMotor(){
+  public void StopIndexerMotor(){
     indexerMotor.setVoltage(0);
   }
 
-  
-  public boolean detectNoteRight(){
-    return !noteGetRight.get();
+  /**
+   * @return True when there is a Note.
+   */
+  public boolean detectNote(){
+    return !noteGet.get();
   }
 
-  public boolean detectNoteLeft(){
-    return !noteGetLeft.get();
+  /**
+   * @return Flywheel Motor RPM
+   */
+  public double getShooterSpeed(){
+    return shooterEncoder.getVelocity();
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("shooterSpeed", getShooterMotorTurnSpeed());
-    SmartDashboard.putNumber("shooterMotorTurnSetpoint", shooterVoltageSetpoint);
+    SmartDashboard.putNumber("shooterSpeed", getShooterSpeed());
+    SmartDashboard.putNumber("Shooter Setpoint", Voltage_Setpoint);
   }
 }

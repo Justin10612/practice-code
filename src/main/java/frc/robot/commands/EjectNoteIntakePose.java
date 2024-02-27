@@ -32,7 +32,7 @@ public class EjectNoteIntakePose extends Command {
   public void end(boolean interrupted) {
     m_IntakeSubsystem.WheelStop();
     m_IntakeSubsystem.setIdleAngle();
-    m_ShooterSubsystem.StopTranportMotor();
+    m_ShooterSubsystem.StopIndexerMotor();
   }
 
   // Returns true when the command should end.
