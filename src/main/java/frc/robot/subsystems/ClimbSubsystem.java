@@ -50,7 +50,6 @@ public class ClimbSubsystem extends SubsystemBase {
 
     climbRightMotor.burnFlash();
     climbLeftMotot.burnFlash();
-
   }
 
   public void resetEncoder(){

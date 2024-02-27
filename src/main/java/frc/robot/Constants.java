@@ -57,8 +57,9 @@ public final class Constants {
     //Motor ID
     public static final int kShooterMotorID = 33;
     public static final int kIndexerMotorID = 13;
-    //IR ID
-    public static final int kIRPort = 4;
+    //LimitSwitch ID
+    public static final int kShooterLimitSwitchRightPort = 4;
+    public static final int kShooterLimitSwitchLeftPort = 5;
     //Motor Setting
     public static final double shooterSpeakerVoltageSetpoint = 9.6;
     public static final double shooterAMP_VoltageSetpoint = 3;

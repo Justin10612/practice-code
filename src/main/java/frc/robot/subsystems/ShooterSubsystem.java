@@ -24,7 +24,8 @@ public class ShooterSubsystem extends SubsystemBase {
   
   private final RelativeEncoder shooterTurnEncoder;
 
-  private final DigitalInput noteGet;
+  private final DigitalInput noteGetRight;
+  private final DigitalInput noteGetLeft;
 
   private double shooterVoltageSetpoint = ShooterConstants.shooterSpeakerVoltageSetpoint;
   private double shooterRPMSetpoint = ShooterConstants.shooterSpeakerRPMSetpoint;
@@ -35,7 +36,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     shooterTurnEncoder = shooterMotor.getEncoder();
     //ID Sensor
-    noteGet = new DigitalInput(ShooterConstants.kIRPort);
+    noteGetRight = new DigitalInput(ShooterConstants.kShooterLimitSwitchRightPort);
+    noteGetLeft = new DigitalInput(ShooterConstants.kShooterLimitSwitchLeftPort);
 
     shooterTurnPID = new PIDController(0, 0, 0);
 
@@ -101,8 +103,12 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   
-  public boolean detectNote(){
-    return noteGet.get();
+  public boolean detectNoteRight(){
+    return !noteGetRight.get();
+  }
+
+  public boolean detectNoteLeft(){
+    return !noteGetLeft.get();
   }
 
   @Override
