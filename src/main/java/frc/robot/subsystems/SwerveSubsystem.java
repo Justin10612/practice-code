@@ -36,11 +36,8 @@ public class SwerveSubsystem extends SubsystemBase{
     private SwerveDriveOdometry mOdometry;
     // Field
     private Field2d field = new Field2d();
-    
-    
     public SwerveSubsystem(){
         gyroConfig.MountPose.MountPoseYaw = -10;
-        // gyroConfig.withMountPose(new MountPoseConfigs().withMountPoseYaw(180));
         gyro.getConfigurator().apply(gyroConfig);
         // Module Set
         leftFrontModule = new SwerveModule(

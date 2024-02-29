@@ -3,7 +3,7 @@
   "startingPose": {
     "position": {
       "x": 1.24,
-      "y": 5.54
+      "y": 5.555088802485298
     },
     "rotation": 0
   },
@@ -38,25 +38,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
+            "waitTime": 0.5
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Center Note Take"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeBack"
           }
         },
         {
@@ -80,13 +68,67 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Note Take"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Note Shoot"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AllStop"
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Left First Note Take"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Cener Left First Note Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         }
       ]

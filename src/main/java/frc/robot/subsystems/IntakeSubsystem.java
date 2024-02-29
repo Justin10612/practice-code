@@ -9,9 +9,11 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,22 +22,29 @@ import frc.robot.Constants.IntakeConstants;
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private final CANSparkMax intakeMotor; 
-  private final CANSparkMax intakePivotMotor; 
+  private final CANSparkMax intakePivotMotor;
+  
+  private final RelativeEncoder intakePivotEncoder;
 
   private final CANcoder intakPivotCancoder;
   private final CANcoderConfiguration intakePivotCancoderCofig;
 
-  private final PIDController intakePivotPID = new PIDController(0.005, 0, 0);
+  private final PIDController intakePivotPID;
+  private final ArmFeedforward intakePivotFeedforward;
 
   private double PivotAngleSetpoint = IntakeConstants.kIntakeIdleAngle;
 
   public IntakeSubsystem() {
+    intakePivotPID = new PIDController(0.005, 0, 0);
+    intakePivotFeedforward = new ArmFeedforward(0, 0, 0);
     // CAN coder
     intakPivotCancoder = new CANcoder(IntakeConstants.kIntakePivotCancoderID);
     intakePivotCancoderCofig = new CANcoderConfiguration();
     // Motor Controllers
     intakeMotor = new CANSparkMax(IntakeConstants.kIntakePivotMotorID, MotorType.kBrushless);
     intakePivotMotor = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
+    //Relative Encoder
+    intakePivotEncoder = intakePivotMotor.getEncoder();
     
     intakeMotor.restoreFactoryDefaults();
     intakePivotMotor.restoreFactoryDefaults();
@@ -90,11 +99,13 @@ public class IntakeSubsystem extends SubsystemBase {
     // Intake PID Calculation
     double PidOutput = intakePivotPID.calculate(getAngle(), PivotAngleSetpoint);
     PidOutput = Constants.setMaxOutput(PidOutput, IntakeConstants.kPivotMaxOutput);
+    // Intake Feedforward Calclation
+    double FeedforwardOutput = intakePivotFeedforward.calculate(Math.toRadians(getAngle()), intakePivotEncoder.getVelocity()*2*Math.PI/60)/12;
     // PID deadband
     if(Math.abs(intakePivotPID.getPositionError())<2){
-      intakePivotMotor.set(0);
+      intakePivotMotor.set(FeedforwardOutput);
     }else{
-      intakePivotMotor.set(PidOutput);
+      intakePivotMotor.set(PidOutput + FeedforwardOutput);
     }
   }
 }

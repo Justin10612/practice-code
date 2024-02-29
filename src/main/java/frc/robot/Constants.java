@@ -53,7 +53,7 @@ public final class Constants {
     public static final int kShooterMotorID = 33;
     public static final int kIndexerMotorID = 13;
     //IR ID
-    public static final int kIRPort = 4;
+    public static final int kLimitSwitchPort = 4;
     //Motor Setting
     public static final double shooterSpeakerVoltageSetpoint = 9.6;
     public static final double shooterAMP_VoltageSetpoint = 3;
@@ -70,24 +70,24 @@ public final class Constants {
     public static final int kLeftLimitSwitchPort = 2;
   }
 
-  public static final class ApriltagConstants{
+  public static final class AimConstants{
     public static final int blueSpeakerCenterID = 7;
     public static final int blueSpeakerLeftID = 8;
     public static final int blueAMPID = 9;
     public static final int bluesourceRightID = 1;
     public static final int blueSourceLeftID = 2;
+    public static final int blueTrapLeftID = 15;
+    public static final int blueTrapRightID = 16;
+    public static final int blueTrapCenterID = 14; 
 
     public static final int redSpeakerCenterID = 4;
     public static final int redSpeakerRightID = 3;
     public static final int redAMPID = 5;
     public static final int redSourceRightID = 9;
     public static final int redSourceLeftID = 10;
-
-    public static final double speakerHeight = 204.5;//cm
-    public static final double armHeight = 28.16;//cm
-
-    public static final double limelightToArmDistance = 0;
-    public static final double armAndEndEffectorAngle = 120.0;
+    public static final int redTrapLeftID = 11;
+    public static final int redTrapRightID = 12;
+    public static final int redTrapCenterID = 13;
 
     public static double[] redModeSelect(int targetID){
       double[] setpoint;
@@ -95,33 +95,28 @@ public final class Constants {
         case redAMPID:
           setpoint = new double[]{0, 0, 0, 0};
           break;
-        case redSourceLeftID:
-          setpoint = new double[]{0, 0, 0, 0};
+        case redTrapLeftID, redTrapCenterID, redTrapRightID:
+          setpoint = new double[]{0, 0, 0, 0}; 
           break;
-        case redSpeakerCenterID,redSpeakerRightID , redSourceRightID:
-          setpoint = new double[]{0,0,0,0}; 
         default:
           setpoint = new double[]{0, 0, 0, 0};
           break;
-        
       }
       return setpoint;
     }
+
     public static double[] blueModeSelect(int targetID){
       double[] setpoint;
       switch (targetID) {
         case blueAMPID:
           setpoint = new double[]{0, 0, 0, 0};
           break;
-        case blueSourceLeftID:
-          setpoint = new double[]{0, 0, 0, 0};
+        case blueTrapLeftID, blueTrapCenterID, blueTrapRightID:
+          setpoint = new double[]{0, 0, 0, 0}; 
           break;
-        case blueSpeakerCenterID, blueSpeakerLeftID, bluesourceRightID:
-          setpoint = new double[]{0,0,0,0}; 
         default:
           setpoint = new double[]{0, 0, 0, 0};
           break;
-        
       }
       return setpoint;
     }
@@ -137,8 +132,9 @@ public final class Constants {
     public static final double driveEncoderRPM2MeterPerSec = driveEncoderRot2Meter/60.0;
     public static final double turningEncoderRPM2RadPerSec = turningEncoderRot2Rad/60.0;
     public static final double turningMotorkP = 0.015;
-    public static final double maxDriveMotorSpeed = 4.0;
+    public static final double maxDriveMotorSpeed = 4.5;
   }
+
   public static final class SwerveConstants{
     public static final int leftFrontDriveID = 19;
     public static final int leftFrontTurningID = 17;
@@ -176,7 +172,6 @@ public final class Constants {
         return value;
       }
     }
-
     public static final int gyroID = 33;
     //front left, front right, rear left, rear right
     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(

@@ -26,6 +26,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private final DigitalInput noteGet;
 
+  private double shooterTurnPIDOutput;
+
   private double Voltage_Setpoint;
   private double RPM_Setpoint;
 
@@ -36,7 +38,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // Encoder
     shooterEncoder = shooterMotor.getEncoder();
     // Note Sensor
-    noteGet = new DigitalInput(ShooterConstants.kIRPort);
+    noteGet = new DigitalInput(ShooterConstants.kLimitSwitchPort);
 
     shooterPID = new PIDController(0, 0, 0);
 
@@ -60,7 +62,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // Without PID
     Voltage_Setpoint = targetVoltage;
     RPM_Setpoint = targetRPM;
-    shooterMotor.setVoltage(targetVoltage);
+    shooterMotor.setVoltage(targetVoltage + shooterTurnPIDOutput);
   }
 
   /**
@@ -72,16 +74,6 @@ public class ShooterSubsystem extends SubsystemBase {
     }else{
       StopIndexerMotor();
     }
-  }
-
-  public void InverseShoot(){
-    shooterMotor.setVoltage(-Voltage_Setpoint);
-    if(getShooterSpeed() <= RPM_Setpoint + 800){
-        indexerMotor.setVoltage(4);
-      }
-      else{
-        indexerMotor.setVoltage(0);
-      }
   }
 
   public void StopMotors(){
@@ -117,6 +109,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    shooterTurnPIDOutput = shooterPID.calculate(getShooterSpeed(), RPM_Setpoint);
+
     SmartDashboard.putNumber("shooterSpeed", getShooterSpeed());
     SmartDashboard.putNumber("Shooter Setpoint", Voltage_Setpoint);
   }

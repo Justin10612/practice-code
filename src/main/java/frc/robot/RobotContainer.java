@@ -17,18 +17,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AimAMPCommand;
+import frc.robot.commands.AimNoteCommand;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.EjectNoteIdlePose;
 import frc.robot.commands.EjectNoteIntakePose;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManualDriveCommand;
 import frc.robot.commands.NoteBackCommand;
-import frc.robot.commands.NoteShootInverseCommand;
 import frc.robot.commands.ShooterPrepForAMP;
 import frc.robot.commands.FeedNote;
 import frc.robot.commands.ShooterPrepForSPEAKER;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.PhotonVisionSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 /**
@@ -38,6 +41,8 @@ import frc.robot.subsystems.SwerveSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  private final LimeLightSubsystem m_limeLightSubsystem = new LimeLightSubsystem();
+  private final PhotonVisionSubsystem m_photonVisionSubsystem = new PhotonVisionSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
@@ -78,7 +83,9 @@ public class RobotContainer {
       Commands.runOnce(()->{
         m_swerveSubsystem.resetGyro();
     }));
-
+    /* Aim Note */
+    DriverJoystick.rightTrigger(0.4).whileTrue(new AimNoteCommand(m_limeLightSubsystem, m_swerveSubsystem, xSpeedFunc, isSlowModeFunc));
+    DriverJoystick.leftTrigger(0.4).whileTrue(new AimAMPCommand(m_photonVisionSubsystem, m_swerveSubsystem));
     /* Operator */
     /* Climb */
     DoubleSupplier lInputFunc = () -> OperatorJoystick.getLeftY();
@@ -98,8 +105,6 @@ public class RobotContainer {
     OperatorJoystick.b().whileTrue(new EjectNoteIdlePose(m_intakeSubsystem, m_shooterSubsystem));
     /* Move Note backward */
     OperatorJoystick.y().whileTrue(new NoteBackCommand(m_shooterSubsystem));
-    /* Magic:Inverse your inveerse */
-    OperatorJoystick.pov(0).whileTrue(new NoteShootInverseCommand(m_shooterSubsystem));
   }
 
   /**
