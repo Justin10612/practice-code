@@ -12,13 +12,11 @@ public class IntakeCommand extends Command {
   /** Creates a new IntakeCommand. */
   private final IntakeSubsystem m_intakeSubsystem;
   private final ShooterSubsystem m_shooterSubsystem;
-
   public IntakeCommand(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
     this.m_intakeSubsystem = intakeSubsystem;
     this.m_shooterSubsystem = shooterSubsystem;
     addRequirements(m_intakeSubsystem, m_shooterSubsystem);
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -38,6 +36,6 @@ public class IntakeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_shooterSubsystem.detectNote();
   }
 }
