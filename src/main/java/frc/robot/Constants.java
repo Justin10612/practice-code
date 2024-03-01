@@ -40,8 +40,8 @@ public final class Constants {
     public static final double kIntakingAngle = -110;
     public static final double kIntakeIdleAngle = 12;
     //Motor ID
-    public static final int kIntakePivotMotorID = 13;
-    public static final int kIntakeMotorID = 27;
+    public static final int kIntakePivotMotorID = 27;
+    public static final int kIntakeMotorID = 13;
     // Motor Setting 
     public static final double kPivotMaxOutput = 0.12;
     public static final double kIntakingMotorVoltage = 5;
@@ -53,7 +53,7 @@ public final class Constants {
     public static final int kShooterMotorID = 33;
     public static final int kIndexerMotorID = 13;
     //IR ID
-    public static final int kLimitSwitchPort = 4;
+    public static final int kLimitSwitchPort = 0;
     //Motor Setting
     public static final double shooterSpeakerVoltageSetpoint = 9.6;
     public static final double shooterAMP_VoltageSetpoint = 3;
@@ -139,7 +139,7 @@ public final class Constants {
     public static final int leftFrontDriveID = 19;
     public static final int leftFrontTurningID = 17;
     public static final int rightFrontDriveID = 11;
-    public static final int rightFrontTurningID = 24;  
+    public static final int rightFrontTurningID = 5;  
     public static final int leftRearDriveID = 15;
     public static final int leftRearTurningID = 22;
     public static final int rightRearDriveID = 16;

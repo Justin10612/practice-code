@@ -14,19 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hit(Center)"
+            "name": "BaseStop"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
+            "name": "ClimbUp"
           }
         },
         {

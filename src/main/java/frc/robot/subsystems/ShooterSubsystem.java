@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -18,7 +19,7 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
   private final CANSparkMax shooterMotor;
-  private final CANSparkMax indexerMotor;
+  private final TalonFX indexerMotor;
 
   private final PIDController shooterPID;
   
@@ -34,7 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem() {
     // Motor Controllers
     shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorID, MotorType.kBrushless);
-    indexerMotor = new CANSparkMax(ShooterConstants.kIndexerMotorID, MotorType.kBrushless);
+    indexerMotor = new TalonFX(ShooterConstants.kIndexerMotorID);
     // Encoder
     shooterEncoder = shooterMotor.getEncoder();
     // Note Sensor
@@ -43,16 +44,13 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterPID = new PIDController(0, 0, 0);
 
     shooterMotor.restoreFactoryDefaults();
-    indexerMotor.restoreFactoryDefaults();
 
     shooterMotor.setInverted(true);
     indexerMotor.setInverted(true);
 
     shooterMotor.setIdleMode(IdleMode.kCoast);
-    indexerMotor.setIdleMode(IdleMode.kCoast);
 
     shooterMotor.burnFlash();
-    indexerMotor.burnFlash();
   }
 
   /**

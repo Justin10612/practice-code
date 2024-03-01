@@ -14,19 +14,25 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
+            "name": "ClimbUp"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Hit(Center)"
+            "name": "ShooterTurn"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.8
           }
         },
         {
@@ -38,7 +44,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.3
           }
         },
         {
