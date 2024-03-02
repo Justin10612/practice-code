@@ -54,8 +54,7 @@ public class ManualDrive extends Command {
       xSpeed = xSpeed*0.4;
       ySpeed = ySpeed*0.4;
       zSpeed = zSpeed*0.4;
-    }
-    else{
+    }else{
       xSpeed = xSpeed*1;
       ySpeed = ySpeed*1;
       zSpeed = zSpeed*1;

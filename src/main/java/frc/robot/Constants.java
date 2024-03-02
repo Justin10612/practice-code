@@ -69,6 +69,13 @@ public final class Constants {
     public static final int kRightLimitSwitchPort = 2;
     public static final int kLeftLimitSwitchPort = 1;
   }
+  /* =======
+   *   LED
+   * =======
+   */
+  public static final class LEDConstants{
+    public static final int kCANdleID = 46;
+  }
   /* ==========
    *   Vision
    * ==========

@@ -10,12 +10,13 @@ import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LEDConstants;
 public class LEDSubsystem extends SubsystemBase {
   /** Creates a new LEDSubsystem. */
   private final CANdle candle;
   private final CANdleConfiguration candleConfig;
   public LEDSubsystem() {
-    candle = new CANdle(46);
+    candle = new CANdle(LEDConstants.kCANdleID);
     candleConfig = new CANdleConfiguration();
 
     candleConfig.vBatOutputMode = VBatOutputMode.Modulated;
