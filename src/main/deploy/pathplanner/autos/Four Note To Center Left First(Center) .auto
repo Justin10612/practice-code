@@ -18,9 +18,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "ClimbUp"
+            "waitTime": 0.02
           }
         },
         {
@@ -36,21 +36,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "IntakeOut"
+            "pathName": "Center Note Take(Center)"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Note Shoot"
+            "pathName": "Center Note Shoot(Center)"
           }
         },
         {
@@ -60,6 +54,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "NoteShoot"
@@ -72,21 +72,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Left Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Note Shoot"
+            "pathName": "Left Note Take(Center)"
           }
         },
         {
@@ -96,33 +84,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "NoteShoot"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
+            "waitTime": 0.02
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Note Shoot"
+            "pathName": "Left Note Shoot(Center)"
           }
         },
         {
@@ -132,6 +102,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "NoteShoot"
@@ -144,21 +120,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Center Left First Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Cener Left First Note Shoot"
+            "pathName": "Center Left First Note Take(Center)"
           }
         },
         {
@@ -168,6 +132,30 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Cener Left First Note Shoot(Center)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "NoteShoot"
@@ -177,12 +165,6 @@
           "type": "wait",
           "data": {
             "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AllStop"
           }
         }
       ]

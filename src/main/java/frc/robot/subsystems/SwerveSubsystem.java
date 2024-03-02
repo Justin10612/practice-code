@@ -80,7 +80,7 @@ public class SwerveSubsystem extends SubsystemBase{
             this::getSpeeds, 
             this::drive_auto,
             new HolonomicPathFollowerConfig(
-                new PIDConstants(0.4, 0, 0), // Translation constants 
+                new PIDConstants(4, 0, 0), // Translation constants 
                 new PIDConstants(2, 0, 0.002), // Rotation constants 
                 SwerveModuleConstants.maxDriveMotorSpeed, 
                 Units.inchesToMeters(14.32), // Drive base radius (distance from center to furthest module) 
@@ -147,9 +147,6 @@ public class SwerveSubsystem extends SubsystemBase{
     // Auto Drive
     public void drive_auto(ChassisSpeeds robotRelativeSpeeds){
         ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
-        System.out.println(targetSpeeds.vxMetersPerSecond);
-        SmartDashboard.putNumber("Xspeed", targetSpeeds.vxMetersPerSecond);
-        SmartDashboard.putNumber("Yspeed", targetSpeeds.vyMetersPerSecond);
         SwerveModuleState[] states = swerveKinematics.toSwerveModuleStates(targetSpeeds);
         setModuleStates(states);
     }
@@ -176,10 +173,14 @@ public class SwerveSubsystem extends SubsystemBase{
         field.setRobotPose(mOdometry.getPoseMeters());
         // SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
         // SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
-        // SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
-        // SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
-        // SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
-        // SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
+        SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
+        SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
+        SmartDashboard.putNumber("LF_Position", leftFrontModule.getDrivePosition());
+        SmartDashboard.putNumber("LR_Position", leftRearModule.getDrivePosition());
+        SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
+        SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
+        SmartDashboard.putNumber("RF_Position", rightFrontModule.getDrivePosition());
+        SmartDashboard.putNumber("RR_Position", rightRearModule.getDrivePosition());
         // SmartDashboard.putNumber("robotAngle", gyro.getRotation2d().getDegrees());
     }
   

@@ -15,13 +15,11 @@ public class LEDSubsystem extends SubsystemBase {
   private final CANdle candle;
   private final CANdleConfiguration candleConfig;
   public LEDSubsystem() {
-    candle = new CANdle(45);
+    candle = new CANdle(46);
     candleConfig = new CANdleConfiguration();
 
-    candleConfig.vBatOutputMode = VBatOutputMode.On;
-    candleConfig.stripType = LEDStripType.RGB;
+    candleConfig.vBatOutputMode = VBatOutputMode.Modulated;
     candle.configAllSettings(candleConfig);
-    candle.
   }
 
   @Override

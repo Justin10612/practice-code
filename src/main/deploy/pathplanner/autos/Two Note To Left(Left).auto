@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.24,
-      "y": 5.555088802485298
+      "x": 0.6699236223008809,
+      "y": 6.581490138729208
     },
-    "rotation": 0.0
+    "rotation": 55.61965527615512
   },
   "command": {
     "type": "sequential",
@@ -14,25 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hit Center"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "BaseStop"
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
+            "name": "ClimbUp"
           }
         },
         {
@@ -44,25 +38,49 @@
         {
           "type": "named",
           "data": {
-            "name": "IntakeOut"
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Note Shoot"
+            "pathName": "Left Note Take(Left)"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Note Shoot(Left)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
           }
         },
         {
@@ -75,12 +93,6 @@
           "type": "wait",
           "data": {
             "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
           }
         }
       ]

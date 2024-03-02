@@ -5,7 +5,7 @@
       "x": 1.24,
       "y": 5.555088802485298
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -14,37 +14,25 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hit Center"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "BaseStop"
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "ClimbUp"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Note Take"
           }
         },
         {
@@ -54,15 +42,45 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Center Note Shoot"
+            "pathName": "Left Note Take(Center)"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Note Shoot(Center)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
           }
         },
         {
@@ -74,37 +92,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Note Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteShoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         }
       ]

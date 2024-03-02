@@ -30,7 +30,7 @@ public class FeedNote extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ShooterSubsystem.StopIndexerMotor();
+    m_ShooterSubsystem.StopMotors();
   }
 
   // Returns true when the command should end.

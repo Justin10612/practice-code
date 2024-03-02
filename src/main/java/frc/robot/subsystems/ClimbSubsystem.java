@@ -75,7 +75,7 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setRightMotor(double value){//152
-    if(getRightPosition() >= 139){
+    if(getRightPosition() >= 112){
       if(value > 0){
         climbRightMotor.setVoltage(0);
       }
@@ -97,7 +97,7 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setLeftMotor(double value){
-    if(getLeftPosition() >= 152){
+    if(getLeftPosition() >= 104){
       if(value > 0){
         climbLeftMotor.setVoltage(0);
       }
@@ -146,7 +146,7 @@ public class ClimbSubsystem extends SubsystemBase {
       climbLeftMotor.setVoltage(0);
     }
     else{
-      climbLeftMotor.setVoltage(-8);
+      climbLeftMotor.setVoltage(-9.6);
     }
   }
   public void rightClimbBack(){
@@ -154,7 +154,7 @@ public class ClimbSubsystem extends SubsystemBase {
       climbRightMotor.setVoltage(0);
     }
     else{
-      climbRightMotor.setVoltage(-8);
+      climbRightMotor.setVoltage(-9.6);
     }
   }
 

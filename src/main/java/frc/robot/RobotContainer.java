@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AimAMPCommand;
 import frc.robot.commands.AimNoteCommand;
+import frc.robot.commands.ClimbBackCommand;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbOutCommand;
 import frc.robot.commands.EjectNoteIdlePose;
@@ -56,21 +57,24 @@ public class RobotContainer {
   private final CommandXboxController DriverJoystick = new CommandXboxController(OperatorConstants.kDriverJoystickPort);
   private final CommandXboxController OperatorJoystick = new CommandXboxController(OperatorConstants.kOperatorJoystickPort);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto mode", autoChooser);
-    
-    NamedCommands.registerCommand("ShooterTurn", new ShooterPrepForSPEAKER(m_shooterSubsystem).beforeStarting(new ShooterPrepForSPEAKER(m_shooterSubsystem)));
+  public RobotContainer() {    
+    NamedCommands.registerCommand("ClimbBack", new ClimbBackCommand(m_climbSubsystem).withTimeout(0.5));
+    NamedCommands.registerCommand("ShooterTurn", new ShooterPrepForSPEAKER(m_shooterSubsystem).withTimeout(1));
 
     NamedCommands.registerCommand("NoteIn", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem).withTimeout(2));
 
-    NamedCommands.registerCommand("NoteShoot", new FeedNote(m_shooterSubsystem).withTimeout(0.5));
+    NamedCommands.registerCommand("NoteShoot", new FeedNote(m_shooterSubsystem).withTimeout(1));
 
-    NamedCommands.registerCommand("ClimbUp", new ClimbOutCommand(m_climbSubsystem).withTimeout(0.8));
+    NamedCommands.registerCommand("ClimbUp", new ClimbOutCommand(m_climbSubsystem).withTimeout(0.5));
 
-    NamedCommands.registerCommand("BaseStop", Commands.runOnce(()->{
+    NamedCommands.registerCommand("IntakeOut", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
+
+    NamedCommands.registerCommand("BaseStop", Commands.run(()->{
       m_swerveSubsystem.drive_auto(new ChassisSpeeds(0, 0, 0));
-    }));
+    }).withTimeout(0.02));
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto mode", autoChooser);
 
     configureBindings();
   }

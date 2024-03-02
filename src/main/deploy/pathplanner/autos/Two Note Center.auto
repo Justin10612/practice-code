@@ -14,19 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hit Center"
+            "name": "BaseStop"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
+            "name": "ClimbUp"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.8
           }
         },
         {
@@ -38,37 +38,49 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
+            "waitTime": 1.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Take"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeBack"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Note Shoot"
+            "pathName": "Center Note Take(Center)"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Note Shoot(Center)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
           }
         },
         {

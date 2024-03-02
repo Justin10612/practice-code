@@ -46,9 +46,9 @@ public class ManualDriveCommand extends Command {
     double zSpeed = -zSpeedFunc.getAsDouble();
     boolean isSlowMode = isSlowModeFunc.getAsBoolean();
     // Dead band Limit
-    Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
-    Constants.DeadBandLimit(ySpeed, OperatorConstants.kJoystickDeadBand);
-    Constants.DeadBandLimit(zSpeed, OperatorConstants.kJoystickDeadBand);
+    xSpeed = Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
+    ySpeed = Constants.DeadBandLimit(ySpeed, OperatorConstants.kJoystickDeadBand);
+    zSpeed = Constants.DeadBandLimit(zSpeed, OperatorConstants.kJoystickDeadBand);
     // TurboModeSelect
     if(isSlowMode){
       xSpeed = xSpeed*0.4;

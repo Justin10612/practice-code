@@ -29,8 +29,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private double shooterTurnPIDOutput;
 
-  private double Voltage_Setpoint;
-  private double RPM_Setpoint;
+  private double Voltage_Setpoint = ShooterConstants.shooterSpeakerVoltageSetpoint;
+  private double RPM_Setpoint = ShooterConstants.shooterSpeakerRPMSetpoint;
 
   public ShooterSubsystem() {
     // Motor Controllers
@@ -71,6 +71,7 @@ public class ShooterSubsystem extends SubsystemBase {
       Feeding();
     }else{
       StopIndexerMotor();
+      EnableShooter(Voltage_Setpoint, RPM_Setpoint);
     }
   }
 
@@ -110,6 +111,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterTurnPIDOutput = shooterPID.calculate(getShooterSpeed(), RPM_Setpoint);
 
     SmartDashboard.putNumber("shooterSpeed", getShooterSpeed());
-    SmartDashboard.putNumber("Shooter Setpoint", Voltage_Setpoint);
+    SmartDashboard.putNumber("Shooter Setpoint", RPM_Setpoint);
+    SmartDashboard.putBoolean("haveNote", detectNote());
   }
 }
