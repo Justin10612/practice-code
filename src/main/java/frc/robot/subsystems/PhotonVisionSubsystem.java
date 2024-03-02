@@ -45,7 +45,9 @@ public class PhotonVisionSubsystem extends SubsystemBase {
   private double ySetpoint;
   private double zSetpoint;
   private int targetID;
+
   public PhotonVisionSubsystem() {
+    // Camera
     photonLimelight = new PhotonCamera("Microsoft_LifeCam_HD-3000");
 
     yMovePID = new PIDController(0.005, 0, 0);

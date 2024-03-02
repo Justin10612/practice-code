@@ -18,20 +18,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static double DeadBandLimit(double input, double deadBand){
-    return Math.abs(input)>deadBand ? input : 0;
-  }
+  /* Robot Parameters */
+  public static final double robotLength = Units.inchesToMeters(25.5);
+  public static final double robotWidth = Units.inchesToMeters(25.5);
+
   public static class OperatorConstants {
     public static final int kDriverJoystickPort = 0;
     public static final int kOperatorJoystickPort = 1;
     public static final double kJoystickDeadBand = 0.1;
   }
-  public static final double robotLength = Units.inchesToMeters(25.5);
-  public static final double robotWidth = Units.inchesToMeters(25.5);
 
-  public static double setMaxOutput(double value, double maxOutput){
-    return Math.min(maxOutput, Math.max(value, -maxOutput));
-  }
   public static final class IntakeConstants{
     //CanCoder ID
     public static final int kIntakePivotCancoderID = 45;
@@ -121,7 +117,6 @@ public final class Constants {
       }
       return setpoint;
     }
-
   }
 
   public static final class SwerveModuleConstants{
@@ -151,6 +146,8 @@ public final class Constants {
     public static final int leftRearCANCoderID = 44;
     public static final int rightRearCANCoderID = 41;
 
+    public static final int gyroID = 33;
+
     public static final boolean leftFrontdriveMotorReversed = true;
     public static final boolean leftFrontTurningMotorReversed = true;
     public static final boolean rightFrontDriveMotorReversed = true;
@@ -165,21 +162,23 @@ public final class Constants {
     public static final double leftRearOffset = -0.13;
     public static final double rightRearOffset = 0.19;
     
-    public static double joysickValue(double value, double mineOutput){
-      if(Math.abs(value) < mineOutput){
-        return 0;
-      }
-      else{
-        return value;
-      }
-    }
-    public static final int gyroID = 33;
     //front left, front right, rear left, rear right
     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
       new Translation2d(robotLength/2, robotWidth/2), 
       new Translation2d(robotLength/2, -robotWidth/2), 
       new Translation2d(-robotLength/2, robotWidth/2),
       new Translation2d(-robotLength/2, -robotWidth/2)
-  );
+    );
+  }
+  /* =========
+   * Functions
+   * =========
+  */
+  public static double DeadBandLimit(double input, double deadBand){
+    return Math.abs(input)>deadBand ? input : 0;
+  }
+
+  public static double setMaxOutput(double value, double maxOutput){
+    return Math.min(maxOutput, Math.max(value, -maxOutput));
   }
 }

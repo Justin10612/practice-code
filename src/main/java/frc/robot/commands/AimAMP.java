@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.PhotonVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class AimAMPCommand extends Command {
+public class AimAMP extends Command {
   /** Creates a new AimAMPCommand. */
   private final PhotonVisionSubsystem m_photonVisionSuubsystem;
   private final SwerveSubsystem m_swerveSubsystem;
-  public AimAMPCommand(PhotonVisionSubsystem photonVisionSubsystem, SwerveSubsystem swerveSubsystem) {
+  public AimAMP(PhotonVisionSubsystem photonVisionSubsystem, SwerveSubsystem swerveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_photonVisionSuubsystem = photonVisionSubsystem;
     this.m_swerveSubsystem = swerveSubsystem;
