@@ -80,56 +80,73 @@ public final class Constants {
    *   Vision
    * ==========
    */
-  public static final class AimConstants{
-    public static final int blueSpeakerCenterID = 7;
-    public static final int blueSpeakerLeftID = 8;
-    public static final int blueAMPID = 9;
-    public static final int bluesourceRightID = 1;
-    public static final int blueSourceLeftID = 2;
-    public static final int blueTrapLeftID = 15;
-    public static final int blueTrapRightID = 16;
-    public static final int blueTrapCenterID = 14; 
+  public static final class VisionConstants{
+    // X Aiming PID
+    public static final double XmoveKp = 0.003; 
+    public static final double XmoveKi = 0;
+    public static final double XmoveKd = 0;
+    // Y Aiming PID
+    public static final double YmoveKp = 0.005;
+    public static final double YmoveKi = 0;
+    public static final double YmoveKd = 0;
+    // Z Aiming PID
+    public static final double ZRotationKp = 0.005;
+    public static final double ZRotationKi = 0;
+    public static final double ZRotationKd = 0;
+    // Target Setpoints
+    public static final double[] TRAP_Setpoint = {1, 0, 0};
+    public static final double[] AMP_Setpoint = {1, 0, 0};
 
-    public static final int redSpeakerCenterID = 4;
-    public static final int redSpeakerRightID = 3;
-    public static final int redAMPID = 5;
-    public static final int redSourceRightID = 9;
-    public static final int redSourceLeftID = 10;
-    public static final int redTrapLeftID = 11;
-    public static final int redTrapRightID = 12;
-    public static final int redTrapCenterID = 13;
-
-    public static double[] redModeSelect(int targetID){
-      double[] setpoint;
+    public static double[] getTargetSetpoint(int targetID){
       switch (targetID) {
-        case redAMPID:
-          setpoint = new double[]{0, 0, 0, 0};
-          break;
-        case redTrapLeftID, redTrapCenterID, redTrapRightID:
-          setpoint = new double[]{0, 0, 0, 0}; 
-          break;
+        case AprilTagIDs.redAmpID:
+        case AprilTagIDs.blueAmpID:
+         return AMP_Setpoint;
+        case AprilTagIDs.redTrapLeftID:
+        case AprilTagIDs.redTrapCenterID:
+        case AprilTagIDs.redTrapRightID:
+        case AprilTagIDs.blueTrapLeftID:
+        case AprilTagIDs.blueTrapCenterID:
+        case AprilTagIDs.blueTrapRightID:
+           return TRAP_Setpoint;
         default:
-          setpoint = new double[]{0, 0, 0, 0};
-          break;
+          return TRAP_Setpoint;
       }
-      return setpoint;
     }
+  // public static double[] blueModeSelect(int targetID){
+  //   double[] setpoint;
+  //   switch (targetID) {
+  //     case AprilTagIDs.blueAMPID:
+  //       setpoint = new double[]{0, 0, 0, 0};
+  //       break;
+  //     case AprilTagIDs.blueTrapLeftID, AprilTagIDs.blueTrapCenterID, AprilTagIDs.blueTrapRightID:
+  //       setpoint = new double[]{0, 0, 0, 0}; 
+  //       break;
+  //     default:
+  //       setpoint = new double[]{0, 0, 0, 0};
+  //       break;
+  //   }
+  //   return setpoint;
+  }
 
-    public static double[] blueModeSelect(int targetID){
-      double[] setpoint;
-      switch (targetID) {
-        case blueAMPID:
-          setpoint = new double[]{0, 0, 0, 0};
-          break;
-        case blueTrapLeftID, blueTrapCenterID, blueTrapRightID:
-          setpoint = new double[]{0, 0, 0, 0}; 
-          break;
-        default:
-          setpoint = new double[]{0, 0, 0, 0};
-          break;
-      }
-      return setpoint;
-    }
+  public static final class AprilTagIDs{
+      public static final int blueSpeakerCenterID = 7;
+      public static final int blueSpeakerLeftID = 8;
+      public static final int blueAmpID = 9;
+      public static final int bluesourceRightID = 1;
+      public static final int blueSourceLeftID = 2;
+      public static final int blueTrapLeftID = 15;
+      public static final int blueTrapRightID = 16;
+      public static final int blueTrapCenterID = 14; 
+
+      public static final int redSpeakerCenterID = 4;
+      public static final int redSpeakerRightID = 3;
+      public static final int redAmpID = 5;
+      public static final int redSourceRightID = 9;
+      public static final int redSourceLeftID = 10;
+      public static final int redTrapLeftID = 11;
+      public static final int redTrapRightID = 12;
+      public static final int redTrapCenterID = 13;
   }
   /* =================
    *   Swerve Module

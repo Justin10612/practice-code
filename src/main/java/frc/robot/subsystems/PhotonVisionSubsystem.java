@@ -11,110 +11,98 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.AimConstants;
+import frc.robot.Constants.VisionConstants;
 
 public class PhotonVisionSubsystem extends SubsystemBase {
   /** Creates a new Visionsubsystem. */
-  private final PhotonCamera photonLimelight;
+  private final PhotonCamera photonVision;
   private PhotonPipelineResult result;
   private PhotonTrackedTarget target;
-  private boolean hasTarget;
+  private int targetID;
 
   private final PIDController yMovePID;
   private final PIDController xMovePID;
-  private final PIDController turnPID;
-
-  private final Optional<Alliance> alliance;
-
-  private double yMovePIDOutput, xMovePIDOutput, turnPIDOutput;
-
+  private final PIDController turnPID;  
+  
   private final double maxXMovepPIDOutput = 0.3; 
   private final double maxYMovePIDOutput = 0.3;
   private final double maxTurnPIDOutput = 0.5;
 
-  private double botXValue;
-  private double botYValue;
-  private double botZValue;
-  private double xSetpoint;
-  private double ySetpoint;
-  private double zSetpoint;
-  private int targetID;
-
   public PhotonVisionSubsystem() {
     // Camera
-    photonLimelight = new PhotonCamera("Microsoft_LifeCam_HD-3000");
-
-    yMovePID = new PIDController(0.005, 0, 0);
-    xMovePID = new PIDController(0.0030, 0, 0);
-    turnPID = new PIDController(0.005, 0, 0);
-
-    alliance = DriverStation.getAlliance();
-  }
-  public void getSetpoint(double[] setpoint){
-    xSetpoint = setpoint[0];
-    ySetpoint = setpoint[1];
-    zSetpoint = setpoint[2];
+    photonVision = new PhotonCamera("Microsoft_LifeCam_HD-3000");
+    
+    xMovePID = new PIDController(VisionConstants.XmoveKp, VisionConstants.XmoveKi, VisionConstants.XmoveKd);
+    yMovePID = new PIDController(VisionConstants.YmoveKp, VisionConstants.YmoveKi, VisionConstants.YmoveKd);
+    turnPID = new PIDController(VisionConstants.ZRotationKp, VisionConstants.ZRotationKi, VisionConstants.ZRotationKd);
   }
 
-  public double getXSpeed(){
-    return xMovePIDOutput;
+  public int getTargetID(){
+    return targetID;
   }
 
-  public double getYSpeed(){
-    return yMovePIDOutput;
+  public Transform3d getTargetPose(){
+   return target.getBestCameraToTarget();
   }
 
-  public double getTurnSpeed(){
-    return turnPIDOutput;
+  /**
+   * @param xSetpoint 
+   * @param ySetpoint
+   * @param zSetpoint
+   * @return [xMovePIDOutput, yMovePIDOutput, zTurnPIDOutput]
+   */
+  public double[] AimingTargetPID(double xSetpoint, double ySetpoint, double zSetpoint){
+    double[] output = {0, 0, 0};
+    // PID calculation
+    if(hasTarget()){
+      // Get Measurement
+      double botXValue = getTargetPose().getX();
+      double botYValue = getTargetPose().getY();
+      double botZValue = getTargetPose().getRotation().getAngle();
+      // PID calculation
+      double xMovePIDOutput = xMovePID.calculate(botXValue, xSetpoint);
+      double yMovePIDOutput = yMovePID.calculate(botYValue, ySetpoint);
+      double zTurnPIDOutput = -turnPID.calculate(botZValue, zSetpoint);
+      // Bounded Output
+      output[0] = Constants.setMaxOutput(xMovePIDOutput, maxXMovepPIDOutput);
+      output[1] = Constants.setMaxOutput(yMovePIDOutput, maxYMovePIDOutput);
+      output[2] = Constants.setMaxOutput(zTurnPIDOutput, maxTurnPIDOutput);
+      // Print Output
+      SmartDashboard.putNumber("X_AimPid", output[0]);
+      SmartDashboard.putNumber("Y_AimPid", output[1]);
+      SmartDashboard.putNumber("Z_AimPid", output[2]);
+      return output;
+    }else{
+      return output;
+    }
   }
+
+  public boolean hasTarget(){
+    return result.hasTargets();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    result = photonLimelight.getLatestResult();
+    result = photonVision.getLatestResult();
     target = result.getBestTarget();
-    hasTarget = result.hasTargets();
+    targetID = target.getFiducialId();
 
-    if(hasTarget){
-      botXValue = result.getBestTarget().getBestCameraToTarget().getX();
-      botYValue = result.getBestTarget().getBestCameraToTarget().getY();
-      botZValue = result.getBestTarget().getBestCameraToTarget().getRotation().getAngle();
-      targetID = target.getFiducialId();
+    if(hasTarget()){
+      SmartDashboard.putBoolean("HasTarget", hasTarget());
+      SmartDashboard.putNumber("targetID", targetID);
+      SmartDashboard.putNumber("TargetX", getTargetPose().getX());
+      SmartDashboard.putNumber("TargetY", getTargetPose().getY());
+      SmartDashboard.putNumber("TargetZ", getTargetPose().getRotation().getZ());
+    }else{
+      SmartDashboard.putBoolean("HasTarget", false);
     }
-    else{
-      botXValue = xSetpoint;
-      botYValue = ySetpoint;
-      botZValue = zSetpoint;
-      targetID = 0;
-    }
-
-    if(alliance.get() == DriverStation.Alliance.Red){
-      getSetpoint(AimConstants.redModeSelect(targetID));
-    }
-    else{
-      getSetpoint(AimConstants.blueModeSelect(targetID));
-    }
-
-    yMovePIDOutput = yMovePID.calculate(botXValue, xSetpoint);
-    xMovePIDOutput = xMovePID.calculate(botYValue, ySetpoint);
-    turnPIDOutput = -turnPID.calculate(botZValue, zSetpoint);
-
-    xMovePIDOutput = Constants.setMaxOutput(xMovePIDOutput, maxXMovepPIDOutput);
-    yMovePIDOutput = Constants.setMaxOutput(yMovePIDOutput, maxYMovePIDOutput);
-    turnPIDOutput = Constants.setMaxOutput(turnPIDOutput, maxTurnPIDOutput);
-   
-    SmartDashboard.putNumber("photonZ", botZValue);
-    SmartDashboard.putNumber("photonY", botYValue);
-    SmartDashboard.putNumber("photonX", botXValue);
-    SmartDashboard.putNumber("targetID", targetID);
-
-    SmartDashboard.putNumber("xMovePIDOutput", xMovePIDOutput);
-    SmartDashboard.putNumber("yMovePIDOutput", yMovePIDOutput);
-    SmartDashboard.putNumber("turn", turnPIDOutput);
   }
 }
