@@ -6,18 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
-import java.util.function.DoubleSupplier;
 
-public class ClimbCommand extends Command {
-  /** Creates a new ClimbCommand. */
+public class ClimbBackCommand extends Command {
+  /** Creates a new ClimbBackCommand. */
   private final ClimbSubsystem m_climbSubsystem;
-  private final DoubleSupplier m_leftFunc;
-  private final DoubleSupplier m_rightFunc;
-
-  public ClimbCommand(ClimbSubsystem climbSubsystem, DoubleSupplier leftFunc, DoubleSupplier rightFunc) {
+  public ClimbBackCommand(ClimbSubsystem climbSubsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
     this.m_climbSubsystem = climbSubsystem;
-    this.m_leftFunc= leftFunc;
-    this.m_rightFunc = rightFunc;
     addRequirements(m_climbSubsystem);
   }
 
@@ -28,13 +23,8 @@ public class ClimbCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Inputs
-    double leftInputVal = m_leftFunc.getAsDouble();
-    double rightInputVal = m_rightFunc.getAsDouble();
-    // Output
-    // 如果這裡加負號，是不是代表Subsystem那邊要SetInverted?
-    m_climbSubsystem.setRightMotor(rightInputVal*-0.8);
-    m_climbSubsystem.setLeftMotor(leftInputVal*-0.8);
+    m_climbSubsystem.rightClimbBack();
+    m_climbSubsystem.leftClimbBack();
   }
 
   // Called once the command ends or is interrupted.

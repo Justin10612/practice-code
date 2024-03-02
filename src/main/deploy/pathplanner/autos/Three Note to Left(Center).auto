@@ -14,25 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hit(Center)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "BaseStop"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "ClimbUp"
           }
         },
         {
@@ -44,25 +32,49 @@
         {
           "type": "named",
           "data": {
-            "name": "IntakeOut"
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Take"
+            "pathName": "Center Note Take(Center)"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Shoot"
+            "pathName": "Center Note Shoot(Center)"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
           }
         },
         {
@@ -74,25 +86,31 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Note Take(Center)"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "IntakeOut"
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Note Shoot"
+            "pathName": "Left Note Shoot(Center)"
           }
         },
         {
@@ -104,37 +122,13 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteIn"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Note Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
+            "waitTime": 0.3
           }
         },
         {
@@ -146,43 +140,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Left First Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Cener Left First Note Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteShoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         },
         {

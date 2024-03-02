@@ -41,8 +41,8 @@ public class IntakeSubsystem extends SubsystemBase {
     intakPivotCancoder = new CANcoder(IntakeConstants.kIntakePivotCancoderID);
     intakePivotCancoderCofig = new CANcoderConfiguration();
     // Motor Controllers
-    intakeMotor = new CANSparkMax(IntakeConstants.kIntakePivotMotorID, MotorType.kBrushless);
-    intakePivotMotor = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
+    intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
+    intakePivotMotor = new CANSparkMax(IntakeConstants.kIntakePivotMotorID, MotorType.kBrushless);
     //Relative Encoder
     intakePivotEncoder = intakePivotMotor.getEncoder();
     

@@ -18,15 +18,21 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Hit(Center)"
+            "name": "ClimbUp"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.8
           }
         },
         {
@@ -44,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Take"
+            "pathName": "Center Note Take(Center)"
           }
         },
         {
@@ -56,7 +62,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Shoot"
+            "pathName": "Center Note Shoot(Center)"
           }
         },
         {
@@ -80,13 +86,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Note Take"
+            "pathName": "Right Note Take(Center)"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Note Shoot"
+            "pathName": "Right Note Shoot(Center)"
           }
         },
         {

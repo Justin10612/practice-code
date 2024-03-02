@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -40,12 +41,12 @@ public final class Constants {
     public static final double kIntakingAngle = -110;
     public static final double kIntakeIdleAngle = 12;
     //Motor ID
-    public static final int kIntakePivotMotorID = 13;
-    public static final int kIntakeMotorID = 27;
+    public static final int kIntakePivotMotorID = 27;
+    public static final int kIntakeMotorID = 32;
     // Motor Setting 
     public static final double kPivotMaxOutput = 0.12;
-    public static final double kIntakingMotorVoltage = 5;
-    public static final double kEjectingMotorVoltage = -6;
+    public static final double kIntakingMotorVoltage = 6.5;
+    public static final double kEjectingMotorVoltage = -6.5;
   }
 
   public static final class ShooterConstants{
@@ -53,12 +54,12 @@ public final class Constants {
     public static final int kShooterMotorID = 33;
     public static final int kIndexerMotorID = 13;
     //IR ID
-    public static final int kLimitSwitchPort = 4;
+    public static final int kLimitSwitchPort = 0;
     //Motor Setting
     public static final double shooterSpeakerVoltageSetpoint = 9.6;
-    public static final double shooterAMP_VoltageSetpoint = 3;
+    public static final double shooterAMP_VoltageSetpoint = 4;
     public static final double shooterSpeakerRPMSetpoint = 4000;
-    public static final double shooterAMP_RPMSetpoint = 1000;
+    public static final double shooterAMP_RPMSetpoint = 1500;
   }
 
   public static final class ClimbConstants{
@@ -66,8 +67,8 @@ public final class Constants {
     public static final int kClimbRightMotorID = 31;
     public static final int kClimbLeftMotorID = 8;
     //limitSwitch Port
-    public static final int kRightLimitSwitchPort = 1;
-    public static final int kLeftLimitSwitchPort = 2;
+    public static final int kRightLimitSwitchPort = 2;
+    public static final int kLeftLimitSwitchPort = 1;
   }
 
   public static final class AimConstants{
@@ -134,20 +135,20 @@ public final class Constants {
     public static final double turningMotorkP = 0.015;
     public static final double maxDriveMotorSpeed = 4.5;
   }
-
+  
   public static final class SwerveConstants{
     public static final int leftFrontDriveID = 19;
     public static final int leftFrontTurningID = 17;
-    public static final int rightFrontDriveID = 11;
-    public static final int rightFrontTurningID = 24;  
+    public static final int rightFrontDriveID = 29;
+    public static final int rightFrontTurningID = 21;  
     public static final int leftRearDriveID = 15;
     public static final int leftRearTurningID = 22;
     public static final int rightRearDriveID = 16;
     public static final int rightRearTurningID = 26;
 
-    public static final int leftFrontCANCoderID = 44;
+    public static final int leftFrontCANCoderID = 42;
     public static final int rightFrontCANCoderID = 43;
-    public static final int leftRearCANCoderID = 42;
+    public static final int leftRearCANCoderID = 44;
     public static final int rightRearCANCoderID = 41;
 
     public static final boolean leftFrontdriveMotorReversed = true;
@@ -159,10 +160,10 @@ public final class Constants {
     public static final boolean rightRearDriveMotorReversed = false;
     public static final boolean rightRearTurningMotorReversed = true;
 
-    public static final double leftFrontOffset = 0.129;
-    public static final double rightFrontOffset = -0.355;
-    public static final double leftRearOffset = -0.345;
-    public static final double rightRearOffset = 0.185;
+    public static final double leftFrontOffset = -0.11;
+    public static final double rightFrontOffset = -0.34;
+    public static final double leftRearOffset = -0.13;
+    public static final double rightRearOffset = 0.19;
     
     public static double joysickValue(double value, double mineOutput){
       if(Math.abs(value) < mineOutput){

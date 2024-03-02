@@ -75,54 +75,87 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setRightMotor(double value){//152
-    // if(climbRightPosition >= 139){
-    //   if(value > 0){
-    //     climbRightMotor.setVoltage(0);
-    //   }
-    //   else{
-    //     climbRightMotor.setVoltage(value*12);
-    //   }
-    // }
-    // else if(climbRightLimitSwitch.get()){
-    //   if(value < 0){
-    //     climbRightMotor.setVoltage(0);
-    //   }
-    //   else{
-    //     climbRightMotor.setVoltage(value*12);
-    //   }
-    // }
-    // else{
-    //   climbRightMotor.setVoltage(value*12);
-    // }
-    climbRightMotor.setVoltage(value*12);
+    if(getRightPosition() >= 112){
+      if(value > 0){
+        climbRightMotor.setVoltage(0);
+      }
+      else{
+        climbRightMotor.setVoltage(value*12);
+      }
+    }
+    else if(getRightLimitState()){
+      if(value < 0){
+        climbRightMotor.setVoltage(0);
+      }
+      else{
+        climbRightMotor.setVoltage(value*12);
+      }
+    }
+    else{
+      climbRightMotor.setVoltage(value*12);
+    }
   }
 
   public void setLeftMotor(double value){
-    // if(climbLeftPosition >= 152){
-    //   if(value > 0){
-    //     climbLeftMotor.setVoltage(0);
-    //   }
-    //   else{
-    //     climbLeftMotor.setVoltage(value*12);
-    //   }
-    // }
-    // else if(climbLeftLimitSwitch.get()){
-    //   if(value < 0){
-    //     climbLeftMotor.setVoltage(0);
-    //   }
-    //   else{
-    //     climbLeftMotor.setVoltage(value*12);
-    //   }
-    // }
-    // else{
-    //   climbLeftMotor.setVoltage(value*12);
-    // }
-    climbLeftMotor.setVoltage(value*12);
+    if(getLeftPosition() >= 104){
+      if(value > 0){
+        climbLeftMotor.setVoltage(0);
+      }
+      else{
+        climbLeftMotor.setVoltage(value*12);
+      }
+    }
+    else if(getLeftLimitState()){
+      if(value < 0){
+        climbLeftMotor.setVoltage(0);
+      }
+      else{
+        climbLeftMotor.setVoltage(value*12);
+      }
+    }
+    else{
+      climbLeftMotor.setVoltage(value*12);
+    }
   }
 
   public void StopMotors(){
     climbLeftMotor.setVoltage(0);
     climbRightMotor.setVoltage(0);
+  }
+
+  public void leftClimbOut(){
+    if(getLeftPosition() <= 50){
+      climbLeftMotor.setVoltage(9.6);
+    }
+    else{
+      climbLeftMotor.setVoltage(0);
+    }
+  }
+
+  public void rightClimbOut(){
+    if(getRightPosition() <= 50){
+      climbRightMotor.setVoltage(9.6);
+    }
+    else{
+      climbRightMotor.setVoltage(0);
+    }
+  }
+
+  public void leftClimbBack(){
+    if(getLeftLimitState()){
+      climbLeftMotor.setVoltage(0);
+    }
+    else{
+      climbLeftMotor.setVoltage(-9.6);
+    }
+  }
+  public void rightClimbBack(){
+    if(getRightLimitState()){
+      climbRightMotor.setVoltage(0);
+    }
+    else{
+      climbRightMotor.setVoltage(-9.6);
+    }
   }
 
   @Override

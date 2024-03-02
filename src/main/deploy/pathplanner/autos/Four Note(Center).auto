@@ -14,13 +14,49 @@
         {
           "type": "named",
           "data": {
+            "name": "ClimbUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShooterTurn"
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.8
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Hit(Center)"
+            "pathName": "Center Note Take(Center)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Note Shoot(Center)"
           }
         },
         {
@@ -44,13 +80,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Take"
+            "pathName": "Left Note Take(Center)"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Shoot"
+            "pathName": "Left Note Shoot(Center)"
           }
         },
         {
@@ -72,15 +108,21 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Left Note Take"
+            "name": "IntakeOut"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Note Shoot"
+            "pathName": "Right Note Take(Center)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Note Shoot(Center)"
           }
         },
         {
@@ -102,33 +144,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Center Left First Note Take"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Cener Left First Note Shoot"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteShoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "AllStop"
           }
         }
       ]
