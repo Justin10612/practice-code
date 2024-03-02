@@ -7,27 +7,24 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
   /* Robot Parameters */
   public static final double robotLength = Units.inchesToMeters(25.5);
   public static final double robotWidth = Units.inchesToMeters(25.5);
-
+  /* ============
+   *   Joystick
+   * ============
+   */
   public static class OperatorConstants {
     public static final int kDriverJoystickPort = 0;
     public static final int kOperatorJoystickPort = 1;
     public static final double kJoystickDeadBand = 0.1;
   }
-
+  /* ==========
+   *   Intake
+   * ==========
+   */
   public static final class IntakeConstants{
     //CanCoder ID
     public static final int kIntakePivotCancoderID = 45;
@@ -44,7 +41,10 @@ public final class Constants {
     public static final double kIntakingMotorVoltage = 6.5;
     public static final double kEjectingMotorVoltage = -6.5;
   }
-
+  /* ===========
+   *   Shooter
+   * ===========
+   */
   public static final class ShooterConstants{
     //Motor ID
     public static final int kShooterMotorID = 33;
@@ -57,7 +57,10 @@ public final class Constants {
     public static final double shooterSpeakerRPMSetpoint = 4000;
     public static final double shooterAMP_RPMSetpoint = 1500;
   }
-
+  /* ===========
+   *   Climber
+   * ===========
+   */
   public static final class ClimbConstants{
     //Motor ID
     public static final int kClimbRightMotorID = 31;
@@ -66,7 +69,10 @@ public final class Constants {
     public static final int kRightLimitSwitchPort = 2;
     public static final int kLeftLimitSwitchPort = 1;
   }
-
+  /* ==========
+   *   Vision
+   * ==========
+   */
   public static final class AimConstants{
     public static final int blueSpeakerCenterID = 7;
     public static final int blueSpeakerLeftID = 8;
@@ -118,7 +124,10 @@ public final class Constants {
       return setpoint;
     }
   }
-
+  /* =================
+   *   Swerve Module
+   * =================
+   */
   public static final class SwerveModuleConstants{
     public static final double wheelDiameter = Units.inchesToMeters(4);
     public static final double driveMotorGearRatio = 1/6.75;
@@ -170,9 +179,9 @@ public final class Constants {
       new Translation2d(-robotLength/2, -robotWidth/2)
     );
   }
-  /* =========
-   * Functions
-   * =========
+  /* =============
+   *   Functions
+   * =============
   */
   public static double DeadBandLimit(double input, double deadBand){
     return Math.abs(input)>deadBand ? input : 0;
