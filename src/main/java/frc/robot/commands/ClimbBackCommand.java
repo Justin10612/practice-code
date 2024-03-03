@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
 
 public class ClimbBackCommand extends Command {
-  /** Creates a new ClimbBackCommand. */
   private final ClimbSubsystem m_climbSubsystem;
+  /** Creates a new ClimbBackCommand. */
   public ClimbBackCommand(ClimbSubsystem climbSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_climbSubsystem = climbSubsystem;

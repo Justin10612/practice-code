@@ -78,20 +78,16 @@ public class ClimbSubsystem extends SubsystemBase {
     if(getRightPosition() >= 112){
       if(value > 0){
         climbRightMotor.setVoltage(0);
-      }
-      else{
+      }else{
         climbRightMotor.setVoltage(value*12);
       }
-    }
-    else if(getRightLimitState()){
+    }else if(getRightLimitState()){
       if(value < 0){
         climbRightMotor.setVoltage(0);
-      }
-      else{
+      }else{
         climbRightMotor.setVoltage(value*12);
       }
-    }
-    else{
+    }else{
       climbRightMotor.setVoltage(value*12);
     }
   }
@@ -100,20 +96,17 @@ public class ClimbSubsystem extends SubsystemBase {
     if(getLeftPosition() >= 104){
       if(value > 0){
         climbLeftMotor.setVoltage(0);
-      }
-      else{
+      }else{
         climbLeftMotor.setVoltage(value*12);
       }
     }
     else if(getLeftLimitState()){
       if(value < 0){
         climbLeftMotor.setVoltage(0);
-      }
-      else{
+      }else{
         climbLeftMotor.setVoltage(value*12);
       }
-    }
-    else{
+    }else{
       climbLeftMotor.setVoltage(value*12);
     }
   }
@@ -126,8 +119,7 @@ public class ClimbSubsystem extends SubsystemBase {
   public void leftClimbOut(){
     if(getLeftPosition() <= 50){
       climbLeftMotor.setVoltage(9.6);
-    }
-    else{
+    }else{
       climbLeftMotor.setVoltage(0);
     }
   }
@@ -135,8 +127,7 @@ public class ClimbSubsystem extends SubsystemBase {
   public void rightClimbOut(){
     if(getRightPosition() <= 50){
       climbRightMotor.setVoltage(9.6);
-    }
-    else{
+    }else{
       climbRightMotor.setVoltage(0);
     }
   }
@@ -144,16 +135,14 @@ public class ClimbSubsystem extends SubsystemBase {
   public void leftClimbBack(){
     if(getLeftLimitState()){
       climbLeftMotor.setVoltage(0);
-    }
-    else{
+    }else{
       climbLeftMotor.setVoltage(-9.6);
     }
   }
   public void rightClimbBack(){
     if(getRightLimitState()){
       climbRightMotor.setVoltage(0);
-    }
-    else{
+    }else{
       climbRightMotor.setVoltage(-9.6);
     }
   }

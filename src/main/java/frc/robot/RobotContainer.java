@@ -17,18 +17,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AimAMPCommand;
-import frc.robot.commands.AimNoteCommand;
+import frc.robot.commands.AimAMP;
+import frc.robot.commands.AimNote;
 import frc.robot.commands.ClimbBackCommand;
-import frc.robot.commands.ClimbCommand;
-import frc.robot.commands.ClimbOutCommand;
+import frc.robot.commands.ClimbManually;
+import frc.robot.commands.ClimberUp;
 import frc.robot.commands.EjectNoteIdlePose;
 import frc.robot.commands.EjectNoteIntakePose;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ManualDriveCommand;
-import frc.robot.commands.NoteBackCommand;
+import frc.robot.commands.ManualDrive;
+import frc.robot.commands.ShooterEjectNote;
 import frc.robot.commands.ShooterPrepForAMP;
-import frc.robot.commands.FeedNote;
+import frc.robot.commands.ShooterFeedNote;
 import frc.robot.commands.ShooterPrepForSPEAKER;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -63,9 +63,9 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("NoteIn", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem).withTimeout(2));
 
-    NamedCommands.registerCommand("NoteShoot", new FeedNote(m_shooterSubsystem).withTimeout(1));
+    NamedCommands.registerCommand("NoteShoot", new ShooterFeedNote(m_shooterSubsystem).withTimeout(1));
 
-    NamedCommands.registerCommand("ClimbUp", new ClimbOutCommand(m_climbSubsystem).withTimeout(0.5));
+    NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_climbSubsystem).withTimeout(0.5));
 
     NamedCommands.registerCommand("IntakeOut", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
 
@@ -80,26 +80,34 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    /* Driver Part */
+    /* ============
+     *    Driver 
+     * ============
+    */
     /* Manual Drive */
     DoubleSupplier xSpeedFunc = () -> DriverJoystick.getRawAxis(1);
     DoubleSupplier ySpeedFunc = () -> DriverJoystick.getRawAxis(0);
     DoubleSupplier zSppedFunc = () -> DriverJoystick.getRawAxis(4);
     BooleanSupplier isSlowModeFunc = () -> DriverJoystick.rightBumper().getAsBoolean();
-    m_swerveSubsystem.setDefaultCommand(new ManualDriveCommand(m_swerveSubsystem, xSpeedFunc, ySpeedFunc, zSppedFunc, isSlowModeFunc));
+    m_swerveSubsystem.setDefaultCommand(new ManualDrive(m_swerveSubsystem, xSpeedFunc, ySpeedFunc, zSppedFunc, isSlowModeFunc));
     /* Reset Gyro */
     DriverJoystick.b().onTrue(
       Commands.runOnce(()->{
         m_swerveSubsystem.resetGyro();
     }));
-    /* Aim Note */
-    DriverJoystick.rightTrigger(0.4).whileTrue(new AimNoteCommand(m_limeLightSubsystem, m_swerveSubsystem, xSpeedFunc, isSlowModeFunc));
-    DriverJoystick.leftTrigger(0.4).whileTrue(new AimAMPCommand(m_photonVisionSubsystem, m_swerveSubsystem));
-    /* Operator */
+    /* Aiming Note */
+    DriverJoystick.rightTrigger(0.4).whileTrue(new AimNote(m_limeLightSubsystem, m_swerveSubsystem, xSpeedFunc, isSlowModeFunc));
+    /* Aiming Amp */
+    DriverJoystick.leftTrigger(0.4).whileTrue(new AimAMP(m_photonVisionSubsystem, m_swerveSubsystem));
+
+    /* ===========
+     *   Operator 
+     * ===========
+    */
     /* Climb */
     DoubleSupplier lInputFunc = () -> OperatorJoystick.getLeftY();
     DoubleSupplier rInputFunc = () -> OperatorJoystick.getRightY();
-    OperatorJoystick.leftBumper().whileTrue(new ClimbCommand(m_climbSubsystem, lInputFunc, rInputFunc));
+    OperatorJoystick.leftBumper().whileTrue(new ClimbManually(m_climbSubsystem, lInputFunc, rInputFunc));
     /* Intake Note */
     OperatorJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
     /* Eject Note when Intake is at down position. */
@@ -107,9 +115,9 @@ public class RobotContainer {
     /* Eject Note when Intake is at idle position. */
     OperatorJoystick.b().whileTrue(new EjectNoteIdlePose(m_intakeSubsystem, m_shooterSubsystem));
     /* Move Note backward */
-    OperatorJoystick.y().whileTrue(new NoteBackCommand(m_shooterSubsystem));
+    OperatorJoystick.y().whileTrue(new ShooterEjectNote(m_shooterSubsystem));
     /* Feed Note */
-    OperatorJoystick.rightBumper().whileTrue(new FeedNote(m_shooterSubsystem));
+    OperatorJoystick.rightBumper().whileTrue(new ShooterFeedNote(m_shooterSubsystem));
     /* Spin Shooter for Speaker */
     OperatorJoystick.rightTrigger(0.4).whileTrue(new ShooterPrepForSPEAKER(m_shooterSubsystem));
     /* Spin Shooter for AMP */

@@ -5,34 +5,43 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.PhotonVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class AimAMPCommand extends Command {
+public class AimAMP extends Command {
   /** Creates a new AimAMPCommand. */
   private final PhotonVisionSubsystem m_photonVisionSuubsystem;
   private final SwerveSubsystem m_swerveSubsystem;
-  public AimAMPCommand(PhotonVisionSubsystem photonVisionSubsystem, SwerveSubsystem swerveSubsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
+
+  public AimAMP(PhotonVisionSubsystem photonVisionSubsystem, SwerveSubsystem swerveSubsystem) {
     this.m_photonVisionSuubsystem = photonVisionSubsystem;
     this.m_swerveSubsystem = swerveSubsystem;
     addRequirements(m_photonVisionSuubsystem, m_swerveSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = m_photonVisionSuubsystem.getXSpeed();
-    double ySpeed = m_photonVisionSuubsystem.getYSpeed();
-    double zSpeed = m_photonVisionSuubsystem.getTurnSpeed();
-    m_swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, false);
+    if(m_photonVisionSuubsystem.hasTarget()){
+      // Get Setpoint
+      double[] targetSetpoint = VisionConstants.getTargetSetpoint(m_photonVisionSuubsystem.getTargetID());    
+      // Aiming Calculation
+      double[] driveOutput = m_photonVisionSuubsystem.AimingTargetPID(
+        targetSetpoint[0],
+        targetSetpoint[1], 
+        targetSetpoint[2]);
+      // Move Drivebase
+      m_swerveSubsystem.drive(driveOutput[0], driveOutput[1], driveOutput[2], false);
+    }else{
+      // LED blinking or Something...
+      m_swerveSubsystem.drive(0, 0, 0, false);
+    }
+    
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 

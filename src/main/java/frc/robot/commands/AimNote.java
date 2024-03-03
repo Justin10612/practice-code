@@ -14,7 +14,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class AimNoteCommand extends Command {
+public class AimNote extends Command {
   /** Creates a new AimNoteCommand. */
   private final LimeLightSubsystem m_limeLightSubsystem;
   private final SwerveSubsystem m_swerveSubsystem;
@@ -23,7 +23,7 @@ public class AimNoteCommand extends Command {
   private BooleanSupplier isSlowModeFunc;
   // Slew rate limiter
   private final SlewRateLimiter xLimiter;
-  public AimNoteCommand(LimeLightSubsystem limeLightSubsystem, SwerveSubsystem swerveSubsystem, DoubleSupplier xSpeed, BooleanSupplier isSlowMode) {
+  public AimNote(LimeLightSubsystem limeLightSubsystem, SwerveSubsystem swerveSubsystem, DoubleSupplier xSpeed, BooleanSupplier isSlowMode) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_limeLightSubsystem = limeLightSubsystem;
     this.m_swerveSubsystem = swerveSubsystem;

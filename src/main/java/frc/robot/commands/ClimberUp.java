@@ -7,10 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
 
-public class ClimbOutCommand extends Command {
+public class ClimberUp extends Command {
   /** Creates a new ClimUpCommand. */
   private final ClimbSubsystem m_climbSubsystem;
-  public ClimbOutCommand(ClimbSubsystem climbSubsystem) {
+  public ClimberUp(ClimbSubsystem climbSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_climbSubsystem = climbSubsystem;
     addRequirements(m_climbSubsystem);

@@ -12,7 +12,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-public class ManualDriveCommand extends Command {
+public class ManualDrive extends Command {
   /** Creates a new ManualDriveCommand. */
   private final SwerveSubsystem m_swerveSubsystem;
   // Inputs
@@ -25,7 +25,7 @@ public class ManualDriveCommand extends Command {
   private final SlewRateLimiter yLimiter;
   private final SlewRateLimiter zLimiter;
 
-  public ManualDriveCommand(SwerveSubsystem swerveSubsystem, DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed, BooleanSupplier isSlowMode) {
+  public ManualDrive(SwerveSubsystem swerveSubsystem, DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed, BooleanSupplier isSlowMode) {
     this.m_swerveSubsystem = swerveSubsystem;
     this.xSpeedFunc = xSpeed;
     this.ySpeedFunc = ySpeed;
@@ -54,8 +54,7 @@ public class ManualDriveCommand extends Command {
       xSpeed = xSpeed*0.4;
       ySpeed = ySpeed*0.4;
       zSpeed = zSpeed*0.4;
-    }
-    else{
+    }else{
       xSpeed = xSpeed*1;
       ySpeed = ySpeed*1;
       zSpeed = zSpeed*1;

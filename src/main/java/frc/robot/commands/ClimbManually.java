@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
 import java.util.function.DoubleSupplier;
 
-public class ClimbCommand extends Command {
+public class ClimbManually extends Command {
   /** Creates a new ClimbCommand. */
   private final ClimbSubsystem m_climbSubsystem;
   private final DoubleSupplier m_leftFunc;
   private final DoubleSupplier m_rightFunc;
 
-  public ClimbCommand(ClimbSubsystem climbSubsystem, DoubleSupplier leftFunc, DoubleSupplier rightFunc) {
+  public ClimbManually(ClimbSubsystem climbSubsystem, DoubleSupplier leftFunc, DoubleSupplier rightFunc) {
     this.m_climbSubsystem = climbSubsystem;
     this.m_leftFunc= leftFunc;
     this.m_rightFunc = rightFunc;

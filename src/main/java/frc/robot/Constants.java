@@ -7,31 +7,24 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
-  public static double DeadBandLimit(double input, double deadBand){
-    return Math.abs(input)>deadBand ? input : 0;
-  }
+  /* Robot Parameters */
+  public static final double robotLength = Units.inchesToMeters(25.5);
+  public static final double robotWidth = Units.inchesToMeters(25.5);
+  /* ============
+   *   Joystick
+   * ============
+   */
   public static class OperatorConstants {
     public static final int kDriverJoystickPort = 0;
     public static final int kOperatorJoystickPort = 1;
     public static final double kJoystickDeadBand = 0.1;
   }
-  public static final double robotLength = Units.inchesToMeters(25.5);
-  public static final double robotWidth = Units.inchesToMeters(25.5);
-
-  public static double setMaxOutput(double value, double maxOutput){
-    return Math.min(maxOutput, Math.max(value, -maxOutput));
-  }
+  /* ==========
+   *   Intake
+   * ==========
+   */
   public static final class IntakeConstants{
     //CanCoder ID
     public static final int kIntakePivotCancoderID = 45;
@@ -48,7 +41,10 @@ public final class Constants {
     public static final double kIntakingMotorVoltage = 6.5;
     public static final double kEjectingMotorVoltage = -6.5;
   }
-
+  /* ===========
+   *   Shooter
+   * ===========
+   */
   public static final class ShooterConstants{
     //Motor ID
     public static final int kShooterMotorID = 33;
@@ -61,7 +57,10 @@ public final class Constants {
     public static final double shooterSpeakerRPMSetpoint = 4000;
     public static final double shooterAMP_RPMSetpoint = 1500;
   }
-
+  /* ===========
+   *   Climber
+   * ===========
+   */
   public static final class ClimbConstants{
     //Motor ID
     public static final int kClimbRightMotorID = 31;
@@ -70,60 +69,89 @@ public final class Constants {
     public static final int kRightLimitSwitchPort = 2;
     public static final int kLeftLimitSwitchPort = 1;
   }
+  /* =======
+   *   LED
+   * =======
+   */
+  public static final class LEDConstants{
+    public static final int kCANdleID = 46;
+  }
+  /* ==========
+   *   Vision
+   * ==========
+   */
+  public static final class VisionConstants{
+    // X Aiming PID
+    public static final double XmoveKp = 0.003; 
+    public static final double XmoveKi = 0;
+    public static final double XmoveKd = 0;
+    // Y Aiming PID
+    public static final double YmoveKp = 0.005;
+    public static final double YmoveKi = 0;
+    public static final double YmoveKd = 0;
+    // Z Aiming PID
+    public static final double ZRotationKp = 0.005;
+    public static final double ZRotationKi = 0;
+    public static final double ZRotationKd = 0;
+    // Target Setpoints
+    public static final double[] TRAP_Setpoint = {1, 0, 0};
+    public static final double[] AMP_Setpoint = {1, 0, 0};
 
-  public static final class AimConstants{
-    public static final int blueSpeakerCenterID = 7;
-    public static final int blueSpeakerLeftID = 8;
-    public static final int blueAMPID = 9;
-    public static final int bluesourceRightID = 1;
-    public static final int blueSourceLeftID = 2;
-    public static final int blueTrapLeftID = 15;
-    public static final int blueTrapRightID = 16;
-    public static final int blueTrapCenterID = 14; 
-
-    public static final int redSpeakerCenterID = 4;
-    public static final int redSpeakerRightID = 3;
-    public static final int redAMPID = 5;
-    public static final int redSourceRightID = 9;
-    public static final int redSourceLeftID = 10;
-    public static final int redTrapLeftID = 11;
-    public static final int redTrapRightID = 12;
-    public static final int redTrapCenterID = 13;
-
-    public static double[] redModeSelect(int targetID){
-      double[] setpoint;
+    public static double[] getTargetSetpoint(int targetID){
       switch (targetID) {
-        case redAMPID:
-          setpoint = new double[]{0, 0, 0, 0};
-          break;
-        case redTrapLeftID, redTrapCenterID, redTrapRightID:
-          setpoint = new double[]{0, 0, 0, 0}; 
-          break;
+        case AprilTagIDs.redAmpID:
+        case AprilTagIDs.blueAmpID:
+         return AMP_Setpoint;
+        case AprilTagIDs.redTrapLeftID:
+        case AprilTagIDs.redTrapCenterID:
+        case AprilTagIDs.redTrapRightID:
+        case AprilTagIDs.blueTrapLeftID:
+        case AprilTagIDs.blueTrapCenterID:
+        case AprilTagIDs.blueTrapRightID:
+           return TRAP_Setpoint;
         default:
-          setpoint = new double[]{0, 0, 0, 0};
-          break;
+          return TRAP_Setpoint;
       }
-      return setpoint;
     }
-
-    public static double[] blueModeSelect(int targetID){
-      double[] setpoint;
-      switch (targetID) {
-        case blueAMPID:
-          setpoint = new double[]{0, 0, 0, 0};
-          break;
-        case blueTrapLeftID, blueTrapCenterID, blueTrapRightID:
-          setpoint = new double[]{0, 0, 0, 0}; 
-          break;
-        default:
-          setpoint = new double[]{0, 0, 0, 0};
-          break;
-      }
-      return setpoint;
-    }
-
+  // public static double[] blueModeSelect(int targetID){
+  //   double[] setpoint;
+  //   switch (targetID) {
+  //     case AprilTagIDs.blueAMPID:
+  //       setpoint = new double[]{0, 0, 0, 0};
+  //       break;
+  //     case AprilTagIDs.blueTrapLeftID, AprilTagIDs.blueTrapCenterID, AprilTagIDs.blueTrapRightID:
+  //       setpoint = new double[]{0, 0, 0, 0}; 
+  //       break;
+  //     default:
+  //       setpoint = new double[]{0, 0, 0, 0};
+  //       break;
+  //   }
+  //   return setpoint;
   }
 
+  public static final class AprilTagIDs{
+      public static final int blueSpeakerCenterID = 7;
+      public static final int blueSpeakerLeftID = 8;
+      public static final int blueAmpID = 9;
+      public static final int bluesourceRightID = 1;
+      public static final int blueSourceLeftID = 2;
+      public static final int blueTrapLeftID = 15;
+      public static final int blueTrapRightID = 16;
+      public static final int blueTrapCenterID = 14; 
+
+      public static final int redSpeakerCenterID = 4;
+      public static final int redSpeakerRightID = 3;
+      public static final int redAmpID = 5;
+      public static final int redSourceRightID = 9;
+      public static final int redSourceLeftID = 10;
+      public static final int redTrapLeftID = 11;
+      public static final int redTrapRightID = 12;
+      public static final int redTrapCenterID = 13;
+  }
+  /* =================
+   *   Swerve Module
+   * =================
+   */
   public static final class SwerveModuleConstants{
     public static final double wheelDiameter = Units.inchesToMeters(4);
     public static final double driveMotorGearRatio = 1/6.75;
@@ -151,6 +179,8 @@ public final class Constants {
     public static final int leftRearCANCoderID = 44;
     public static final int rightRearCANCoderID = 41;
 
+    public static final int gyroID = 33;
+
     public static final boolean leftFrontdriveMotorReversed = true;
     public static final boolean leftFrontTurningMotorReversed = true;
     public static final boolean rightFrontDriveMotorReversed = true;
@@ -165,21 +195,23 @@ public final class Constants {
     public static final double leftRearOffset = -0.13;
     public static final double rightRearOffset = 0.19;
     
-    public static double joysickValue(double value, double mineOutput){
-      if(Math.abs(value) < mineOutput){
-        return 0;
-      }
-      else{
-        return value;
-      }
-    }
-    public static final int gyroID = 33;
     //front left, front right, rear left, rear right
     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
       new Translation2d(robotLength/2, robotWidth/2), 
       new Translation2d(robotLength/2, -robotWidth/2), 
       new Translation2d(-robotLength/2, robotWidth/2),
       new Translation2d(-robotLength/2, -robotWidth/2)
-  );
+    );
+  }
+  /* =============
+   *   Functions
+   * =============
+  */
+  public static double DeadBandLimit(double input, double deadBand){
+    return Math.abs(input)>deadBand ? input : 0;
+  }
+
+  public static double setMaxOutput(double value, double maxOutput){
+    return Math.min(maxOutput, Math.max(value, -maxOutput));
   }
 }
