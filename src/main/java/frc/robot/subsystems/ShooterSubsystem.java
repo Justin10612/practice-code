@@ -81,7 +81,7 @@ public class ShooterSubsystem extends SubsystemBase {
       Feeding();
     }else{
       StopIndexerMotor();
-      EnableShooter(Voltage_Setpoint, RPM_Setpoint);
+      EnableShooter(Voltage_Setpoint, RPM_Setpoint); //有需要寫句嗎
     }
   }
 
