@@ -79,7 +79,15 @@ public final class Constants {
    */
   public static final class LEDConstants{
     public static final int kCANdleID = 46;
-    public static final int kLedNum = 20;
+    public static final int kLedNum = 22;
+
+    public static final int[] kHaveNoteRGBValue = {255, 0, 0};
+    public static final int[] kIntakeTurningRGBValue = {20, 0, 0};
+    public static final int[] kPrepToAMP_RGBValue = {0, 0, 0};
+    public static final int[] kPrepToSpeakerRGBValue = {0, 0, 0};
+    public static final int[] kShootAMP_RGBValue = {0, 0, 0};
+    public static final int[] kShootSpeakerRGBValue = {0, 0, 0};
+    public static final int[] kDisableRGBValue = {0, 0, 0};
   }
   /* ==========
    *   Vision
@@ -87,15 +95,15 @@ public final class Constants {
    */
   public static final class VisionConstants{
     // X Aiming PID
-    public static final double XmoveKp = 0.003; 
+    public static final double XmoveKp = 0; 
     public static final double XmoveKi = 0;
     public static final double XmoveKd = 0;
     // Y Aiming PID
-    public static final double YmoveKp = 0.005;
+    public static final double YmoveKp = 0;
     public static final double YmoveKi = 0;
     public static final double YmoveKd = 0;
     // Z Aiming PID
-    public static final double ZRotationKp = 0.005;
+    public static final double ZRotationKp = 0;
     public static final double ZRotationKi = 0;
     public static final double ZRotationKd = 0;
     // Target Setpoints
@@ -118,20 +126,6 @@ public final class Constants {
           return TRAP_Setpoint;
       }
     }
-  // public static double[] blueModeSelect(int targetID){
-  //   double[] setpoint;
-  //   switch (targetID) {
-  //     case AprilTagIDs.blueAMPID:
-  //       setpoint = new double[]{0, 0, 0, 0};
-  //       break;
-  //     case AprilTagIDs.blueTrapLeftID, AprilTagIDs.blueTrapCenterID, AprilTagIDs.blueTrapRightID:
-  //       setpoint = new double[]{0, 0, 0, 0}; 
-  //       break;
-  //     default:
-  //       setpoint = new double[]{0, 0, 0, 0};
-  //       break;
-  //   }
-  //   return setpoint;
   }
 
   public static final class AprilTagIDs{

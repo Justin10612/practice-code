@@ -20,7 +20,7 @@ public class ShooterPrspForSpeake_Auto extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooterSubsystem.EnableShooter(ShooterConstants.shooterSpeakerVoltageSetpoint, ShooterConstants.shooterSpeakerRPMSetpoint);
+    m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterSpeakerVoltageSetpoint, ShooterConstants.kShooterSpeakerRPMSetpoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
