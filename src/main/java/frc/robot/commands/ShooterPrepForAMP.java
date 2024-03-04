@@ -21,7 +21,7 @@ public class ShooterPrepForAMP extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooterSubsystem.EnableShooter(ShooterConstants.shooterAMP_VoltageSetpoint, ShooterConstants.shooterAMP_RPMSetpoint);
+    m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

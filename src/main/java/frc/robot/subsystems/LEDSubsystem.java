@@ -4,21 +4,29 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.StrobeAnimation;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.CANdle.VBatOutputMode;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDConstants;
+
 public class LEDSubsystem extends SubsystemBase {
   /** Creates a new LEDSubsystem. */
   private final CANdle candle;
   private final CANdleConfiguration candleConfig;
+  private final int ledNum = LEDConstants.kLedNum;
+
+  private Animation m_toAnimate = null;
+
   public LEDSubsystem() {
     candle = new CANdle(LEDConstants.kCANdleID);
     candleConfig = new CANdleConfiguration();
-
+    candleConfig.stripType = LEDStripType.GRB;
+    candleConfig.statusLedOffWhenActive = true;
+    candleConfig.disableWhenLOS = false;
     candleConfig.vBatOutputMode = VBatOutputMode.Modulated;
     candle.configAllSettings(candleConfig);
   }

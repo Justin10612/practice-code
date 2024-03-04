@@ -24,7 +24,7 @@ public class ShooterFeedNote extends Command {
   @Override
   public void execute() {
     // 把它放在這，因為他需要時時監看是否到達目標轉速。
-    m_ShooterSubsystem.Shoot();
+    m_ShooterSubsystem.FeedWhenReady();
   }
 
   // Called once the command ends or is interrupted.

@@ -46,16 +46,20 @@ public final class Constants {
    * ===========
    */
   public static final class ShooterConstants{
-    //Motor ID
+    // Motor ID
     public static final int kShooterMotorID = 33;
     public static final int kIndexerMotorID = 13;
-    //IR ID
+    // Limit Switch ID
     public static final int kLimitSwitchPort = 0;
-    //Motor Setting
-    public static final double shooterSpeakerVoltageSetpoint = 9.6;
-    public static final double shooterAMP_VoltageSetpoint = 4;
-    public static final double shooterSpeakerRPMSetpoint = 4000;
-    public static final double shooterAMP_RPMSetpoint = 1500;
+    // Motor Setting
+    public static final double kShooterSpeakerVoltageSetpoint = 9.6;
+    public static final double kShooterAMP_VoltageSetpoint = 4;
+    public static final double kShooterSpeakerRPMSetpoint = 4000;
+    public static final double kShooterAMP_RPMSetpoint = 1500;
+    // Shooter PID Constants
+    public static final double kShooterKp = 0; 
+    public static final double kShooterKi = 0;
+    public static final double kShooterKd = 0;
   }
   /* ===========
    *   Climber
@@ -75,6 +79,7 @@ public final class Constants {
    */
   public static final class LEDConstants{
     public static final int kCANdleID = 46;
+    public static final int kLedNum = 20;
   }
   /* ==========
    *   Vision
