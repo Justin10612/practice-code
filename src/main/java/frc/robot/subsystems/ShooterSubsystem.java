@@ -20,17 +20,12 @@ public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
   private final CANSparkMax shooterMotor;
   private final TalonFX indexerMotor;
-
   private final PIDController shooterPID;
-  
   private final RelativeEncoder shooterEncoder;
-
   private final DigitalInput noteGet;
 
-  private double shooterTurnPIDOutput;
-
-  private double Voltage_Setpoint = ShooterConstants.shooterSpeakerVoltageSetpoint;
-  private double RPM_Setpoint = ShooterConstants.shooterSpeakerRPMSetpoint;
+  private double Voltage_Setpoint = ShooterConstants.kShooterSpeakerVoltageSetpoint;
+  private double RPM_Setpoint = ShooterConstants.kShooterSpeakerRPMSetpoint;
 
   public ShooterSubsystem() {
     // Motor Controllers
@@ -41,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // Note Sensor
     noteGet = new DigitalInput(ShooterConstants.kLimitSwitchPort);
 
-    shooterPID = new PIDController(0, 0, 0);
+    shooterPID = new PIDController(ShooterConstants.kShooterKp, ShooterConstants.kShooterKi, ShooterConstants.kShooterKd);
 
     shooterMotor.restoreFactoryDefaults();
 
@@ -60,13 +55,28 @@ public class ShooterSubsystem extends SubsystemBase {
     // Without PID
     Voltage_Setpoint = targetVoltage;
     RPM_Setpoint = targetRPM;
-    shooterMotor.setVoltage(targetVoltage + shooterTurnPIDOutput);
+    shooterMotor.setVoltage(targetVoltage);
+  }
+
+  /**
+   * 給定馬達的目標電壓以及轉速，透過PID控制Shooter馬達轉動。
+   * 要將它放在execute()中執行
+   */
+  public void EnableShooterPID(double targetVoltage, double targetRPM){
+    // With PID
+    Voltage_Setpoint = targetVoltage;
+    RPM_Setpoint = targetRPM;
+    // PID cal
+    double pidOutput = shooterPID.calculate(getShooterSpeed(), targetRPM);
+    pidOutput = Math.min(Math.max(-1, pidOutput), 1); // Output is limited between 1 and -1. Unit:volt
+    // Implement
+    shooterMotor.setVoltage(targetVoltage + pidOutput);
   }
 
   /**
    * When Shooter Velocity reach the setpoint, feed Note into it.
    */
-  public void Shoot(){
+  public void FeedWhenReady(){
     if(getShooterSpeed() >= RPM_Setpoint - 800){
       Feeding();
     }else{
@@ -108,10 +118,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    shooterTurnPIDOutput = shooterPID.calculate(getShooterSpeed(), RPM_Setpoint);
-
-    SmartDashboard.putNumber("shooterSpeed", getShooterSpeed());
-    SmartDashboard.putNumber("Shooter Setpoint", RPM_Setpoint);
+    SmartDashboard.putNumber("ShooterMeasure", getShooterSpeed());
+    SmartDashboard.putNumber("ShooterSetspeed", RPM_Setpoint);
     SmartDashboard.putBoolean("haveNote", detectNote());
   }
 }
