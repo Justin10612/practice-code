@@ -79,6 +79,7 @@ public final class Constants {
    */
   public static final class LEDConstants{
     public static final int kCANdleID = 46;
+    public static final int kLedNum = 20;
   }
   /* ==========
    *   Vision
