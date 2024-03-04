@@ -24,6 +24,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ShooterTurn"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 0.5
