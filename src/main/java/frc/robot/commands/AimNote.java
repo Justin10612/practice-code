@@ -40,7 +40,7 @@ public class AimNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        // Get value
+    // Get value
     // 負號加在這
     double xSpeed = -xSpeedFunc.getAsDouble();
     double zSpeed = m_limeLightSubsystem.getTurnPIDOutput();

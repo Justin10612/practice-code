@@ -14,6 +14,12 @@
         {
           "type": "named",
           "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ClimbUp"
           }
         },
@@ -24,15 +30,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 0.8
+            "waitTime": 0.5
           }
         },
         {
@@ -44,7 +44,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.5
           }
         },
         {
@@ -105,12 +105,6 @@
           "type": "wait",
           "data": {
             "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
           }
         },
         {

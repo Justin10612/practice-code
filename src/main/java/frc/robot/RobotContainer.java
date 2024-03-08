@@ -30,6 +30,7 @@ import frc.robot.commands.ShooterEjectNote;
 import frc.robot.commands.ShooterPrepForAMP;
 import frc.robot.commands.ShooterFeedNote;
 import frc.robot.commands.ShooterPrepForSPEAKER;
+import frc.robot.commands.ShooterPrspForSpeake_Auto;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
@@ -60,18 +61,19 @@ public class RobotContainer {
   public RobotContainer() {    
     NamedCommands.registerCommand("ClimbBack", new ClimbBackCommand(m_climbSubsystem).withTimeout(0.5));
 
+    NamedCommands.registerCommand("ShooterTurn", new ShooterPrspForSpeake_Auto(m_shooterSubsystem));
 
     NamedCommands.registerCommand("NoteIn", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem).withTimeout(2));
 
-    NamedCommands.registerCommand("NoteShoot", new ShooterFeedNote(m_shooterSubsystem).withTimeout(1));
+    NamedCommands.registerCommand("NoteShoot", new ShooterFeedNote(m_shooterSubsystem).withTimeout(0.5));
 
     NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_climbSubsystem).withTimeout(0.5));
 
     NamedCommands.registerCommand("IntakeOut", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
 
     NamedCommands.registerCommand("BaseStop", Commands.run(()->{
-      m_swerveSubsystem.drive_auto(new ChassisSpeeds(0, 0, 0));
-    }).withTimeout(0.02));
+      m_swerveSubsystem.stopModules();
+    }, m_swerveSubsystem).withTimeout(0.02));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto mode", autoChooser);

@@ -44,7 +44,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
@@ -63,12 +63,6 @@
           "type": "named",
           "data": {
             "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
           }
         },
         {
@@ -92,25 +86,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Left Note Take(Center)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
           }
         },
         {
@@ -134,7 +116,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.2
           }
         },
         {
@@ -146,7 +128,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {

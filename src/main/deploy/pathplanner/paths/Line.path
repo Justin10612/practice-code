@@ -17,11 +17,27 @@
     {
       "anchor": {
         "x": 2.57,
-        "y": 4.1046482092964185
+        "y": 5.54
       },
       "prevControl": {
-        "x": 1.3239288017037585,
-        "y": 4.035579609620759
+        "x": 2.4699999999999998,
+        "y": 5.54
+      },
+      "nextControl": {
+        "x": 2.6699999999999995,
+        "y": 5.54
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.26,
+        "y": 5.545
+      },
+      "prevControl": {
+        "x": 1.16,
+        "y": 5.545
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,23 +45,11 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "SuckNote",
-      "minWaypointRelativePos": 0.65,
-      "maxWaypointRelativePos": 1.0,
-      "constraints": {
-        "maxVelocity": 3.0,
-        "maxAcceleration": 1.9,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0
-      }
-    }
-  ],
+  "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 4.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -56,6 +60,9 @@
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": null,
-  "useDefaultConstraints": false
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
 }

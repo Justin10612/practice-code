@@ -14,6 +14,12 @@
         {
           "type": "named",
           "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShooterTurn"
           }
         },
@@ -24,15 +30,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 0.8
+            "waitTime": 0.5
           }
         },
         {
@@ -54,12 +54,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ShooterTurn"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Center Note Shoot(Center)"
@@ -69,6 +63,18 @@
           "type": "named",
           "data": {
             "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
           }
         },
         {
@@ -104,6 +110,18 @@
         {
           "type": "named",
           "data": {
+            "name": "NoteIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "NoteShoot"
           }
         },
@@ -111,6 +129,12 @@
           "type": "wait",
           "data": {
             "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AllStop"
           }
         }
       ]

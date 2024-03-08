@@ -26,6 +26,24 @@
         {
           "type": "named",
           "data": {
+            "name": "ShooterTurn"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbUp"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "NoteShoot"
           }
         },
@@ -39,6 +57,18 @@
           "type": "path",
           "data": {
             "pathName": "Center Note Take(Center)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
           }
         },
         {
