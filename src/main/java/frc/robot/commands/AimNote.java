@@ -46,7 +46,7 @@ public class AimNote extends Command {
     double zSpeed = m_limeLightSubsystem.getTurnPIDOutput();
     boolean isSlowMode = isSlowModeFunc.getAsBoolean();
     // Dead band Limit
-    Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
+    xSpeed = Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
     // TurboModeSelect
     if(isSlowMode){
       xSpeed = xSpeed*0.4;
