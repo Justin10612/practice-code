@@ -30,7 +30,7 @@ public class LEDSubsystem extends SubsystemBase {
     candleConfig.vBatOutputMode = VBatOutputMode.Modulated;
     candle.configAllSettings(candleConfig);
   }
-  public void StrobeAnimation(Animation animation){
+  public void setAnimation(Animation animation){
     this.m_toAnimate = animation;
   }
   @Override
