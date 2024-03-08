@@ -30,9 +30,12 @@ public class LEDSubsystem extends SubsystemBase {
     candleConfig.vBatOutputMode = VBatOutputMode.Modulated;
     candle.configAllSettings(candleConfig);
   }
-
+  public void setAnimation(Animation animation){
+    this.m_toAnimate = animation;
+  }
   @Override
   public void periodic() {
+    candle.animate(m_toAnimate);
     // This method will be called once per scheduler run
   }
 }
