@@ -1,0 +1,139 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.24,
+      "y": 5.54
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbUp"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.8
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Note Take(Center)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Note Shoot(Center)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Center Note Take(Center)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Center Note Shoot(Center)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "NoteShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AllStop"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

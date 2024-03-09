@@ -22,7 +22,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX indexerMotor;
   private final PIDController shooterPID;
   private final RelativeEncoder shooterEncoder;
-  private final DigitalInput noteGet;
+  private final DigitalInput BottonLimitSwitch;
+  private final DigitalInput TopLimitSwitch;
 
   private double Voltage_Setpoint = ShooterConstants.kShooterSpeakerVoltageSetpoint;
   private double RPM_Setpoint = ShooterConstants.kShooterSpeakerRPMSetpoint;
@@ -34,7 +35,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // Encoder
     shooterEncoder = shooterMotor.getEncoder();
     // Note Sensor
-    noteGet = new DigitalInput(ShooterConstants.kLimitSwitchPort);
+    BottonLimitSwitch = new DigitalInput(ShooterConstants.kLowLimitSwitchPort);
+    TopLimitSwitch = new DigitalInput(ShooterConstants.kUpLimitSwitchPort);
 
     shooterPID = new PIDController(ShooterConstants.kShooterKp, ShooterConstants.kShooterKi, ShooterConstants.kShooterKd);
 
@@ -105,8 +107,15 @@ public class ShooterSubsystem extends SubsystemBase {
   /**
    * @return True when there is a Note.
    */
-  public boolean detectNote(){
-    return !noteGet.get();
+  public boolean getTopSwitchState(){
+    return !TopLimitSwitch.get();
+  }
+
+  /**
+   * @return True when there is a Note.
+   */
+  public boolean getBottonSwitchState(){
+    return !BottonLimitSwitch.get();
   }
 
   /**
@@ -120,6 +129,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("ShooterMeasure", getShooterSpeed());
     SmartDashboard.putNumber("ShooterSetspeed", RPM_Setpoint);
-    SmartDashboard.putBoolean("haveNote", detectNote());
+    SmartDashboard.putBoolean("TopSW", getTopSwitchState());
+    SmartDashboard.putBoolean("BottonSW", getBottonSwitchState());
   }
 }

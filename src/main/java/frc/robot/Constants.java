@@ -50,7 +50,8 @@ public final class Constants {
     public static final int kShooterMotorID = 33;
     public static final int kIndexerMotorID = 13;
     // Limit Switch ID
-    public static final int kLimitSwitchPort = 0;
+    public static final int kUpLimitSwitchPort = 0;
+    public static final int kLowLimitSwitchPort = 3;
     // Motor Setting
     public static final double kShooterSpeakerVoltageSetpoint = 9.6;
     public static final double kShooterAMP_VoltageSetpoint = 4;
@@ -184,9 +185,9 @@ public final class Constants {
     public static final boolean leftFrontTurningMotorReversed = true;
     public static final boolean rightFrontDriveMotorReversed = true;
     public static final boolean rightfrontTurningMotorReversed = true;
-    public static final boolean leftRearDriveMotorreversed = false;
+    public static final boolean leftRearDriveMotorreversed = true;
     public static final boolean leftRearTurningMotorReversed = true;
-    public static final boolean rightRearDriveMotorReversed = false;
+    public static final boolean rightRearDriveMotorReversed = true;
     public static final boolean rightRearTurningMotorReversed = true;
 
     public static final double leftFrontOffset = -0.11;
