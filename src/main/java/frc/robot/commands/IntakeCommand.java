@@ -22,7 +22,14 @@ public class IntakeCommand extends Command {
   public void initialize() {
     m_intakeSubsystem.setIntakeAngle();
     m_intakeSubsystem.WheelIntaking();
-    m_shooterSubsystem.Feeding();
+    m_shooterSubsystem.NormalFeeding();
+  }
+
+  @Override
+  public void execute(){
+    if(m_shooterSubsystem.getBottonSwitchState()){
+      m_shooterSubsystem.SlowFeeding();
+    }
   }
 
   // Called once the command ends or is interrupted.

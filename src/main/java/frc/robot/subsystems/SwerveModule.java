@@ -35,6 +35,7 @@ public class SwerveModule extends SubsystemBase{
     cancoderConfig.MagnetSensor.MagnetOffset = absoluteEncoderOffsetDegree;
     cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
     absoluteEncoder.getConfigurator().apply(cancoderConfig);
+   
     /* Motor Controller */
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
     turningMotor = new CANSparkMax(turningMotorID, MotorType.kBrushless);

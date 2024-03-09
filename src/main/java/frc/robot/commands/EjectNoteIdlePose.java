@@ -23,7 +23,7 @@ public class EjectNoteIdlePose extends Command {
   public void initialize() {
     m_IntakeSubsystem.setIdleAngle();
     m_IntakeSubsystem.WheelEject();
-    m_ShooterSubsystem.Feeding();
+    m_ShooterSubsystem.NormalFeeding();
   }
 
 

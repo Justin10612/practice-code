@@ -88,9 +88,9 @@ public class PhotonVisionSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     result = photonVision.getLatestResult();
     target = result.getBestTarget();
-    targetID = target.getFiducialId();
 
     if(hasTarget()){
+      targetID = target.getFiducialId();
       SmartDashboard.putBoolean("HasTarget", hasTarget());
       SmartDashboard.putNumber("targetID", targetID);
       SmartDashboard.putNumber("TargetX", getTargetPose().getX());

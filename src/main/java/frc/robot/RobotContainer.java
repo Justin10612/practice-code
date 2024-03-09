@@ -9,7 +9,6 @@ import java.util.function.DoubleSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -92,7 +91,7 @@ public class RobotContainer {
     BooleanSupplier isSlowModeFunc = () -> DriverJoystick.rightBumper().getAsBoolean();
     m_swerveSubsystem.setDefaultCommand(new ManualDrive(m_swerveSubsystem, xSpeedFunc, ySpeedFunc, zSppedFunc, isSlowModeFunc));
     /* Reset Gyro */
-    DriverJoystick.b().onTrue(
+    DriverJoystick.b().whileTrue(
       Commands.runOnce(()->{
         m_swerveSubsystem.resetGyro();
     }));

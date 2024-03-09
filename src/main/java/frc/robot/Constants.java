@@ -12,6 +12,7 @@ public final class Constants {
   /* Robot Parameters */
   public static final double robotLength = Units.inchesToMeters(25.5);
   public static final double robotWidth = Units.inchesToMeters(25.5);
+  public static final double kModuleDistance = 20*0.0254;
   /* ============
    *   Joystick
    * ============
@@ -29,9 +30,9 @@ public final class Constants {
     //CanCoder ID
     public static final int kIntakePivotCancoderID = 45;
     //Cancoder Setting
-    public static final double kIntakePivotCancoderOffset = 0.266;
+    public static final double kIntakePivotCancoderOffset = 0.443;
     // Pivot Angle
-    public static final double kIntakingAngle = -110;
+    public static final double kIntakingAngle = -113;
     public static final double kIntakeIdleAngle = 12;
     //Motor ID
     public static final int kIntakePivotMotorID = 27;
@@ -61,6 +62,9 @@ public final class Constants {
     public static final double kShooterKp = 0; 
     public static final double kShooterKi = 0;
     public static final double kShooterKd = 0;
+    // Indexer Speed
+    public static final double kIndexerNormalVolt = 4;
+    public static final double kIndexerSlowlVolt = 2.5;
   }
   /* ===========
    *   Climber
@@ -71,8 +75,8 @@ public final class Constants {
     public static final int kClimbRightMotorID = 31;
     public static final int kClimbLeftMotorID = 8;
     //limitSwitch Port
-    public static final int kRightLimitSwitchPort = 2;
-    public static final int kLeftLimitSwitchPort = 1;
+    public static final int kRightLimitSwitchPort = 1;
+    public static final int kLeftLimitSwitchPort = 2;
   }
   /* =======
    *   LED
@@ -192,15 +196,20 @@ public final class Constants {
 
     public static final double leftFrontOffset = -0.11;
     public static final double rightFrontOffset = -0.34;
-    public static final double leftRearOffset = -0.13;
-    public static final double rightRearOffset = 0.19;
+    public static final double leftRearOffset = 0.37;
+    public static final double rightRearOffset = -0.31;
+
+    /**
+     * Drive base radius (distance from center to furthest module) 
+     * Unit:meters */ 
+    public static final double kDriveBaseRadius = 14.15 * 0.0254;
     
     //front left, front right, rear left, rear right
     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-      new Translation2d(robotLength/2, robotWidth/2), 
-      new Translation2d(robotLength/2, -robotWidth/2), 
-      new Translation2d(-robotLength/2, robotWidth/2),
-      new Translation2d(-robotLength/2, -robotWidth/2)
+      new Translation2d(kModuleDistance/2, kModuleDistance/2), 
+      new Translation2d(kModuleDistance/2, -kModuleDistance/2), 
+      new Translation2d(-kModuleDistance/2, kModuleDistance/2),
+      new Translation2d(-kModuleDistance/2, -kModuleDistance/2)
     );
   }
   /* =============

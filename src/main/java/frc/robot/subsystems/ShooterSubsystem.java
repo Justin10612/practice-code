@@ -80,7 +80,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void FeedWhenReady(){
     if(getShooterSpeed() >= RPM_Setpoint - 800){
-      Feeding();
+      NormalFeeding();
     }else{
       StopIndexerMotor();
       EnableShooter(Voltage_Setpoint, RPM_Setpoint); //有需要寫句嗎
@@ -92,12 +92,15 @@ public class ShooterSubsystem extends SubsystemBase {
     indexerMotor.setVoltage(0);
   }
 
-  public void Feeding(){
-    indexerMotor.setVoltage(4);
+  public void NormalFeeding(){
+    indexerMotor.setVoltage(ShooterConstants.kIndexerNormalVolt);
+  }
+  public void SlowFeeding(){
+    indexerMotor.setVoltage(ShooterConstants.kIndexerSlowlVolt);
   }
 
   public void Ejecting(){
-    indexerMotor.setVoltage(-4);
+    indexerMotor.setVoltage(ShooterConstants.kIndexerNormalVolt);
   }
 
   public void StopIndexerMotor(){

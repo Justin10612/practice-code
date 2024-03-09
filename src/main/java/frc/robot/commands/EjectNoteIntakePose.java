@@ -24,7 +24,7 @@ public class EjectNoteIntakePose extends Command {
   public void initialize() {
     m_IntakeSubsystem.setIntakeAngle();
     m_IntakeSubsystem.WheelEject();
-    m_ShooterSubsystem.Feeding();
+    m_ShooterSubsystem.NormalFeeding();
   }
 
   // Called once the command ends or is interrupted.
