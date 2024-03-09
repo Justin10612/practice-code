@@ -32,8 +32,8 @@ public final class Constants {
     //Cancoder Setting
     public static final double kIntakePivotCancoderOffset = 0.443;
     // Pivot Angle
-    public static final double kIntakingAngle = -113;
-    public static final double kIntakeIdleAngle = 12;
+    public static final double kIntakingAngle = -90;
+    public static final double kIntakeIdleAngle = 1.58;
     //Motor ID
     public static final int kIntakePivotMotorID = 27;
     public static final int kIntakeMotorID = 32;
@@ -56,15 +56,15 @@ public final class Constants {
     // Motor Setting
     public static final double kShooterSpeakerVoltageSetpoint = 9.6;
     public static final double kShooterAMP_VoltageSetpoint = 4;
-    public static final double kShooterSpeakerRPMSetpoint = 4000;
+    public static final double kShooterSpeakerRPMSetpoint = 4100;
     public static final double kShooterAMP_RPMSetpoint = 1500;
     // Shooter PID Constants
-    public static final double kShooterKp = 0; 
+    public static final double kShooterKp = 0.001; 
     public static final double kShooterKi = 0;
     public static final double kShooterKd = 0;
     // Indexer Speed
     public static final double kIndexerNormalVolt = 4;
-    public static final double kIndexerSlowlVolt = 2.5;
+    public static final double kIndexerSlowlVolt = 0;
   }
   /* ===========
    *   Climber

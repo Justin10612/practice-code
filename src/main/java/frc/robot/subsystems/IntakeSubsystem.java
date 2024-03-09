@@ -35,7 +35,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private double PivotAngleSetpoint = IntakeConstants.kIntakeIdleAngle;
 
   public IntakeSubsystem() {
-    intakePivotPID = new PIDController(0.005, 0, 0);
+    intakePivotPID = new PIDController(0.003, 0, 0);
     intakePivotFeedforward = new ArmFeedforward(0, 0, 0);
     // CAN coder
     intakPivotCancoder = new CANcoder(IntakeConstants.kIntakePivotCancoderID);
@@ -98,14 +98,16 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("intakeAngle", getAngle());
     // Intake PID Calculation
     double PidOutput = intakePivotPID.calculate(getAngle(), PivotAngleSetpoint);
+    // PID deadband
     PidOutput = Constants.setMaxOutput(PidOutput, IntakeConstants.kPivotMaxOutput);
     // Intake Feedforward Calclation
     double FeedforwardOutput = intakePivotFeedforward.calculate(Math.toRadians(getAngle()), intakePivotEncoder.getVelocity()*2*Math.PI/60)/12;
-    // PID deadband
+    // Implement
     if(Math.abs(intakePivotPID.getPositionError())<2){
-      intakePivotMotor.set(FeedforwardOutput);
+      intakePivotMotor.set(0);
     }else{
-      intakePivotMotor.set(PidOutput + FeedforwardOutput);
+      intakePivotMotor.set(PidOutput);
     }
+    // intakePivotMotor.set(PidOutput);
   }
 }

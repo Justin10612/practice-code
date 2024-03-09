@@ -5,17 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class EjectNoteIdlePose extends Command {
-  private final ShooterSubsystem m_ShooterSubsystem;
+  private final IndexerSubsystem m_IndexerSubsystem;
   private final IntakeSubsystem m_IntakeSubsystem;
 
-  public EjectNoteIdlePose(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+  public EjectNoteIdlePose(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem) {
     this.m_IntakeSubsystem = intakeSubsystem;
-    this.m_ShooterSubsystem = shooterSubsystem;
-    addRequirements(m_IntakeSubsystem, m_ShooterSubsystem);
+    this.m_IndexerSubsystem = indexerSubsystem;
+    addRequirements(m_IntakeSubsystem, m_IndexerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +24,7 @@ public class EjectNoteIdlePose extends Command {
   public void initialize() {
     m_IntakeSubsystem.setIdleAngle();
     m_IntakeSubsystem.WheelEject();
-    m_ShooterSubsystem.NormalFeeding();
+    m_IndexerSubsystem.NormalFeeding();
   }
 
 
@@ -32,7 +33,7 @@ public class EjectNoteIdlePose extends Command {
   public void end(boolean interrupted) {
     m_IntakeSubsystem.setIdleAngle();
     m_IntakeSubsystem.WheelStop();
-    m_ShooterSubsystem.StopIndexerMotor();
+    m_IndexerSubsystem.StopIndexerMotor();
   }
 
   // Returns true when the command should end.

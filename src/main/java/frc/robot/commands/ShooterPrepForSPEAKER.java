@@ -29,7 +29,7 @@ public class ShooterPrepForSPEAKER extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ShooterSubsystem.StopMotors();
+    m_ShooterSubsystem.stopShooterMotor();
   }
 
   // Returns true when the command should end.

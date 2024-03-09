@@ -30,6 +30,7 @@ import frc.robot.commands.ShooterFeedNote;
 import frc.robot.commands.ShooterPrepForSPEAKER;
 import frc.robot.commands.ShooterPrspForSpeake_Auto;
 import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
@@ -47,6 +48,7 @@ public class RobotContainer {
   private final PhotonVisionSubsystem m_photonVisionSubsystem = new PhotonVisionSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final IndexerSubsystem m_IndexerSubsystem = new IndexerSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
@@ -61,13 +63,13 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("ShooterTurn", new ShooterPrspForSpeake_Auto(m_shooterSubsystem));
 
-    NamedCommands.registerCommand("NoteIn", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem).withTimeout(2));
+    NamedCommands.registerCommand("NoteIn", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(2));
 
-    NamedCommands.registerCommand("NoteShoot", new ShooterFeedNote(m_shooterSubsystem).withTimeout(0.5));
+    NamedCommands.registerCommand("NoteShoot", new ShooterFeedNote(m_IndexerSubsystem).withTimeout(0.5));
 
     NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_climbSubsystem).withTimeout(0.5));
 
-    NamedCommands.registerCommand("IntakeOut", new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
+    NamedCommands.registerCommand("IntakeOut", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem));
 
     NamedCommands.registerCommand("BaseStop", Commands.run(()->{
       m_swerveSubsystem.stopModules();
@@ -109,15 +111,15 @@ public class RobotContainer {
     DoubleSupplier rInputFunc = () -> OperatorJoystick.getRightY();
     OperatorJoystick.leftBumper().whileTrue(new ClimbManually(m_climbSubsystem, lInputFunc, rInputFunc));
     /* Intake Note */
-    OperatorJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_shooterSubsystem));
+    OperatorJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem));
     /* Eject Note when Intake is at down position. */
-    OperatorJoystick.a().whileTrue(new EjectNoteIntakePose(m_intakeSubsystem, m_shooterSubsystem));
+    OperatorJoystick.a().whileTrue(new EjectNoteIntakePose(m_intakeSubsystem, m_IndexerSubsystem));
     /* Eject Note when Intake is at idle position. */
-    OperatorJoystick.b().whileTrue(new EjectNoteIdlePose(m_intakeSubsystem, m_shooterSubsystem));
+    OperatorJoystick.b().whileTrue(new EjectNoteIdlePose(m_intakeSubsystem, m_IndexerSubsystem));
     /* Move Note backward */
-    OperatorJoystick.y().whileTrue(new ShooterEjectNote(m_shooterSubsystem));
+    OperatorJoystick.y().whileTrue(new ShooterEjectNote(m_IndexerSubsystem));
     /* Feed Note */
-    OperatorJoystick.rightBumper().whileTrue(new ShooterFeedNote(m_shooterSubsystem));
+    OperatorJoystick.rightBumper().whileTrue(new ShooterFeedNote(m_IndexerSubsystem));
     /* Spin Shooter for Speaker */
     OperatorJoystick.rightTrigger(0.4).whileTrue(new ShooterPrepForSPEAKER(m_shooterSubsystem));
     /* Spin Shooter for AMP */

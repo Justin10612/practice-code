@@ -5,15 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 
 public class ShooterFeedNote extends Command {
   /** Creates a new NoteShootSpeakerCommand. */
-  private final ShooterSubsystem m_ShooterSubsystem;
+  private final IndexerSubsystem m_IndexerSubsystem;
 
-  public ShooterFeedNote(ShooterSubsystem shooterSubsystem) {
-    this.m_ShooterSubsystem = shooterSubsystem;
-    addRequirements(m_ShooterSubsystem);
+  public ShooterFeedNote(IndexerSubsystem indexerSubsystem) {
+    this.m_IndexerSubsystem = indexerSubsystem;
+    addRequirements(m_IndexerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -24,13 +24,13 @@ public class ShooterFeedNote extends Command {
   @Override
   public void execute() {
     // 把它放在這，因為他需要時時監看是否到達目標轉速。
-    m_ShooterSubsystem.FeedWhenReady();
+    m_IndexerSubsystem.FeedWhenReady();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ShooterSubsystem.StopMotors();
+    m_IndexerSubsystem.StopIndexerMotor();
   }
 
   // Returns true when the command should end.

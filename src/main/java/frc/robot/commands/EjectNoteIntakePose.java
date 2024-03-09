@@ -5,18 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class EjectNoteIntakePose extends Command {
-  private final ShooterSubsystem m_ShooterSubsystem;
+  private final IndexerSubsystem m_IndexerSubsystem;
   private final IntakeSubsystem m_IntakeSubsystem;
 
   /** Creates a new EjectNoteIntakePose. */
-  public EjectNoteIntakePose(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+  public EjectNoteIntakePose(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem) {
     this.m_IntakeSubsystem = intakeSubsystem;
-    this.m_ShooterSubsystem = shooterSubsystem;
-    addRequirements(m_IntakeSubsystem, m_ShooterSubsystem);
+    this.m_IndexerSubsystem = indexerSubsystem;
+    addRequirements(m_IntakeSubsystem, m_IndexerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +25,7 @@ public class EjectNoteIntakePose extends Command {
   public void initialize() {
     m_IntakeSubsystem.setIntakeAngle();
     m_IntakeSubsystem.WheelEject();
-    m_ShooterSubsystem.NormalFeeding();
+    m_IndexerSubsystem.NormalFeeding();
   }
 
   // Called once the command ends or is interrupted.
@@ -32,7 +33,7 @@ public class EjectNoteIntakePose extends Command {
   public void end(boolean interrupted) {
     m_IntakeSubsystem.WheelStop();
     m_IntakeSubsystem.setIdleAngle();
-    m_ShooterSubsystem.StopIndexerMotor();
+    m_IndexerSubsystem.StopIndexerMotor();
   }
 
   // Returns true when the command should end.
