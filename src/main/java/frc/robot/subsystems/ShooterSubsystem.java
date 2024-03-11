@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -80,6 +79,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (getShooterSpeed() >= Voltage_Setpoint - 400) {
+      ShooterConstants.shouldShoot = true;
+    }else{
+      ShooterConstants.shouldShoot = false;
+    }
+
+
     SmartDashboard.putNumber("ShooterMeasure", getShooterSpeed());
     SmartDashboard.putNumber("ShooterSetspeed", RPM_Setpoint);
   }

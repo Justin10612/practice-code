@@ -13,7 +13,7 @@ import frc.robot.Constants.ShooterConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
   private final TalonFX indexerMotor;
-  private final DigitalInput BottonLimitSwitch;
+  private final DigitalInput BottomLimitSwitch;
   private final DigitalInput TopLimitSwitch;
 
 
@@ -21,7 +21,7 @@ public class IndexerSubsystem extends SubsystemBase {
     indexerMotor = new TalonFX(ShooterConstants.kIndexerMotorID); 
     indexerMotor.setInverted(true);
     // Note Sensor
-    BottonLimitSwitch = new DigitalInput(ShooterConstants.kLowLimitSwitchPort);
+    BottomLimitSwitch = new DigitalInput(ShooterConstants.kBottomLimitSwitchPort);
     TopLimitSwitch = new DigitalInput(ShooterConstants.kUpLimitSwitchPort);
   }
 
@@ -29,12 +29,11 @@ public class IndexerSubsystem extends SubsystemBase {
    * When Shooter Velocity reach the setpoint, feed Note into it.
    */
   public void FeedWhenReady(){
-    // if(getShooterSpeed() >= RPM_Setpoint - 800){
-    //   NormalFeeding();
-    // }else{
-    //   StopIndexerMotor();
-    //   EnableShooter(Voltage_Setpoint, RPM_Setpoint); 
-    // }
+    if(ShooterConstants.shouldShoot){
+      indexerMotor.setVoltage(ShooterConstants.kIndexerFastVolt);
+    }else{
+      indexerMotor.setVoltage(0);
+    }
   }
 
   public void StopIndexerMotor(){
@@ -62,13 +61,13 @@ public class IndexerSubsystem extends SubsystemBase {
   /**
    * @return True when there is a Note.
    */
-  public boolean getBottonSwitchState(){
-    return !BottonLimitSwitch.get();
+  public boolean getBottomSwitchState(){
+    return !BottomLimitSwitch.get();
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("TopSW", getTopSwitchState());
-    SmartDashboard.putBoolean("BottonSW", getBottonSwitchState());
+    SmartDashboard.putBoolean("BottomSW", getBottomSwitchState());
   }
 }

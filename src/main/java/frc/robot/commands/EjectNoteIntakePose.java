@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class EjectNoteIntakePose extends Command {
   private final IndexerSubsystem m_IndexerSubsystem;
@@ -27,6 +26,10 @@ public class EjectNoteIntakePose extends Command {
     m_IntakeSubsystem.WheelEject();
     m_IndexerSubsystem.NormalFeeding();
   }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

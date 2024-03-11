@@ -20,18 +20,19 @@ public class ShooterPrepForAMP extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_shooterSubsystem.EnableShooterPID(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_shooterSubsystem.stopShooterMotor();
+    m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterStopVoltageSetpoint, ShooterConstants.kShooterStopRPMSetpoint);
   }
 
   // Returns true when the command should end.

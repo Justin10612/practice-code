@@ -33,8 +33,8 @@ public class ClimbManually extends Command {
     double rightInputVal = m_rightFunc.getAsDouble();
     // Output
     // 如果這裡加負號，是不是代表Subsystem那邊要SetInverted?
-    m_climbSubsystem.setRightMotor(rightInputVal*-0.8);
-    m_climbSubsystem.setLeftMotor(leftInputVal*-0.8);
+    m_climbSubsystem.setRightMotor(rightInputVal*-1);
+    m_climbSubsystem.setLeftMotor(leftInputVal*-1);
   }
 
   // Called once the command ends or is interrupted.

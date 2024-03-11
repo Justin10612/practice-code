@@ -27,7 +27,7 @@ public class IntakeCommand extends Command {
 
   @Override
   public void execute(){
-    if(m_IndexerSubsystem.getBottonSwitchState()){
+    if(m_IndexerSubsystem.getBottomSwitchState()){
       m_IndexerSubsystem.StopIndexerMotor();
     }
   }
@@ -43,6 +43,6 @@ public class IntakeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_IndexerSubsystem.getBottonSwitchState();
+    return m_IndexerSubsystem.getBottomSwitchState();
   }
 }

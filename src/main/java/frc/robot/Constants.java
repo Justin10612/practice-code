@@ -52,19 +52,24 @@ public final class Constants {
     public static final int kIndexerMotorID = 13;
     // Limit Switch ID
     public static final int kUpLimitSwitchPort = 0;
-    public static final int kLowLimitSwitchPort = 3;
+    public static final int kBottomLimitSwitchPort = 3;
     // Motor Setting
     public static final double kShooterSpeakerVoltageSetpoint = 9.6;
     public static final double kShooterAMP_VoltageSetpoint = 4;
+    public static final double kShooterStopVoltageSetpoint = 0;
     public static final double kShooterSpeakerRPMSetpoint = 4100;
     public static final double kShooterAMP_RPMSetpoint = 1500;
+    public static final double kShooterStopRPMSetpoint = 9999;
     // Shooter PID Constants
     public static final double kShooterKp = 0.001; 
     public static final double kShooterKi = 0;
     public static final double kShooterKd = 0;
     // Indexer Speed
     public static final double kIndexerNormalVolt = 4;
+    public static final double kIndexerFastVolt = 10;
     public static final double kIndexerSlowlVolt = 0;
+
+    public static boolean shouldShoot = false;
   }
   /* ===========
    *   Climber
