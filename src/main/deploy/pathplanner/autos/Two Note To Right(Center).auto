@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.26,
-      "y": 5.54
+      "x": 1.24,
+      "y": 5.555088802485298
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
+            "name": "ClimbUp"
           }
         },
         {
@@ -24,15 +24,33 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "ClimbUp"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Note Take(Center)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Note Shoot(Center)"
           }
         },
         {

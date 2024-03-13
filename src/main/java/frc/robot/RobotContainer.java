@@ -78,7 +78,7 @@ public class RobotContainer {
       m_shooterSubsystem,
       m_IndexerSubsystem,
       feedBtn,
-      true).withTimeout(10));
+      true).withTimeout(0.5));
 
     NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_climbSubsystem).withTimeout(0.5));
     /* Create Chooser */

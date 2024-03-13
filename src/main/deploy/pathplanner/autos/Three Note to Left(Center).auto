@@ -12,21 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ClimbUp"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShooterTurnSPEAKER"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ClimbUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterTurnSPEAKER"
+                }
+              }
+            ]
           }
         },
         {
@@ -62,24 +63,6 @@
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteIn"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "NoteShootSPEAKER"
           }
         },
@@ -99,24 +82,6 @@
           "type": "path",
           "data": {
             "pathName": "Left Note Shoot(Center)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteIn"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
           }
         },
         {

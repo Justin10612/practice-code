@@ -14,18 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "ShooterTurnSPEAKER"
           }
         },
@@ -60,33 +48,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Center Note Shoot(Center)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
           }
         },
         {
@@ -108,33 +72,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Right Note Shoot(Center)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
           }
         },
         {
@@ -168,33 +108,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Center Center Note Shoot(Center)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
           }
         },
         {

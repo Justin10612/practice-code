@@ -43,23 +43,23 @@ public class AimNote extends Command {
     // Get value
     // 負號加在這
     double xSpeed = -xSpeedFunc.getAsDouble();
-    double zSpeed = m_limeLightSubsystem.getTurnPIDOutput();
+    // double zSpeed = m_limeLightSubsystem.getTurnPIDOutput();
     boolean isSlowMode = isSlowModeFunc.getAsBoolean();
     // Dead band Limit
     xSpeed = Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
     // TurboModeSelect
-    if(isSlowMode){
-      xSpeed = xSpeed*0.4;
-      zSpeed = zSpeed*1;
-    }
-    else{
-      xSpeed = xSpeed*0.85;
-      zSpeed = zSpeed*1;
-    }
+    // if(isSlowMode){
+    //   xSpeed = xSpeed*0.4;
+    //   zSpeed = zSpeed*1;
+    // }
+    // else{
+    //   xSpeed = xSpeed*0.85;
+    //   zSpeed = zSpeed*1;
+    // }
     // SlewRate
     xSpeed = xLimiter.calculate(xSpeed);
     // Output
-    m_swerveSubsystem.drive(xSpeed, 0, zSpeed, false);
+    // m_swerveSubsystem.drive(xSpeed, 0, zSpeed, false);
   }
 
   // Called once the command ends or is interrupted.

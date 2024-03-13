@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "ShooterTurnSPEAKER"
           }
         },
@@ -57,12 +51,6 @@
           "type": "path",
           "data": {
             "pathName": "Left Note Shoot(Left)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
           }
         },
         {

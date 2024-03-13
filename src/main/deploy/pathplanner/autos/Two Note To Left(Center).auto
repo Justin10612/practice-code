@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "ClimbUp"
           }
         },
@@ -57,30 +51,6 @@
           "type": "path",
           "data": {
             "pathName": "Left Note Shoot(Center)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteIn"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
           }
         },
         {

@@ -101,7 +101,7 @@ public class IntakeSubsystem extends SubsystemBase {
     // PID deadband
     PidOutput = Constants.setMaxOutput(PidOutput, IntakeConstants.kPivotMaxOutput);
     // Intake Feedforward Calclation
-    double FeedforwardOutput = intakePivotFeedforward.calculate(Math.toRadians(getAngle()), intakePivotEncoder.getVelocity()*2*Math.PI/60)/12;
+    // double FeedforwardOutput = intakePivotFeedforward.calculate(Math.toRadians(getAngle()), intakePivotEncoder.getVelocity()*2*Math.PI/60)/12;
     // Implement
     if(Math.abs(intakePivotPID.getPositionError())<2){
       intakePivotMotor.set(0);

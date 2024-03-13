@@ -55,6 +55,7 @@ public final class Constants {
     public static final int kBottomLimitSwitchPort = 3;
     // Motor Setting
     public static final double kShooterSpeakerVoltageSetpoint = 9.6;
+    public static final double kShooterSpeakerVoltageSetpoint_Auto = 11;
     public static final double kShooterAMP_VoltageSetpoint = 4;
     public static final double kShooterStopVoltageSetpoint = 0;
     public static final double kShooterSpeakerRPMSetpoint = 4100;
