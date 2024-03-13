@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterPrspForSpeake_Auto extends Command {
+public class ShooterPrepAMP extends Command {
   private final ShooterSubsystem m_shooterSubsystem;
-  /** Creates a new ShooterPrspForSpeake_Auto. */
-  public ShooterPrspForSpeake_Auto(ShooterSubsystem shooterSubsystem) {
+
+  public ShooterPrepAMP(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_shooterSubsystem = shooterSubsystem;
     addRequirements(m_shooterSubsystem);
@@ -24,7 +24,7 @@ public class ShooterPrspForSpeake_Auto extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.EnableShooterPID(ShooterConstants.kShooterSpeakerVoltageSetpoint, ShooterConstants.kShooterSpeakerRPMSetpoint);
+    m_shooterSubsystem.EnableShooterPID(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
   }
 
   // Called once the command ends or is interrupted.

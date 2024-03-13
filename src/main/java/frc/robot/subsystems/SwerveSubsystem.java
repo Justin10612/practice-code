@@ -14,6 +14,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Unit;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -35,6 +37,8 @@ public class SwerveSubsystem extends SubsystemBase{
   private SwerveDriveOdometry m_odometer;
   // Field
   private Field2d field = new Field2d();
+  // Testing
+  ChassisSpeeds targetSpeeds = new ChassisSpeeds(0, 0, 0);
 
   public SwerveSubsystem(){
     /* Gyro */
@@ -84,11 +88,11 @@ public class SwerveSubsystem extends SubsystemBase{
       this::getSpeeds, 
       this::driveFieldRelative,
       new HolonomicPathFollowerConfig(
-          new PIDConstants(4, 0, 0), // Translation constants 
-          new PIDConstants(2, 0, 0.002), // Rotation constants 
+          new PIDConstants(3, 0, 0.02), // Translation constants 
+          new PIDConstants(3, 0, 0.035), // Rotation constants 
           SwerveModuleConstants.maxDriveMotorSpeed, 
           SwerveConstants.kDriveBaseRadius, // Drive base radius (distance from center to furthest module) 
-          new ReplanningConfig()
+          new ReplanningConfig(false, false)
       ),
       () -> {
         // Boolean supplier that controls when the path will be mirrored for the red alliance
@@ -159,7 +163,7 @@ public class SwerveSubsystem extends SubsystemBase{
   }
   // Auto Drive
   public void driveFieldRelative(ChassisSpeeds RobotSpeeds){
-    ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(RobotSpeeds, 0.02);
+    targetSpeeds = ChassisSpeeds.discretize(RobotSpeeds, 0.002);
     SwerveModuleState[] states = SwerveConstants.swerveKinematics.toSwerveModuleStates(targetSpeeds);
     setModuleStates(states);
   }
@@ -171,22 +175,29 @@ public class SwerveSubsystem extends SubsystemBase{
   public void setOdometer(Pose2d pose){
     m_odometer.resetPosition(getHeading(), getModulePosition(), pose);
   }
+  
 
   @Override
   public void periodic(){
+    
     m_odometer.update(getHeading(), getModulePosition());
     field.setRobotPose(m_odometer.getPoseMeters());
     // SmartDashboard.putNumber("X", m_odometer.getPoseMeters().getX());
     // SmartDashboard.putNumber("Y", m_odometer.getPoseMeters().getY());
-    SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
-    SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
-    SmartDashboard.putNumber("LF_Position", leftFrontModule.getDrivePosition());
-    SmartDashboard.putNumber("LR_Position", leftRearModule.getDrivePosition());
-    SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
-    SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
-    SmartDashboard.putNumber("RF_Position", rightFrontModule.getDrivePosition());
-    SmartDashboard.putNumber("RR_Position", rightRearModule.getDrivePosition());
+    // SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
+    // SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
+    // SmartDashboard.putNumber("LF_Position", leftFrontModule.getDrivePosition());
+    // SmartDashboard.putNumber("LR_Position", leftRearModule.getDrivePosition());
+    // SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
+    // SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
+    // SmartDashboard.putNumber("RF_Position", rightFrontModule.getDrivePosition());
+    // SmartDashboard.putNumber("RR_Position", rightRearModule.getDrivePosition());
     // SmartDashboard.putNumber("robotAngle", getHeading().getDegrees());
+    /* Testing */
+    SmartDashboard.putNumber("BotX", targetSpeeds.vxMetersPerSecond);
+    SmartDashboard.putNumber("BotY", targetSpeeds.vyMetersPerSecond);
+    SmartDashboard.putNumber("BotZ", targetSpeeds.omegaRadiansPerSecond);
+
   }
   
 }

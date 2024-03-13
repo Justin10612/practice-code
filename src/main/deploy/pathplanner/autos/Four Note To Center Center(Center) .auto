@@ -26,7 +26,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
+            "name": "ShooterTurnSPEAKER"
           }
         },
         {
@@ -44,7 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
@@ -92,7 +92,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
@@ -140,7 +140,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
@@ -200,13 +200,19 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AllStop"
           }
         }
       ]

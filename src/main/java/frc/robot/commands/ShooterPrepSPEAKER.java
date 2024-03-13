@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterPrepForSPEAKER extends Command {
-  /** Creates a new ShooterPreparingCommand. */
+public class ShooterPrepSPEAKER extends Command {
   private final ShooterSubsystem m_shooterSubsystem;
-  public ShooterPrepForSPEAKER(ShooterSubsystem shooterSubsystem) {
+  /** Creates a new ShooterPrepSPEAKER. */
+  public ShooterPrepSPEAKER(ShooterSubsystem shooterSubsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
     this.m_shooterSubsystem = shooterSubsystem;
     addRequirements(m_shooterSubsystem);
   }
@@ -28,10 +29,7 @@ public class ShooterPrepForSPEAKER extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_shooterSubsystem.stopShooterMotor();
-    m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterStopVoltageSetpoint, ShooterConstants.kShooterStopRPMSetpoint);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.57,
-        "y": 6.99
+        "x": 0.35696840624450643,
+        "y": 7.439674879349759
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.67,
-        "y": 6.99
+        "x": 0.4569684062445064,
+        "y": 7.439674879349759
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.26,
-        "y": 5.54
+        "x": 1.8,
+        "y": 7.65
       },
       "prevControl": {
-        "x": 1.16,
-        "y": 5.54
+        "x": 1.9159453703522806,
+        "y": 7.133134366268733
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,23 +29,11 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.6,
-      "maxWaypointRelativePos": 1.0,
-      "constraints": {
-        "maxVelocity": 1.0,
-        "maxAcceleration": 4.5,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0
-      }
-    }
-  ],
+  "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "ShooterTurn",
-      "waypointRelativePos": 0.45,
+      "name": "ShooterTurnAMP",
+      "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
         "data": {
@@ -53,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "ShooterTurnSPEAKER"
+                "name": "ShooterTrunAMP"
               }
             }
           ]
@@ -62,18 +50,21 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 4.5,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -90.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": null,
+  "previewStartingState": {
+    "rotation": -90.0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

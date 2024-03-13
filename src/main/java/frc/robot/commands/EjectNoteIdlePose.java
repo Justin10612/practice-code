@@ -23,7 +23,7 @@ public class EjectNoteIdlePose extends Command {
   public void initialize() {
     m_IntakeSubsystem.setIdleAngle();
     m_IntakeSubsystem.WheelEject();
-    m_IndexerSubsystem.NormalFeeding();
+    m_IndexerSubsystem.Intaking();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

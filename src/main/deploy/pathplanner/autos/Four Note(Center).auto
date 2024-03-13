@@ -20,13 +20,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ClimbUp"
+            "name": "ShooterTurnSPEAKER"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
+            "name": "ClimbUp"
           }
         },
         {
@@ -38,7 +38,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
@@ -68,7 +68,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
@@ -98,7 +98,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
@@ -128,7 +128,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {

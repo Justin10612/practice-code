@@ -12,6 +12,7 @@ public class IntakeCommand extends Command {
   /** Creates a new IntakeCommand. */
   private final IntakeSubsystem m_intakeSubsystem;
   private final IndexerSubsystem m_IndexerSubsystem;
+  
   public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem) {
     this.m_intakeSubsystem = intakeSubsystem;
     this.m_IndexerSubsystem = indexerSubsystem;
@@ -22,7 +23,7 @@ public class IntakeCommand extends Command {
   public void initialize() {
     m_intakeSubsystem.setIntakeAngle();
     m_intakeSubsystem.WheelIntaking();
-    m_IndexerSubsystem.NormalFeeding();
+    m_IndexerSubsystem.Intaking();
   }
 
   @Override

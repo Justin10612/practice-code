@@ -16,6 +16,18 @@
           "data": {
             "pathName": "Line"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BaseStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
         }
       ]
     }

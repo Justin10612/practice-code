@@ -24,7 +24,7 @@ public class EjectNoteIntakePose extends Command {
   public void initialize() {
     m_IntakeSubsystem.setIntakeAngle();
     m_IntakeSubsystem.WheelEject();
-    m_IndexerSubsystem.NormalFeeding();
+    m_IndexerSubsystem.Intaking();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

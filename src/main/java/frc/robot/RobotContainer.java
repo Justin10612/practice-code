@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AimAMP;
 import frc.robot.commands.AimNote;
-import frc.robot.commands.ClimbBackCommand;
+import frc.robot.commands.ClimbDown;
 import frc.robot.commands.ClimbManually;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.EjectNoteIdlePose;
@@ -25,10 +25,10 @@ import frc.robot.commands.EjectNoteIntakePose;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManualDrive;
 import frc.robot.commands.ShooterEjectNote;
-import frc.robot.commands.ShooterPrepForAMP;
-import frc.robot.commands.ShooterFeedNote;
-import frc.robot.commands.ShooterPrepForSPEAKER;
-import frc.robot.commands.ShooterPrspForSpeake_Auto;
+import frc.robot.commands.ShooterPrepAMP;
+import frc.robot.commands.ShootAMP;
+import frc.robot.commands.ShootSPEAKER;
+import frc.robot.commands.ShooterPrepSPEAKER;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -59,22 +59,33 @@ public class RobotContainer {
   private final CommandXboxController OperatorJoystick = new CommandXboxController(OperatorConstants.kOperatorJoystickPort);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {    
-    NamedCommands.registerCommand("ClimbBack", new ClimbBackCommand(m_climbSubsystem).withTimeout(0.5));
+    NamedCommands.registerCommand("ClimbBack", new ClimbDown(m_climbSubsystem).withTimeout(0.5));
 
-    NamedCommands.registerCommand("ShooterTurn", new ShooterPrspForSpeake_Auto(m_shooterSubsystem));
+    NamedCommands.registerCommand("ShooterTurnSPEAKER", new ShooterPrepSPEAKER(m_shooterSubsystem).withTimeout(0.02));
+
+    NamedCommands.registerCommand("ShooterTurnAMP", new ShooterPrepAMP(m_shooterSubsystem).withTimeout(0.02));
 
     NamedCommands.registerCommand("NoteIn", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(2));
+    
+    BooleanSupplier feedBtn = () -> OperatorJoystick.rightBumper().getAsBoolean();
+    NamedCommands.registerCommand("NoteShootSPEAKER", new ShootSPEAKER(
+      m_shooterSubsystem,
+      m_IndexerSubsystem,
+      feedBtn,
+      false).withTimeout(0.5));
 
-    NamedCommands.registerCommand("NoteShoot", new ShooterFeedNote(m_IndexerSubsystem).withTimeout(0.5));
+    NamedCommands.registerCommand("NoteShootAMP", new ShootAMP(
+      m_shooterSubsystem,
+      m_IndexerSubsystem,
+      feedBtn,
+      false).withTimeout(0.5));
 
     NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_climbSubsystem).withTimeout(0.5));
-
-    NamedCommands.registerCommand("IntakeOut", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem));
 
     NamedCommands.registerCommand("BaseStop", Commands.run(()->{
       m_swerveSubsystem.stopModules();
     }, m_swerveSubsystem).withTimeout(0.02));
-
+    /* Create Chooser */
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto mode", autoChooser);
 
@@ -106,6 +117,7 @@ public class RobotContainer {
      *   Operator 
      * ===========
     */
+    BooleanSupplier feedBtn = () -> OperatorJoystick.rightBumper().getAsBoolean();
     /* Climb */
     DoubleSupplier lInputFunc = () -> OperatorJoystick.getLeftY();
     DoubleSupplier rInputFunc = () -> OperatorJoystick.getRightY();
@@ -118,12 +130,20 @@ public class RobotContainer {
     OperatorJoystick.b().whileTrue(new EjectNoteIdlePose(m_intakeSubsystem, m_IndexerSubsystem));
     /* Move Note backward */
     OperatorJoystick.y().whileTrue(new ShooterEjectNote(m_IndexerSubsystem));
-    /* Feed Note */
-    OperatorJoystick.rightBumper().whileTrue(new ShooterFeedNote(m_IndexerSubsystem));
     /* Spin Shooter for Speaker */
-    OperatorJoystick.rightTrigger(0.4).whileTrue(new ShooterPrepForSPEAKER(m_shooterSubsystem));
+    OperatorJoystick.rightTrigger(0.4).whileTrue(
+      new ShootSPEAKER(
+        m_shooterSubsystem,
+        m_IndexerSubsystem,
+        feedBtn,
+        false));
     /* Spin Shooter for AMP */
-    OperatorJoystick.leftTrigger(0.4).whileTrue(new ShooterPrepForAMP(m_shooterSubsystem));
+    OperatorJoystick.leftTrigger(0.4).whileTrue(
+      new ShootAMP(
+        m_shooterSubsystem,
+        m_IndexerSubsystem,
+        feedBtn,
+        false));
   }
 
   /**

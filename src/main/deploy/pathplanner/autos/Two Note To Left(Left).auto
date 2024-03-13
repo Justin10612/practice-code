@@ -18,15 +18,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "ShooterTurn"
+            "name": "ShooterTurnSPEAKER"
           }
         },
         {
@@ -44,7 +38,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {
@@ -72,27 +66,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "NoteIn"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteShoot"
+            "name": "NoteShootSPEAKER"
           }
         },
         {

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.24,
-      "y": 5.54
+      "x": 0.35696840624450643,
+      "y": 7.44
     },
-    "rotation": 0
+    "rotation": -90.0
   },
   "command": {
     "type": "sequential",
@@ -26,31 +26,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.8
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteShootSPEAKER"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.5
+            "waitTime": 0.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Center Note Take(Center)"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Note Shoot(Center)"
+            "pathName": "Run To AMP"
           }
         },
         {
@@ -62,19 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteIn"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteShootSPEAKER"
+            "name": "NoteShootAMP"
           }
         },
         {

@@ -86,18 +86,18 @@ public class PhotonVisionSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    result = photonVision.getLatestResult();
-    target = result.getBestTarget();
+    // result = photonVision.getLatestResult();
+    // target = result.getBestTarget();
 
-    if(hasTarget()){
-      targetID = target.getFiducialId();
-      SmartDashboard.putBoolean("HasTarget", hasTarget());
-      SmartDashboard.putNumber("targetID", targetID);
-      SmartDashboard.putNumber("TargetX", getTargetPose().getX());
-      SmartDashboard.putNumber("TargetY", getTargetPose().getY());
-      SmartDashboard.putNumber("TargetZ", getTargetPose().getRotation().getZ());
-    }else{
-      SmartDashboard.putBoolean("HasTarget", false);
-    }
+    // if(hasTarget()){
+    //   targetID = target.getFiducialId();
+    //   SmartDashboard.putBoolean("HasTarget", hasTarget());
+    //   SmartDashboard.putNumber("targetID", targetID);
+    //   SmartDashboard.putNumber("TargetX", getTargetPose().getX());
+    //   SmartDashboard.putNumber("TargetY", getTargetPose().getY());
+    //   SmartDashboard.putNumber("TargetZ", getTargetPose().getRotation().getZ());
+    // }else{
+    //   SmartDashboard.putBoolean("HasTarget", false);
+    // }
   }
 }

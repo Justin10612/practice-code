@@ -12,7 +12,7 @@ public final class Constants {
   /* Robot Parameters */
   public static final double robotLength = Units.inchesToMeters(25.5);
   public static final double robotWidth = Units.inchesToMeters(25.5);
-  public static final double kModuleDistance = 20*0.0254;
+  public static final double kModuleDistance = 21*0.0254;
   /* ============
    *   Joystick
    * ============
@@ -58,15 +58,15 @@ public final class Constants {
     public static final double kShooterAMP_VoltageSetpoint = 4;
     public static final double kShooterStopVoltageSetpoint = 0;
     public static final double kShooterSpeakerRPMSetpoint = 4100;
-    public static final double kShooterAMP_RPMSetpoint = 1500;
+    public static final double kShooterAMP_RPMSetpoint = 1400;
     public static final double kShooterStopRPMSetpoint = 9999;
     // Shooter PID Constants
-    public static final double kShooterKp = 0.001; 
+    public static final double kShooterKp = 0; 
     public static final double kShooterKi = 0;
     public static final double kShooterKd = 0;
     // Indexer Speed
     public static final double kIndexerNormalVolt = 4;
-    public static final double kIndexerFastVolt = 10;
+    public static final double kIndexerFastVolt = 4;
     public static final double kIndexerSlowlVolt = 0;
 
     public static boolean shouldShoot = false;
@@ -199,15 +199,15 @@ public final class Constants {
     public static final boolean rightRearDriveMotorReversed = true;
     public static final boolean rightRearTurningMotorReversed = true;
 
-    public static final double leftFrontOffset = -0.11;
-    public static final double rightFrontOffset = -0.34;
-    public static final double leftRearOffset = 0.37;
-    public static final double rightRearOffset = -0.31;
+    public static final double leftFrontOffset = 0;
+    public static final double rightFrontOffset = 0;
+    public static final double leftRearOffset = 0;
+    public static final double rightRearOffset = 0;
 
     /**
      * Drive base radius (distance from center to furthest module) 
      * Unit:meters */ 
-    public static final double kDriveBaseRadius = 14.15 * 0.0254;
+    public static final double kDriveBaseRadius = 14.85 * 0.0254;
     
     //front left, front right, rear left, rear right
     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(

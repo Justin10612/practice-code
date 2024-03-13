@@ -29,12 +29,11 @@ public class ClimbManually extends Command {
   @Override
   public void execute() {
     // Inputs
-    double leftInputVal = m_leftFunc.getAsDouble();
-    double rightInputVal = m_rightFunc.getAsDouble();
+    double leftInputVal = -m_leftFunc.getAsDouble();
+    double rightInputVal = -m_rightFunc.getAsDouble();
     // Output
-    // 如果這裡加負號，是不是代表Subsystem那邊要SetInverted?
-    m_climbSubsystem.setRightMotor(rightInputVal*-1);
-    m_climbSubsystem.setLeftMotor(leftInputVal*-1);
+    m_climbSubsystem.setRightMotor(rightInputVal);
+    m_climbSubsystem.setLeftMotor(leftInputVal);
   }
 
   // Called once the command ends or is interrupted.
