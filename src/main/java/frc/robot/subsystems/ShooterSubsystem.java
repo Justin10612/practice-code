@@ -21,6 +21,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private final PIDController shooterPID;
   private final RelativeEncoder shooterEncoder;
 
+  private double RpmSetpoint = 0;
+
   public ShooterSubsystem() {
     // Motor Controllers
     shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorID, MotorType.kBrushless);
@@ -38,12 +40,11 @@ public class ShooterSubsystem extends SubsystemBase {
   /**
    * You have to put it in execute()
    */
-  public void EnableShooterPID(double targetVoltage, double targetRPM){
-    // PID cal
-    double pidOutput = shooterPID.calculate(getShooterSpeed(), targetRPM);
-    pidOutput = Math.min(Math.max(-1, pidOutput), 1); // Output is limited between 1 and -1. Unit:volt
+  public void EnableShooter(double targetVoltage, double targetRPM){
+    RpmSetpoint = targetRPM;
     // Implement
-    shooterMotor.setVoltage(targetVoltage + pidOutput);
+    shooterMotor.setVoltage(targetVoltage);
+    SmartDashboard.putNumber("shooterRPMSetpoint", targetRPM);
   }
 
   public void stopShooterMotor(){
@@ -57,11 +58,13 @@ public class ShooterSubsystem extends SubsystemBase {
     return shooterEncoder.getVelocity();
   }
   public boolean achievedTargetSpeed(){
-    return shooterPID.getPositionError()<100;
+    return getShooterSpeed()>=RpmSetpoint;
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("ShooterMeasure", getShooterSpeed());
+    SmartDashboard.putBoolean("canShoot", achievedTargetSpeed());
+    SmartDashboard.putNumber("shooterError", shooterPID.getPositionError());
   }
 }

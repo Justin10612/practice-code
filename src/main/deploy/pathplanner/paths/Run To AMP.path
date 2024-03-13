@@ -41,7 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "ShooterTrunAMP"
+                "name": "ShooterTurnAMP"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.05
               }
             }
           ]

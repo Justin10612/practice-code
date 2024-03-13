@@ -23,6 +23,7 @@ public class SwerveModule extends SubsystemBase{
   // private final RelativeEncoder turningEncoder;
   // PID controller
   private final PIDController turningPIDController;
+  private final PIDController driveingPIDController;
   // CANcoder
   private final CANcoder absoluteEncoder;
   private final CANcoderConfiguration cancoderConfig;
@@ -50,50 +51,67 @@ public class SwerveModule extends SubsystemBase{
     turningMotor.burnFlash();
 
     driveEncoder = driveMotor.getEncoder();
-    // turningEncoder = turningMotor.getEncoder();
-
-    turningPIDController = new PIDController(SwerveModuleConstants.turningMotorkP, 0, 0);
+    /* Angle PID */
+    turningPIDController = new PIDController(
+      SwerveModuleConstants.anglekP, 
+      SwerveModuleConstants.anglekI, 
+      SwerveModuleConstants.anglekD);
     turningPIDController.enableContinuousInput(-180, 180);
+    /* Drive PID */
+    driveingPIDController = new PIDController(
+      SwerveModuleConstants.drivekP, 
+      SwerveModuleConstants.drivekI, 
+      SwerveModuleConstants.drivekD);
     /* Reset Encoder */
     resetEncoders();
   }
 
 
-    public double getDrivePosition(){
-      return driveEncoder.getPosition()*SwerveModuleConstants.driveEncoderRot2Meter;
-    }
-    public double getDriveVelocity(){
-      return driveEncoder.getVelocity()*SwerveModuleConstants.driveEncoderRPM2MeterPerSec;
-    }
-    public double getTurningPosition(){
-      return absoluteEncoder.getAbsolutePosition().getValue()*360;
-    }
-    // public double getTurnintEncoderPosition(){
-      // return turningEncoder.getPosition()*SwerveModuleConstants.turningEncoderRot2Rad;
-    // }
-    // public double getTurningVelocity(){
-    //   return turningEncoder.getVelocity()*SwerveModuleConstants.turningEncoderRPM2RadPerSec;
-    // }
-    public void resetEncoders(){
-      driveEncoder.setPosition(0);
-      // turningEncoder.setPosition(0);
-    }
-    public SwerveModuleState getState(){
-      return new SwerveModuleState(getDriveVelocity(), Rotation2d.fromDegrees(getTurningPosition()));
-    }
-    public SwerveModulePosition getPosition(){
-      return new SwerveModulePosition(getDrivePosition(), Rotation2d.fromDegrees(getTurningPosition()));
-    }
-    public void setDesiredState(SwerveModuleState state){
-      state = SwerveModuleState.optimize(state, getState().angle);
-      driveMotor.set(state.speedMetersPerSecond);
-      turningMotor.set(turningPIDController.calculate(getState().angle.getDegrees(),state.angle.getDegrees()));
-    }
-    public void stopMotors(){
-      driveMotor.set(0);
-      turningMotor.set(0);
-    }
+  public double getDrivePosition(){
+    return driveEncoder.getPosition()*SwerveModuleConstants.driveEncoderRot2Meter;
+  }
+  public double getDriveVelocity(){
+    return driveEncoder.getVelocity()*SwerveModuleConstants.driveEncoderRPM2MeterPerSec;
+  }
+  public double getTurningPosition(){
+    return absoluteEncoder.getAbsolutePosition().getValue()*360;
+  }
 
-    @Override
-    public void periodic(){}
+  public void resetEncoders(){
+    driveEncoder.setPosition(0);
+    // turningEncoder.setPosition(0);
+  }
+  public SwerveModuleState getState(){
+    return new SwerveModuleState(getDriveVelocity(), Rotation2d.fromDegrees(getTurningPosition()));
+  }
+  public SwerveModulePosition getPosition(){
+    return new SwerveModulePosition(getDrivePosition(), Rotation2d.fromDegrees(getTurningPosition()));
+  }
+  public void setDesiredState(SwerveModuleState state){
+    state = SwerveModuleState.optimize(state, getState().angle);
+    // Drive Motor
+    driveMotor.set(state.speedMetersPerSecond);
+    // Angle Motor pid
+    double anglePidOutput = turningPIDController.calculate(getState().angle.getDegrees(), state.angle.getDegrees());
+    anglePidOutput = Math.abs(turningPIDController.getPositionError())<1 ? 0 : anglePidOutput;
+    turningMotor.set(anglePidOutput);
+  }
+  public void setDesiredState_Auto(SwerveModuleState state){
+    state = SwerveModuleState.optimize(state, getState().angle);
+    // Drive Motor pid
+    // double drivePidOutput = driveingPIDController.calculate(getState().speedMetersPerSecond, state.speedMetersPerSecond);
+    driveMotor.set(state.speedMetersPerSecond/SwerveModuleConstants.maxDriveMotorSpeed);
+    // Angle Motor pid
+    double anglePidOutput = turningPIDController.calculate(getState().angle.getDegrees(), state.angle.getDegrees());
+    anglePidOutput = Math.abs(turningPIDController.getPositionError())<1 ? 0 : anglePidOutput;
+    turningMotor.set(anglePidOutput);
+  }
+
+  public void stopMotors(){
+    driveMotor.set(0);
+    turningMotor.set(0);
+  }
+
+  @Override
+  public void periodic(){}
 }

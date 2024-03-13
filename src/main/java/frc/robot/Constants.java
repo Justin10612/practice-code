@@ -169,7 +169,15 @@ public final class Constants {
     public static final double turningEncoderRot2Rad = turningMotorGearRatio*2*Math.PI;
     public static final double driveEncoderRPM2MeterPerSec = driveEncoderRot2Meter/60.0;
     public static final double turningEncoderRPM2RadPerSec = turningEncoderRot2Rad/60.0;
-    public static final double turningMotorkP = 0.015;
+    // Turn PID
+    public static final double drivekP = 0.2;
+    public static final double drivekI = 0;
+    public static final double drivekD = 0;
+    // Angle PID
+    public static final double anglekP = 0.012;
+    public static final double anglekI = 0;
+    public static final double anglekD = 0.00025;
+    // Max Speed
     public static final double maxDriveMotorSpeed = 4.5;
   }
   
@@ -199,10 +207,10 @@ public final class Constants {
     public static final boolean rightRearDriveMotorReversed = true;
     public static final boolean rightRearTurningMotorReversed = true;
 
-    public static final double leftFrontOffset = 0;
-    public static final double rightFrontOffset = 0;
-    public static final double leftRearOffset = 0;
-    public static final double rightRearOffset = 0;
+    public static final double leftFrontOffset = -0.0962;
+    public static final double rightFrontOffset = -0.348;
+    public static final double leftRearOffset = 0.3986;
+    public static final double rightRearOffset = -0.31;
 
     /**
      * Drive base radius (distance from center to furthest module) 

@@ -61,9 +61,9 @@ public class RobotContainer {
   public RobotContainer() {    
     NamedCommands.registerCommand("ClimbBack", new ClimbDown(m_climbSubsystem).withTimeout(0.5));
 
-    NamedCommands.registerCommand("ShooterTurnSPEAKER", new ShooterPrepSPEAKER(m_shooterSubsystem).withTimeout(0.02));
+    NamedCommands.registerCommand("ShooterTurnSPEAKER", new ShooterPrepSPEAKER(m_shooterSubsystem).withTimeout(0.2));
 
-    NamedCommands.registerCommand("ShooterTurnAMP", new ShooterPrepAMP(m_shooterSubsystem).withTimeout(0.02));
+    NamedCommands.registerCommand("ShooterTurnAMP", new ShooterPrepAMP(m_shooterSubsystem).withTimeout(0.2));
 
     NamedCommands.registerCommand("NoteIn", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(2));
     
@@ -72,19 +72,15 @@ public class RobotContainer {
       m_shooterSubsystem,
       m_IndexerSubsystem,
       feedBtn,
-      false).withTimeout(0.5));
+      true).withTimeout(0.5));
 
     NamedCommands.registerCommand("NoteShootAMP", new ShootAMP(
       m_shooterSubsystem,
       m_IndexerSubsystem,
       feedBtn,
-      false).withTimeout(0.5));
+      true).withTimeout(10));
 
     NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_climbSubsystem).withTimeout(0.5));
-
-    NamedCommands.registerCommand("BaseStop", Commands.run(()->{
-      m_swerveSubsystem.stopModules();
-    }, m_swerveSubsystem).withTimeout(0.02));
     /* Create Chooser */
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto mode", autoChooser);

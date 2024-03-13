@@ -28,8 +28,11 @@ public class IndexerSubsystem extends SubsystemBase {
   /**
    * When Shooter Velocity reach the setpoint, feed Note into it.
    */
-  public void FeedWhenReady(){
+  public void FeedWhenReady_SPEAKER(){
     indexerMotor.setVoltage(ShooterConstants.kIndexerFastVolt);
+  }
+  public void FeedWhenReady_AMP(){
+    indexerMotor.setVoltage(ShooterConstants.kIndexerNormalVolt);
   }
   public void Intaking(){
     indexerMotor.setVoltage(ShooterConstants.kIndexerNormalVolt);

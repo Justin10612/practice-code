@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "ClimbUp"
           }
         },
@@ -38,25 +32,13 @@
         {
           "type": "named",
           "data": {
-            "name": "BaseStop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "NoteShootAMP"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AllStop"
+            "waitTime": 10.0
           }
         }
       ]

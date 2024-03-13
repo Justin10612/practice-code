@@ -36,10 +36,10 @@ public class ShootSPEAKER extends Command {
   public void execute() {
     boolean feedBtn = m_feedBtnFunc.getAsBoolean();
     if(m_isAuto){
-      if(m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady();
+      if(m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_SPEAKER();
     }else{
-      m_shooterSubsystem.EnableShooterPID(ShooterConstants.kShooterSpeakerVoltageSetpoint, ShooterConstants.kShooterSpeakerRPMSetpoint);
-      if(feedBtn && m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady();
+      m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterSpeakerVoltageSetpoint, ShooterConstants.kShooterSpeakerRPMSetpoint);
+      if(feedBtn && m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_SPEAKER();
     }
   }
 
