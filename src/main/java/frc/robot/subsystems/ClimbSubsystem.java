@@ -25,6 +25,9 @@ public class ClimbSubsystem extends SubsystemBase {
   private final RelativeEncoder climbRightEncoder;
   private final RelativeEncoder climbLeftEncoder;
 
+  private boolean leftFlag = true;
+  private boolean rightFlag = true;
+
   public ClimbSubsystem() {
     // Motor Controllers
     climbRightMotor = new CANSparkMax(ClimbConstants.kClimbRightMotorID, MotorType.kBrushless);
@@ -90,6 +93,14 @@ public class ClimbSubsystem extends SubsystemBase {
     }else{
       climbRightMotor.setVoltage(value*12);
     }
+    /* After */
+    if(value >0){
+      if(getRightPosition() >= 110) climbRightMotor.setVoltage(0);
+      else climbRightMotor.setVoltage(value*12);
+    }else{
+      if(getLeftLimitState()) climbRightMotor.setVoltage(0);
+      else climbRightMotor.setVoltage(value*12);
+    }
   }
 
   public void setLeftMotor(double value){
@@ -108,6 +119,14 @@ public class ClimbSubsystem extends SubsystemBase {
       }
     }else{
       climbLeftMotor.setVoltage(value*12);
+    }
+    /* After */
+    if(value >0){
+      if(getLeftPosition() >= 108) climbLeftMotor.setVoltage(0);
+      else climbLeftMotor.setVoltage(value*12);
+    }else{
+      if(getRightLimitState()) climbLeftMotor.setVoltage(0);
+      else climbLeftMotor.setVoltage(value*12);
     }
   }
 
@@ -155,12 +174,19 @@ public class ClimbSubsystem extends SubsystemBase {
     // LimitSwitch
     SmartDashboard.putBoolean("Right Limit", getRightLimitState());
     SmartDashboard.putBoolean("Left Limit", getLeftLimitState());
-    
-    if(getRightLimitState()){
+    /* Encoder Zeroing */
+    if(getRightLimitState() && leftFlag){
       climbLeftEncoder.setPosition(0);
+      leftFlag = false;
+    }else if(!getRightLimitState()){
+      leftFlag = true;
     }
-    if(getLeftLimitState()){
+    /* Another Encoder Zeroing */
+    if(getLeftLimitState() && rightFlag){
       climbRightEncoder.setPosition(0);
+      rightFlag = false;
+    }else if(!getLeftLimitState() && rightFlag){
+      leftFlag = true;
     }
   }
 
