@@ -39,9 +39,7 @@ public class ShootAMP extends Command {
   public void execute() {
     boolean feedBtn = m_feedBtnFunc.getAsBoolean();
     if(m_isAuto){
-      if(m_shooterSubsystem.achievedTargetSpeed()){
-        m_IndexerSubsystem.FeedWhenReady_AMP();
-        System.out.println("iswork");} 
+      if(m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_AMP();
 
     }else{
       m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);

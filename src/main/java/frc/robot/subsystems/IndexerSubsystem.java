@@ -59,7 +59,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("TopSW", getTopSwitchState());
+    // SmartDashboard.putBoolean("TopSW", getTopSwitchState());
     SmartDashboard.putBoolean("BottomSW", getBottomSwitchState());
   }
 }

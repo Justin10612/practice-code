@@ -10,6 +10,7 @@ import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.FaultID;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -92,6 +93,10 @@ public class IntakeSubsystem extends SubsystemBase {
   public void WheelStop(){
     intakeMotor.setVoltage(0);
   }
+
+  public boolean isJam(){
+    return !intakeMotor.getFault(FaultID.kOvercurrent);
+  }
   @Override
   public void periodic() {
     // Display Data
@@ -100,8 +105,6 @@ public class IntakeSubsystem extends SubsystemBase {
     double PidOutput = intakePivotPID.calculate(getAngle(), PivotAngleSetpoint);
     // PID deadband
     PidOutput = Constants.setMaxOutput(PidOutput, IntakeConstants.kPivotMaxOutput);
-    // Intake Feedforward Calclation
-    // double FeedforwardOutput = intakePivotFeedforward.calculate(Math.toRadians(getAngle()), intakePivotEncoder.getVelocity()*2*Math.PI/60)/12;
     // Implement
     if(Math.abs(intakePivotPID.getPositionError())<2){
       intakePivotMotor.set(0);
@@ -109,5 +112,6 @@ public class IntakeSubsystem extends SubsystemBase {
       intakePivotMotor.set(PidOutput);
     }
     // intakePivotMotor.set(PidOutput);
+    SmartDashboard.putBoolean("isJam", isJam());
   }
 }

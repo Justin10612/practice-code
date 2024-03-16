@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.57,
+        "x": 3.0,
         "y": 5.54
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.67,
+        "x": 3.1,
         "y": 5.54
       },
       "isLocked": false,
@@ -45,7 +45,7 @@
   "eventMarkers": [
     {
       "name": "ShootetTurn",
-      "waypointRelativePos": 0.45,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -54,6 +54,12 @@
               "type": "named",
               "data": {
                 "name": "ShooterTurnSPEAKER"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "CenterNoteInCenter"
               }
             }
           ]

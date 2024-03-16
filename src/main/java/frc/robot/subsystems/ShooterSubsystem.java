@@ -9,7 +9,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
@@ -17,8 +16,7 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
   private final CANSparkMax shooterMotor;
- 
-  private final PIDController shooterPID;
+
   private final RelativeEncoder shooterEncoder;
 
   private double RpmSetpoint = 0;
@@ -28,8 +26,6 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor = new CANSparkMax(ShooterConstants.kShooterMotorID, MotorType.kBrushless);
     // Encoder
     shooterEncoder = shooterMotor.getEncoder();
-
-    shooterPID = new PIDController(ShooterConstants.kShooterKp, ShooterConstants.kShooterKi, ShooterConstants.kShooterKd);
 
     shooterMotor.restoreFactoryDefaults();
     shooterMotor.setInverted(true);
@@ -64,7 +60,7 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("ShooterMeasure", getShooterSpeed());
-    SmartDashboard.putBoolean("canShoot", achievedTargetSpeed());
-    SmartDashboard.putNumber("shooterError", shooterPID.getPositionError());
+    // SmartDashboard.putBoolean("canShoot", achievedTargetSpeed());
+    // SmartDashboard.putNumber("Shooter / Voltage",shooterMotor.getBusVoltage());
   }
 }

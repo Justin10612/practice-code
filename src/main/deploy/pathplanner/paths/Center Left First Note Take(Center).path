@@ -44,8 +44,8 @@
   ],
   "eventMarkers": [
     {
-      "name": "NoteIn",
-      "waypointRelativePos": 0.7,
+      "name": "CenterLeftFirstNoteInCenter",
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -53,7 +53,7 @@
             {
               "type": "named",
               "data": {
-                "name": "NoteIn"
+                "name": "CenterLeftFirstNoteInCenter"
               }
             }
           ]

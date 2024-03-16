@@ -39,7 +39,7 @@ public final class Constants {
     public static final int kIntakeMotorID = 32;
     // Motor Setting 
     public static final double kPivotMaxOutput = 0.12;
-    public static final double kIntakingMotorVoltage = 6.5;
+    public static final double kIntakingMotorVoltage = 8;
     public static final double kEjectingMotorVoltage = -6.5;
   }
   /* ===========
@@ -48,7 +48,7 @@ public final class Constants {
    */
   public static final class ShooterConstants{
     // Motor ID
-    public static final int kShooterMotorID = 33;
+    public static final int kShooterMotorID = 23;
     public static final int kIndexerMotorID = 13;
     // Limit Switch ID
     public static final int kUpLimitSwitchPort = 0;
@@ -56,10 +56,10 @@ public final class Constants {
     // Motor Setting
     public static final double kShooterSpeakerVoltageSetpoint = 9.6;
     public static final double kShooterSpeakerVoltageSetpoint_Auto = 11;
-    public static final double kShooterAMP_VoltageSetpoint = 4;
+    public static final double kShooterAMP_VoltageSetpoint = 3;
     public static final double kShooterStopVoltageSetpoint = 0;
     public static final double kShooterSpeakerRPMSetpoint = 4100;
-    public static final double kShooterAMP_RPMSetpoint = 1400;
+    public static final double kShooterAMP_RPMSetpoint = 1000;
     public static final double kShooterStopRPMSetpoint = 9999;
     // Shooter PID Constants
     public static final double kShooterKp = 0; 
@@ -81,8 +81,11 @@ public final class Constants {
     public static final int kClimbRightMotorID = 31;
     public static final int kClimbLeftMotorID = 8;
     //limitSwitch Port
-    public static final int kRightLimitSwitchPort = 1;
-    public static final int kLeftLimitSwitchPort = 2;
+    public static final int kRightLimitSwitchPort = 2;
+    public static final int kLeftLimitSwitchPort = 1;
+    // Encoder Value
+    public static final int kRightEncoderLimit = 0;
+    public static final int kLeftEncoderLimit = 0;
   }
   /* =======
    *   LED

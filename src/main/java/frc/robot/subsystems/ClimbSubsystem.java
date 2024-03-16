@@ -75,13 +75,13 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setRightMotor(double value){//152
-    if(getRightPosition() >= 112){
+    if(getRightPosition() >= 110){
       if(value > 0){
         climbRightMotor.setVoltage(0);
       }else{
         climbRightMotor.setVoltage(value*12);
       }
-    }else if(getRightLimitState()){
+    }else if(getLeftLimitState()){
       if(value < 0){
         climbRightMotor.setVoltage(0);
       }else{
@@ -93,14 +93,14 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setLeftMotor(double value){
-    if(getLeftPosition() >= 104){
+    if(getLeftPosition() >= 108){
       if(value > 0){
         climbLeftMotor.setVoltage(0);
       }else{
         climbLeftMotor.setVoltage(value*12);
       }
     }
-    else if(getLeftLimitState()){
+    else if(getRightLimitState()){
       if(value < 0){
         climbLeftMotor.setVoltage(0);
       }else{
@@ -156,10 +156,10 @@ public class ClimbSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Right Limit", getRightLimitState());
     SmartDashboard.putBoolean("Left Limit", getLeftLimitState());
     
-    if(getLeftLimitState()){
+    if(getRightLimitState()){
       climbLeftEncoder.setPosition(0);
     }
-    if(getRightLimitState()){
+    if(getLeftLimitState()){
       climbRightEncoder.setPosition(0);
     }
   }

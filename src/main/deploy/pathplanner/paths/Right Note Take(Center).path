@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 2.57,
+        "x": 2.75,
         "y": 4.1046482092964185
       },
       "prevControl": {
-        "x": 1.3239288017037585,
+        "x": 1.5039288017037586,
         "y": 4.035579609620759
       },
       "nextControl": null,
@@ -44,8 +44,8 @@
   ],
   "eventMarkers": [
     {
-      "name": "NoteIn",
-      "waypointRelativePos": 0.6,
+      "name": "RightNoteInCenter",
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -53,7 +53,7 @@
             {
               "type": "named",
               "data": {
-                "name": "NoteIn"
+                "name": "RightNoteInCenter"
               }
             }
           ]

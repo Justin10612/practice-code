@@ -12,9 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ClimbUp"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ClimbUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterTurnAMP"
+                }
+              }
+            ]
           }
         },
         {

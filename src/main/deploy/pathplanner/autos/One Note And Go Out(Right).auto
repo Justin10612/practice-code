@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6699236223008809,
-      "y": 6.581490138729208
+      "x": 0.7050561319382253,
+      "y": 4.520382906671662
     },
-    "rotation": 55.61965527615512
+    "rotation": -60.45999999999998
   },
   "command": {
     "type": "sequential",
@@ -18,13 +18,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ShooterTurnSPEAKER"
+                  "name": "ClimbUp"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "ClimbUp"
+                  "name": "ShooterTurnSPEAKER"
                 }
               }
             ]
@@ -51,31 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Note Take(Left)"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Note Shoot(Left)"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "NoteShootSPEAKER"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AllStop"
+            "pathName": "Right Side Just Go Out"
           }
         }
       ]

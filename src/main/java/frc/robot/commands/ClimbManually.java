@@ -4,8 +4,11 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.BooleanSubscriber;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
+
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class ClimbManually extends Command {
@@ -13,11 +16,17 @@ public class ClimbManually extends Command {
   private final ClimbSubsystem m_climbSubsystem;
   private final DoubleSupplier m_leftFunc;
   private final DoubleSupplier m_rightFunc;
+  private final BooleanSupplier m_enableBtnFunc;
+  // Variable
+  private double leftInputVal; 
+  private double rightInputVal; 
+  private boolean enable; 
 
-  public ClimbManually(ClimbSubsystem climbSubsystem, DoubleSupplier leftFunc, DoubleSupplier rightFunc) {
+  public ClimbManually(ClimbSubsystem climbSubsystem, DoubleSupplier leftFunc, DoubleSupplier rightFunc, BooleanSupplier enableBtn) {
     this.m_climbSubsystem = climbSubsystem;
     this.m_leftFunc= leftFunc;
     this.m_rightFunc = rightFunc;
+    this.m_enableBtnFunc = enableBtn;
     addRequirements(m_climbSubsystem);
   }
 
@@ -29,11 +38,16 @@ public class ClimbManually extends Command {
   @Override
   public void execute() {
     // Inputs
-    double leftInputVal = -m_leftFunc.getAsDouble();
-    double rightInputVal = -m_rightFunc.getAsDouble();
+    leftInputVal = -m_leftFunc.getAsDouble();
+    rightInputVal = -m_rightFunc.getAsDouble();
+    enable = m_enableBtnFunc.getAsBoolean();
     // Output
-    m_climbSubsystem.setRightMotor(rightInputVal);
-    m_climbSubsystem.setLeftMotor(leftInputVal);
+    if(enable){
+      m_climbSubsystem.setRightMotor(rightInputVal);
+      m_climbSubsystem.setLeftMotor(leftInputVal);
+    }else{
+      m_climbSubsystem.StopMotors();
+    }
   }
 
   // Called once the command ends or is interrupted.

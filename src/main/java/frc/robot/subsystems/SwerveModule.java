@@ -23,7 +23,6 @@ public class SwerveModule extends SubsystemBase{
   // private final RelativeEncoder turningEncoder;
   // PID controller
   private final PIDController turningPIDController;
-  private final PIDController driveingPIDController;
   // CANcoder
   private final CANcoder absoluteEncoder;
   private final CANcoderConfiguration cancoderConfig;
@@ -57,11 +56,6 @@ public class SwerveModule extends SubsystemBase{
       SwerveModuleConstants.anglekI, 
       SwerveModuleConstants.anglekD);
     turningPIDController.enableContinuousInput(-180, 180);
-    /* Drive PID */
-    driveingPIDController = new PIDController(
-      SwerveModuleConstants.drivekP, 
-      SwerveModuleConstants.drivekI, 
-      SwerveModuleConstants.drivekD);
     /* Reset Encoder */
     resetEncoders();
   }

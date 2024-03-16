@@ -12,15 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ClimbUp"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShooterTurnSPEAKER"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ClimbUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterTurnSPEAKER"
+                }
+              }
+            ]
           }
         },
         {

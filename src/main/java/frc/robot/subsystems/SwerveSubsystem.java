@@ -17,7 +17,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.SwerveModuleConstants;
@@ -106,7 +105,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     // Set up custom logging to add the current path to a field 2d widget
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
-    SmartDashboard.putData("Field", field);
+    // SmartDashboard.putData("Field", field);
   }
 
   public Rotation2d getHeading(){
@@ -142,12 +141,12 @@ public class SwerveSubsystem extends SubsystemBase{
     leftRearModule.setDesiredState(desiredStates[2]);
     rightRearModule.setDesiredState(desiredStates[3]);
   }
-  public void setModuleStatesAuto(SwerveModuleState[] desiredStates){
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveModuleConstants.maxDriveMotorSpeed);
-    leftFrontModule.setDesiredState_Auto(desiredStates[0]);
-    rightFrontModule.setDesiredState_Auto(desiredStates[1]);
-    leftRearModule.setDesiredState_Auto(desiredStates[2]);
-    rightRearModule.setDesiredState_Auto(desiredStates[3]);
+  public void setModuleStatesAuto(SwerveModuleState[] autoDesiredStates){
+    SwerveDriveKinematics.desaturateWheelSpeeds(autoDesiredStates, SwerveModuleConstants.maxDriveMotorSpeed);
+    leftFrontModule.setDesiredState_Auto(autoDesiredStates[0]);
+    rightFrontModule.setDesiredState_Auto(autoDesiredStates[1]);
+    leftRearModule.setDesiredState_Auto(autoDesiredStates[2]);
+    rightRearModule.setDesiredState_Auto(autoDesiredStates[3]);
   }
   public void stopModules(){
     leftFrontModule.stopMotors();
@@ -168,7 +167,7 @@ public class SwerveSubsystem extends SubsystemBase{
   }
   // Auto Drive
   public void driveFieldRelative(ChassisSpeeds RobotSpeeds){
-    targetSpeeds = ChassisSpeeds.discretize(RobotSpeeds, 0.002);
+    targetSpeeds = ChassisSpeeds.discretize(RobotSpeeds, 0.01);
     SwerveModuleState[] states = SwerveConstants.swerveKinematics.toSwerveModuleStates(targetSpeeds);
     setModuleStatesAuto(states);
   }
@@ -184,25 +183,24 @@ public class SwerveSubsystem extends SubsystemBase{
 
   @Override
   public void periodic(){
-    
     m_odometer.update(getHeading(), getModulePosition());
-    field.setRobotPose(m_odometer.getPoseMeters());
+    // field.setRobotPose(m_odometer.getPoseMeters());
     // SmartDashboard.putNumber("X", m_odometer.getPoseMeters().getX());
     // SmartDashboard.putNumber("Y", m_odometer.getPoseMeters().getY());
-    SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
-    SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
-    SmartDashboard.putNumber("LF_Position", leftFrontModule.getDrivePosition());
-    SmartDashboard.putNumber("LR_Position", leftRearModule.getDrivePosition());
-    SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
-    SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
-    SmartDashboard.putNumber("RF_Position", rightFrontModule.getDrivePosition());
-    SmartDashboard.putNumber("RR_Position", rightRearModule.getDrivePosition());
-    SmartDashboard.putNumber("robotAngle", getHeading().getDegrees());
-    /* Testing */
+    // SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
+    // SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
+    // SmartDashboard.putNumber("LF_Position", leftFrontModule.getDrivePosition());
+    // SmartDashboard.putNumber("LR_Position", leftRearModule.getDrivePosition());
+    // SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
+    // SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
+    // SmartDashboard.putNumber("RF_Position", rightFrontModule.getDrivePosition());
+    // SmartDashboard.putNumber("RR_Position", rightRearModule.getDrivePosition());
+    // SmartDashboard.putNumber("robotAngle", getHeading().getDegrees());
+    // /* Testing */
 
-    SmartDashboard.putNumber("BotX", targetSpeeds.vxMetersPerSecond);
-    SmartDashboard.putNumber("BotY", targetSpeeds.vyMetersPerSecond);
-    SmartDashboard.putNumber("BotZ", targetSpeeds.omegaRadiansPerSecond);
+    // SmartDashboard.putNumber("BotX", targetSpeeds.vxMetersPerSecond);
+    // SmartDashboard.putNumber("BotY", targetSpeeds.vyMetersPerSecond);
+    // SmartDashboard.putNumber("BotZ", targetSpeeds.omegaRadiansPerSecond);
 
   }
   

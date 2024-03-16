@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.26,
-      "y": 5.54
+      "x": 0.67,
+      "y": 6.58
     },
     "rotation": 0
   },
@@ -12,15 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ShooterTurnSPEAKER"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ClimbUp"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ClimbUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterTurnSPEAKER"
+                }
+              }
+            ]
           }
         },
         {

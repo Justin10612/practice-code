@@ -24,6 +24,12 @@ public class ManualDrive extends Command {
   private final SlewRateLimiter xLimiter;
   private final SlewRateLimiter yLimiter;
   private final SlewRateLimiter zLimiter;
+  // Variable
+  private double xSpeed;
+  private double ySpeed;
+  private double zSpeed;
+  private boolean isSlowMode;
+
 
   public ManualDrive(SwerveSubsystem swerveSubsystem, DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed, BooleanSupplier isSlowMode) {
     this.m_swerveSubsystem = swerveSubsystem;
@@ -41,10 +47,10 @@ public class ManualDrive extends Command {
   public void execute() {
     // Get value
     // 負號加在這
-    double xSpeed = -xSpeedFunc.getAsDouble();
-    double ySpeed = -ySpeedFunc.getAsDouble();  
-    double zSpeed = -zSpeedFunc.getAsDouble();
-    boolean isSlowMode = isSlowModeFunc.getAsBoolean();
+    xSpeed = -xSpeedFunc.getAsDouble();
+    ySpeed = -ySpeedFunc.getAsDouble();  
+    zSpeed = -zSpeedFunc.getAsDouble();
+    isSlowMode = isSlowModeFunc.getAsBoolean();
     // Dead band Limit
     xSpeed = Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
     ySpeed = Constants.DeadBandLimit(ySpeed, OperatorConstants.kJoystickDeadBand);
@@ -55,9 +61,9 @@ public class ManualDrive extends Command {
       ySpeed = ySpeed*0.4;
       zSpeed = zSpeed*0.4;
     }else{
-      xSpeed = xSpeed*1;
-      ySpeed = ySpeed*1;
-      zSpeed = zSpeed*1;
+      xSpeed = xSpeed*0.8;
+      ySpeed = ySpeed*0.8;
+      zSpeed = zSpeed*0.8;
     }
     // SlewRate
     xSpeed = xLimiter.calculate(xSpeed);
