@@ -39,7 +39,7 @@ public final class Constants {
     public static final int kIntakeMotorID = 32;
     // Motor Setting 
     public static final double kPivotMaxOutput = 0.12;
-    public static final double kIntakingMotorVoltage = 8;
+    public static final double kIntakingMotorVoltage = 8; //8
     public static final double kEjectingMotorVoltage = -6.5;
   }
   /* ===========

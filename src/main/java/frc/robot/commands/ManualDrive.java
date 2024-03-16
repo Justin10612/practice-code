@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -52,9 +53,12 @@ public class ManualDrive extends Command {
     zSpeed = -zSpeedFunc.getAsDouble();
     isSlowMode = isSlowModeFunc.getAsBoolean();
     // Dead band Limit
-    xSpeed = Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
-    ySpeed = Constants.DeadBandLimit(ySpeed, OperatorConstants.kJoystickDeadBand);
-    zSpeed = Constants.DeadBandLimit(zSpeed, OperatorConstants.kJoystickDeadBand);
+    xSpeed = MathUtil.applyDeadband(xSpeed, OperatorConstants.kJoystickDeadBand);
+    ySpeed = MathUtil.applyDeadband(ySpeed, OperatorConstants.kJoystickDeadBand);
+    zSpeed = MathUtil.applyDeadband(zSpeed, OperatorConstants.kJoystickDeadBand);
+    // xSpeed = Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
+    // ySpeed = Constants.DeadBandLimit(ySpeed, OperatorConstants.kJoystickDeadBand);
+    // zSpeed = Constants.DeadBandLimit(zSpeed, OperatorConstants.kJoystickDeadBand);
     // TurboModeSelect
     if(isSlowMode){
       xSpeed = xSpeed*0.4;

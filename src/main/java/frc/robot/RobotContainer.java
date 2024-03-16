@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AimAMP;
 import frc.robot.commands.ClimbDown;
 import frc.robot.commands.ClimbManually;
 import frc.robot.commands.ClimberUp;
@@ -28,12 +27,11 @@ import frc.robot.commands.ShooterPrepAMP;
 import frc.robot.commands.ShootAMP;
 import frc.robot.commands.ShootSPEAKER;
 import frc.robot.commands.ShooterPrepSPEAKER;
+import frc.robot.commands.TrackNote;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-// import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
-import frc.robot.subsystems.PhotonVisionSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 /**
@@ -43,14 +41,12 @@ import frc.robot.subsystems.SwerveSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // private final LimeLightSubsystem m_limeLightSubsystem = new LimeLightSubsystem();
-  // private final PhotonVisionSubsystem m_photonVisionSubsystem = new PhotonVisionSubsystem();
+  private final LimeLightSubsystem m_limeLightSubsystem = new LimeLightSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final IndexerSubsystem m_IndexerSubsystem = new IndexerSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
-  // private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
   
   private final SendableChooser<Command> autoChooser;
 
@@ -85,6 +81,12 @@ public class RobotContainer {
       feedBtn,
       true).withTimeout(0.5));
 
+    NamedCommands.registerCommand("NoteShootSPEAKERForEnd", new ShootSPEAKER(
+      m_shooterSubsystem,
+      m_IndexerSubsystem,
+      feedBtn,
+      true));
+
     NamedCommands.registerCommand("NoteShootAMP", new ShootAMP(
       m_shooterSubsystem,
       m_IndexerSubsystem,
@@ -115,6 +117,8 @@ public class RobotContainer {
       Commands.runOnce(()->{
         m_swerveSubsystem.resetGyro();
     }));
+    /* Aiming Note */
+    DriverJoystick.leftTrigger(0.4).and(OperatorJoystick.x()).whileTrue(new TrackNote(m_swerveSubsystem, m_limeLightSubsystem));
     /* Aiming Amp */
     // DriverJoystick.leftTrigger(0.4).whileTrue(new AimAMP(m_photonVisionSubsystem, m_swerveSubsystem)); 
 
@@ -127,7 +131,7 @@ public class RobotContainer {
     DoubleSupplier lInputFunc = () -> OperatorJoystick.getLeftY();
     DoubleSupplier rInputFunc = () -> OperatorJoystick.getRightY();
     BooleanSupplier enableFunc = () -> OperatorJoystick.leftBumper().getAsBoolean();
-    // m_climbSubsystem.setDefaultCommand(new ClimbManually(m_climbSubsystem, lInputFunc, rInputFunc, enableFunc));
+    m_climbSubsystem.setDefaultCommand(new ClimbManually(m_climbSubsystem, lInputFunc, rInputFunc, enableFunc));
     /* Intake Note */
     OperatorJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem));
     /* Eject Note when Intake is at down position. */

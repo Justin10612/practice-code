@@ -50,6 +50,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     climbRightMotor.burnFlash();
     climbLeftMotor.burnFlash();
+
   }
 
   public void resetEncoder(){
@@ -78,21 +79,21 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setRightMotor(double value){//152
-    if(getRightPosition() >= 110){
-      if(value > 0){
-        climbRightMotor.setVoltage(0);
-      }else{
-        climbRightMotor.setVoltage(value*12);
-      }
-    }else if(getLeftLimitState()){
-      if(value < 0){
-        climbRightMotor.setVoltage(0);
-      }else{
-        climbRightMotor.setVoltage(value*12);
-      }
-    }else{
-      climbRightMotor.setVoltage(value*12);
-    }
+    // if(getRightPosition() >= 110){
+    //   if(value > 0){
+    //     climbRightMotor.setVoltage(0);
+    //   }else{
+    //     climbRightMotor.setVoltage(value*12);
+    //   }
+    // }else if(getLeftLimitState()){
+    //   if(value < 0){
+    //     climbRightMotor.setVoltage(0);
+    //   }else{
+    //     climbRightMotor.setVoltage(value*12);
+    //   }
+    // }else{
+    //   climbRightMotor.setVoltage(value*12);
+    // }
     /* After */
     if(value >0){
       if(getRightPosition() >= 110) climbRightMotor.setVoltage(0);
@@ -104,22 +105,22 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setLeftMotor(double value){
-    if(getLeftPosition() >= 108){
-      if(value > 0){
-        climbLeftMotor.setVoltage(0);
-      }else{
-        climbLeftMotor.setVoltage(value*12);
-      }
-    }
-    else if(getRightLimitState()){
-      if(value < 0){
-        climbLeftMotor.setVoltage(0);
-      }else{
-        climbLeftMotor.setVoltage(value*12);
-      }
-    }else{
-      climbLeftMotor.setVoltage(value*12);
-    }
+    // if(getLeftPosition() >= 108){
+    //   if(value > 0){
+    //     climbLeftMotor.setVoltage(0);
+    //   }else{
+    //     climbLeftMotor.setVoltage(value*12);
+    //   }
+    // }
+    // else if(getRightLimitState()){
+    //   if(value < 0){
+    //     climbLeftMotor.setVoltage(0);
+    //   }else{
+    //     climbLeftMotor.setVoltage(value*12);
+    //   }
+    // }else{
+    //   climbLeftMotor.setVoltage(value*12);
+    // }
     /* After */
     if(value >0){
       if(getLeftPosition() >= 108) climbLeftMotor.setVoltage(0);
@@ -152,14 +153,14 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void leftClimbBack(){
-    if(getLeftLimitState()){
+    if(getRightLimitState()){
       climbLeftMotor.setVoltage(0);
     }else{
       climbLeftMotor.setVoltage(-9.6);
     }
   }
   public void rightClimbBack(){
-    if(getRightLimitState()){
+    if(getLeftLimitState()){
       climbRightMotor.setVoltage(0);
     }else{
       climbRightMotor.setVoltage(-9.6);
@@ -176,17 +177,17 @@ public class ClimbSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Left Limit", getLeftLimitState());
     /* Encoder Zeroing */
     if(getRightLimitState() && leftFlag){
-      climbLeftEncoder.setPosition(0);
+      for(int i=0;i<4;i++) climbLeftEncoder.setPosition(0);
       leftFlag = false;
     }else if(!getRightLimitState()){
       leftFlag = true;
     }
     /* Another Encoder Zeroing */
     if(getLeftLimitState() && rightFlag){
-      climbRightEncoder.setPosition(0);
+      for(int i=0;i<4;i++) climbRightEncoder.setPosition(0);
       rightFlag = false;
     }else if(!getLeftLimitState() && rightFlag){
-      leftFlag = true;
+      rightFlag = true;
     }
   }
 
