@@ -6,33 +6,34 @@ package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootAMP extends Command {
   /** Creates a new ShooterPreparingFrAMPCommand. */
   private final ShooterSubsystem m_shooterSubsystem;
   private final IndexerSubsystem m_IndexerSubsystem;
+  private final LEDSubsystem m_ledSubsystem;
   private final boolean m_isAuto;
   private final BooleanSupplier m_feedBtnFunc;
   
-  public ShootAMP(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem, BooleanSupplier btnFunc, boolean isAuto) {
+  public ShootAMP(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem, LEDSubsystem ledSubsystem, BooleanSupplier btnFunc, boolean isAuto) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_shooterSubsystem = shooterSubsystem;
     this.m_IndexerSubsystem = indexerSubsystem;
+    this.m_ledSubsystem = ledSubsystem;
     this.m_feedBtnFunc = btnFunc;
     this.m_isAuto = isAuto;
-    addRequirements(m_shooterSubsystem, m_IndexerSubsystem);
+    addRequirements(m_shooterSubsystem, m_IndexerSubsystem, m_ledSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    SmartDashboard.putBoolean("isScheduled", true);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -40,10 +41,10 @@ public class ShootAMP extends Command {
     boolean feedBtn = m_feedBtnFunc.getAsBoolean();
     if(m_isAuto){
       if(m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_AMP();
-
     }else{
       m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
       if(feedBtn && m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_AMP();
+      else if(feedBtn == false && m_shooterSubsystem.achievedTargetSpeed()) m_ledSubsystem.setRGB(LEDConstants.kPrepToSpeakerRGBValue);
     }
   }
 
@@ -52,7 +53,6 @@ public class ShootAMP extends Command {
   public void end(boolean interrupted) {
     m_shooterSubsystem.stopShooterMotor();
     m_IndexerSubsystem.StopIndexerMotor();
-    SmartDashboard.putBoolean("isScheduled", false);
   }
 
   // Returns true when the command should end.

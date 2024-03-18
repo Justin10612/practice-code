@@ -185,23 +185,17 @@ public class SwerveSubsystem extends SubsystemBase{
   public void periodic(){
     m_odometer.update(getHeading(), getModulePosition());
     // field.setRobotPose(m_odometer.getPoseMeters());
-    // SmartDashboard.putNumber("X", m_odometer.getPoseMeters().getX());
-    // SmartDashboard.putNumber("Y", m_odometer.getPoseMeters().getY());
-    // SmartDashboard.putNumber("LF_angle", leftFrontModule.getTurningPosition());
-    // SmartDashboard.putNumber("LR_angle", leftRearModule.getTurningPosition());
-    // SmartDashboard.putNumber("LF_Position", leftFrontModule.getDrivePosition());
-    // SmartDashboard.putNumber("LR_Position", leftRearModule.getDrivePosition());
-    // SmartDashboard.putNumber("RF_angle", rightFrontModule.getTurningPosition());
-    // SmartDashboard.putNumber("RR_angle", rightRearModule.getTurningPosition());
-    // SmartDashboard.putNumber("RF_Position", rightFrontModule.getDrivePosition());
-    // SmartDashboard.putNumber("RR_Position", rightRearModule.getDrivePosition());
-    // SmartDashboard.putNumber("robotAngle", getHeading().getDegrees());
-    // /* Testing */
-
-    // SmartDashboard.putNumber("BotX", targetSpeeds.vxMetersPerSecond);
-    // SmartDashboard.putNumber("BotY", targetSpeeds.vyMetersPerSecond);
-    // SmartDashboard.putNumber("BotZ", targetSpeeds.omegaRadiansPerSecond);
-
+    // SmartDashboard.putNumber("Swerve/X", m_odometer.getPoseMeters().getX());
+    // SmartDashboard.putNumber("Swerve/Y", m_odometer.getPoseMeters().getY());
+    // SmartDashboard.putNumber("Swerve/LF_angle", leftFrontModule.getTurningPosition());
+    // SmartDashboard.putNumber("Swerve/LR_angle", leftRearModule.getTurningPosition());
+    // SmartDashboard.putNumber("Swerve/LF_Position", leftFrontModule.getDrivePosition());
+    // SmartDashboard.putNumber("Swerve/LR_Position", leftRearModule.getDrivePosition());
+    // SmartDashboard.putNumber("Swerve/RF_angle", rightFrontModule.getTurningPosition());
+    // SmartDashboard.putNumber("Swerve/RR_angle", rightRearModule.getTurningPosition());
+    // SmartDashboard.putNumber("Swerve/RF_Position", rightFrontModule.getDrivePosition());
+    // SmartDashboard.putNumber("Swerve/RR_Position", rightRearModule.getDrivePosition());
+    // SmartDashboard.putNumber("Swerve/robotAngle", getHeading().getDegrees());
   }
   
 }

@@ -32,7 +32,7 @@ public final class Constants {
     //Cancoder Setting
     public static final double kIntakePivotCancoderOffset = 0.443;
     // Pivot Angle
-    public static final double kIntakingAngle = -90;
+    public static final double kIntakingAngle = -100;
     public static final double kIntakeIdleAngle = 1.58;
     //Motor ID
     public static final int kIntakePivotMotorID = 27;
@@ -41,6 +41,10 @@ public final class Constants {
     public static final double kPivotMaxOutput = 0.12;
     public static final double kIntakingMotorVoltage = 8; //8
     public static final double kEjectingMotorVoltage = -6.5;
+    // Pivot PID
+    public static final double kp = 0.003;
+    public static final double ki = 0;
+    public static final double kd = 0.0001;
   }
   /* ===========
    *   Shooter
@@ -93,7 +97,7 @@ public final class Constants {
    */
   public static final class LEDConstants{
     public static final int kCANdleID = 46;
-    public static final int kLedNum = 22;
+    public static final int kLedNum = 19;
 
     public static final int[] kHaveNoteRGBValue = {255, 0, 0};
     public static final int[] kIntakeTurningRGBValue = {20, 0, 0};

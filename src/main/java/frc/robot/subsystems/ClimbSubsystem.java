@@ -78,22 +78,7 @@ public class ClimbSubsystem extends SubsystemBase {
     return !climberRightLimitSW.get();
   }
 
-  public void setRightMotor(double value){//152
-    // if(getRightPosition() >= 110){
-    //   if(value > 0){
-    //     climbRightMotor.setVoltage(0);
-    //   }else{
-    //     climbRightMotor.setVoltage(value*12);
-    //   }
-    // }else if(getLeftLimitState()){
-    //   if(value < 0){
-    //     climbRightMotor.setVoltage(0);
-    //   }else{
-    //     climbRightMotor.setVoltage(value*12);
-    //   }
-    // }else{
-    //   climbRightMotor.setVoltage(value*12);
-    // }
+  public void setRightMotor(double value){
     /* After */
     if(value >0){
       if(getRightPosition() >= 110) climbRightMotor.setVoltage(0);
@@ -105,22 +90,6 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setLeftMotor(double value){
-    // if(getLeftPosition() >= 108){
-    //   if(value > 0){
-    //     climbLeftMotor.setVoltage(0);
-    //   }else{
-    //     climbLeftMotor.setVoltage(value*12);
-    //   }
-    // }
-    // else if(getRightLimitState()){
-    //   if(value < 0){
-    //     climbLeftMotor.setVoltage(0);
-    //   }else{
-    //     climbLeftMotor.setVoltage(value*12);
-    //   }
-    // }else{
-    //   climbLeftMotor.setVoltage(value*12);
-    // }
     /* After */
     if(value >0){
       if(getLeftPosition() >= 108) climbLeftMotor.setVoltage(0);
@@ -170,11 +139,11 @@ public class ClimbSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // ClimberPose
-    SmartDashboard.putNumber("climbRightPosition", getRightPosition());
-    SmartDashboard.putNumber("climbLeftPosition", getLeftPosition());
+    SmartDashboard.putNumber("Climber/Right", getRightPosition());
+    SmartDashboard.putNumber("Climber/Left", getLeftPosition());
     // LimitSwitch
-    SmartDashboard.putBoolean("Right Limit", getRightLimitState());
-    SmartDashboard.putBoolean("Left Limit", getLeftLimitState());
+    SmartDashboard.putBoolean("Climber/RightLimit", getRightLimitState());
+    SmartDashboard.putBoolean("Climber/LeftLimit", getLeftLimitState());
     /* Encoder Zeroing */
     if(getRightLimitState() && leftFlag){
       for(int i=0;i<4;i++) climbLeftEncoder.setPosition(0);

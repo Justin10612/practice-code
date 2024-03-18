@@ -6,17 +6,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.IndexerSubsystem;
 
 public class IntakeCommand extends Command {
   /** Creates a new IntakeCommand. */
   private final IntakeSubsystem m_intakeSubsystem;
   private final IndexerSubsystem m_IndexerSubsystem;
+  private final LEDSubsystem m_ledSubsystem;
   
-  public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem) {
+  public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, LEDSubsystem ledSubsystem) {
     this.m_intakeSubsystem = intakeSubsystem;
     this.m_IndexerSubsystem = indexerSubsystem;
-    addRequirements(m_intakeSubsystem, m_IndexerSubsystem);
+    this.m_ledSubsystem = ledSubsystem;
+    addRequirements(m_intakeSubsystem, m_IndexerSubsystem, m_ledSubsystem);
   }
   // Called when the command is initially scheduled.
   @Override
@@ -39,6 +43,12 @@ public class IntakeCommand extends Command {
     m_intakeSubsystem.setIdleAngle();
     m_intakeSubsystem.WheelStop();
     m_IndexerSubsystem.StopIndexerMotor();
+    // LED
+    if(m_IndexerSubsystem.getBottomSwitchState()){
+      m_ledSubsystem.redBlinking();
+    }else{
+      m_ledSubsystem.clearLED();
+    }
   }
 
   // Returns true when the command should end.
