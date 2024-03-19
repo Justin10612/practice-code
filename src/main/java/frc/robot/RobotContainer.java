@@ -141,7 +141,8 @@ public class RobotContainer {
     BooleanSupplier enableFunc = () -> OperatorJoystick.leftBumper().getAsBoolean();
     m_climbSubsystem.setDefaultCommand(new ClimbManually(m_climbSubsystem, lInputFunc, rInputFunc, enableFunc));
     /* Intake Note */
-    OperatorJoystick.x().whileTrue(new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem, m_ledSubsystem));
+    OperatorJoystick.x().whileTrue(
+      new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem, m_ledSubsystem));
     /* Eject Note when Intake is at down position. */
     OperatorJoystick.a().whileTrue(new EjectNoteIntakePose(m_intakeSubsystem, m_IndexerSubsystem));
     /* Eject Note when Intake is at idle position. */

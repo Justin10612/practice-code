@@ -18,37 +18,62 @@ import frc.robot.Constants.LEDConstants;
 
 public class LEDSubsystem extends SubsystemBase {
   /** Creates a new LEDSubsystem. */
-  private final CANdle candle;
+  private final CANdle m_candle;
   private final CANdleConfiguration candleConfig;
   private final int ledNum = LEDConstants.kLedNum;
   private Animation ledAnimation = null;
 
   public LEDSubsystem() {
-    candle = new CANdle(LEDConstants.kCANdleID);
+    m_candle = new CANdle(LEDConstants.kCANdleID);
     candleConfig = new CANdleConfiguration();
     candleConfig.stripType = LEDStripType.RGB;
     candleConfig.statusLedOffWhenActive = true;
     candleConfig.disableWhenLOS = false;
     candleConfig.vBatOutputMode = VBatOutputMode.Modulated;
-    candle.configAllSettings(candleConfig);
+    m_candle.configAllSettings(candleConfig);
     //
     int[] off = {0, 0, 0};
     setRGB(off);
   }
-
-  public void redBlinking(){
+  /* =========
+   *   Blink
+   * =========*/
+  public void redBlink(){
     ledAnimation = new StrobeAnimation(255, 0, 0, 0, 0.4, ledNum);
-    candle.animate(ledAnimation);
+    m_candle.animate(ledAnimation);
+  }
+  public void greenBlink(){
+    ledAnimation = new StrobeAnimation(0, 255, 0, 0, 0.4, ledNum);
+    m_candle.animate(ledAnimation);
+  }
+  public void BlueBlink(){
+    ledAnimation = new StrobeAnimation(0, 0, 255, 0, 0.4, ledNum);
+    m_candle.animate(ledAnimation);
+  }
+  /* =========
+   *   Solid
+   * =========*/
+  public void redSolid(){
+    m_candle.animate(null);
+    m_candle.setLEDs(255, 0, 0);
+  }
+  public void greenSolid(){
+    m_candle.animate(null);
+    m_candle.setLEDs(0, 255, 0);
+  }
+  public void blueSolid(){
+    m_candle.animate(null);
+    m_candle.setLEDs(0, 0, 255);
   }
 
   public void setRGB(int rgb[]){
     ledAnimation = new StrobeAnimation(rgb[0], rgb[1], rgb[2], 0, 0.4, ledNum);
-    candle.animate(ledAnimation);
+    m_candle.animate(ledAnimation);
   }
 
   public void clearLED(){
     ledAnimation = new StrobeAnimation(0, 0, 0, 0, 0.4, ledNum);
-    candle.animate(ledAnimation);
+    m_candle.animate(ledAnimation);
   }
 
   @Override

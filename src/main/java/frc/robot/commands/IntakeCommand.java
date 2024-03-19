@@ -28,6 +28,7 @@ public class IntakeCommand extends Command {
     m_intakeSubsystem.setIntakeAngle();
     m_intakeSubsystem.WheelIntaking();
     m_IndexerSubsystem.Intaking();
+    m_ledSubsystem.redBlink();
   }
 
   @Override
@@ -45,9 +46,11 @@ public class IntakeCommand extends Command {
     m_IndexerSubsystem.StopIndexerMotor();
     // LED
     if(m_IndexerSubsystem.getBottomSwitchState()){
-      m_ledSubsystem.redBlinking();
+      m_ledSubsystem.greenSolid();
+      LEDConstants.hasNote = true;
     }else{
-      m_ledSubsystem.clearLED();
+      m_ledSubsystem.redSolid();
+      LEDConstants.hasNote = false;
     }
   }
 
