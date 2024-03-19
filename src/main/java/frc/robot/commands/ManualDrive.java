@@ -70,7 +70,7 @@ public class ManualDrive extends Command {
     ySpeed = yLimiter.calculate(ySpeed);
     zSpeed = zLimiter.calculate(zSpeed);
     // Output
-    m_swerveSubsystem.driveFieldRelative(xSpeed, ySpeed, zSpeed);
+    m_swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, true);
   }
 
   // Returns true when the command should end.

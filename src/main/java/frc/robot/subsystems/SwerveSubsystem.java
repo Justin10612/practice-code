@@ -166,16 +166,6 @@ public class SwerveSubsystem extends SubsystemBase{
     }
     setModuleStates(states);
   }
-  /* Drive Robot Relative */
-  public void driveRobotRelative(double xSpeed, double ySpeed, double zSpeed){
-    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, zSpeed);
-    setModuleStates(SwerveConstants.swerveKinematics.toSwerveModuleStates(chassisSpeeds));
-  }
-  /* Drive Field Relative */
-  public void driveFieldRelative(double xSpeed, double ySpeed, double zSpeed){
-    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, zSpeed, getHeading());
-    setModuleStates(SwerveConstants.swerveKinematics.toSwerveModuleStates(chassisSpeeds));
-  }
   // Auto Drive
   public void driveAuto(ChassisSpeeds RobotSpeeds){
     targetSpeeds = ChassisSpeeds.discretize(RobotSpeeds, 0.01);
