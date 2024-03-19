@@ -55,9 +55,6 @@ public class ManualDrive extends Command {
     xSpeed = MathUtil.applyDeadband(xSpeed, OperatorConstants.kJoystickDeadBand);
     ySpeed = MathUtil.applyDeadband(ySpeed, OperatorConstants.kJoystickDeadBand);
     zSpeed = MathUtil.applyDeadband(zSpeed, OperatorConstants.kJoystickDeadBand);
-    // xSpeed = Constants.DeadBandLimit(xSpeed, OperatorConstants.kJoystickDeadBand);
-    // ySpeed = Constants.DeadBandLimit(ySpeed, OperatorConstants.kJoystickDeadBand);
-    // zSpeed = Constants.DeadBandLimit(zSpeed, OperatorConstants.kJoystickDeadBand);
     // TurboModeSelect
     if(isSlowMode){
       xSpeed = xSpeed*0.4;
@@ -73,7 +70,7 @@ public class ManualDrive extends Command {
     ySpeed = yLimiter.calculate(ySpeed);
     zSpeed = zLimiter.calculate(zSpeed);
     // Output
-    m_swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, true);
+    m_swerveSubsystem.driveFieldRelative(xSpeed, ySpeed, zSpeed);
   }
 
   // Returns true when the command should end.

@@ -40,9 +40,9 @@ public class TrackNote extends Command {
     pidOutput = Math.min(Math.max(pidOutput, -0.4), 0.4);
     if(m_LimeLightSubsystem.hasNote()){
       if(Math.abs(m_pid.getPositionError())>5){
-        m_SwerveSubsystem.drive(0, 0, pidOutput, false);
+        m_SwerveSubsystem.driveRobotRelative(0, 0, pidOutput);
       }else{
-        m_SwerveSubsystem.drive(0.2, 0, 0, false);
+        m_SwerveSubsystem.driveRobotRelative(0.2, 0, 0);
       }
     }
   }

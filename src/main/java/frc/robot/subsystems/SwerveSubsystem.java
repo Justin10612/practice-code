@@ -83,7 +83,7 @@ public class SwerveSubsystem extends SubsystemBase{
       this::getOdometer, 
       this::setOdometer, 
       this::getSpeeds, 
-      this::driveFieldRelative,
+      this::driveAuto,
       new HolonomicPathFollowerConfig(
           new PIDConstants(11, 0, 0.056), // Translation constants 
           new PIDConstants(3, 0, 0.035), // Rotation constants 
@@ -161,12 +161,23 @@ public class SwerveSubsystem extends SubsystemBase{
       states = SwerveConstants.swerveKinematics.toSwerveModuleStates(
         ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, zSpeed, getHeading()));
     }else{
-      states = SwerveConstants.swerveKinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, zSpeed));
+      states = SwerveConstants.swerveKinematics.toSwerveModuleStates(
+        new ChassisSpeeds(xSpeed, ySpeed, zSpeed));
     }
     setModuleStates(states);
   }
+  /* Drive Robot Relative */
+  public void driveRobotRelative(double xSpeed, double ySpeed, double zSpeed){
+    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, zSpeed);
+    setModuleStates(SwerveConstants.swerveKinematics.toSwerveModuleStates(chassisSpeeds));
+  }
+  /* Drive Field Relative */
+  public void driveFieldRelative(double xSpeed, double ySpeed, double zSpeed){
+    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, zSpeed, getHeading());
+    setModuleStates(SwerveConstants.swerveKinematics.toSwerveModuleStates(chassisSpeeds));
+  }
   // Auto Drive
-  public void driveFieldRelative(ChassisSpeeds RobotSpeeds){
+  public void driveAuto(ChassisSpeeds RobotSpeeds){
     targetSpeeds = ChassisSpeeds.discretize(RobotSpeeds, 0.01);
     SwerveModuleState[] states = SwerveConstants.swerveKinematics.toSwerveModuleStates(targetSpeeds);
     setModuleStatesAuto(states);

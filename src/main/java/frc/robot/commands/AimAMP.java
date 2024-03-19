@@ -34,10 +34,10 @@ public class AimAMP extends Command {
         targetSetpoint[1], 
         targetSetpoint[2]);
       // Move Drivebase
-      m_swerveSubsystem.drive(driveOutput[0], driveOutput[1], driveOutput[2], false);
+      m_swerveSubsystem.driveRobotRelative(driveOutput[0], driveOutput[1], driveOutput[2]);
     }else{
       // LED blinking or Something...
-      m_swerveSubsystem.drive(0, 0, 0, false);
+      m_swerveSubsystem.driveRobotRelative(0, 0, 0);
     }
     
   }
