@@ -52,5 +52,6 @@ public class IndexerSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("Indexer/BottomSW", getBottomSwitchState());
+    SmartDashboard.putNumber("Indexer/MotorTemp", indexerMotor.getDeviceTemp().getValueAsDouble());
   }
 }

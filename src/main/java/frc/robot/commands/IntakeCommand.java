@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.IndexerSubsystem;
 
@@ -14,13 +13,11 @@ public class IntakeCommand extends Command {
   /** Creates a new IntakeCommand. */
   private final IntakeSubsystem m_intakeSubsystem;
   private final IndexerSubsystem m_IndexerSubsystem;
-  private final LEDSubsystem m_ledSubsystem;
   
-  public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, LEDSubsystem ledSubsystem) {
+  public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem) {
     this.m_intakeSubsystem = intakeSubsystem;
     this.m_IndexerSubsystem = indexerSubsystem;
-    this.m_ledSubsystem = ledSubsystem;
-    addRequirements(m_intakeSubsystem, m_IndexerSubsystem, m_ledSubsystem);
+    addRequirements(m_intakeSubsystem, m_IndexerSubsystem);
   }
   // Called when the command is initially scheduled.
   @Override
@@ -28,15 +25,12 @@ public class IntakeCommand extends Command {
     m_intakeSubsystem.setIntakeAngle();
     m_intakeSubsystem.WheelIntaking();
     m_IndexerSubsystem.Intaking();
-    m_ledSubsystem.redBlink();
+    LEDConstants.intaking = true;
+    LEDConstants.LEDFlag = true;
   }
 
   @Override
-  public void execute(){
-    if(m_IndexerSubsystem.getBottomSwitchState()){
-      m_IndexerSubsystem.StopIndexerMotor();
-    }
-  }
+  public void execute(){}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -46,12 +40,12 @@ public class IntakeCommand extends Command {
     m_IndexerSubsystem.StopIndexerMotor();
     // LED
     if(m_IndexerSubsystem.getBottomSwitchState()){
-      m_ledSubsystem.greenSolid();
       LEDConstants.hasNote = true;
     }else{
-      m_ledSubsystem.redSolid();
       LEDConstants.hasNote = false;
     }
+    LEDConstants.intaking = false;
+    LEDConstants.LEDFlag = true;
   }
 
   // Returns true when the command should end.

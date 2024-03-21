@@ -79,6 +79,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "TrackNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Right Note Shoot(Center)"

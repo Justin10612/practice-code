@@ -32,6 +32,8 @@ public class TrackNote extends Command {
     pidOutput = 0;
     inputValue = 0;
     // LED
+    LEDConstants.trackingNote = true;
+    LEDConstants.LEDFlag = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,11 +43,16 @@ public class TrackNote extends Command {
     pidOutput = m_pid.calculate(inputValue, 0);
     pidOutput = Math.min(Math.max(pidOutput, -0.4), 0.4);
     if(m_LimeLightSubsystem.hasNote()){
+      LEDConstants.hasNoteInSight = true;
+      LEDConstants.LEDFlag = true;
       if(Math.abs(m_pid.getPositionError())>5){
         m_SwerveSubsystem.drive(0, 0, pidOutput, false);
       }else{
         m_SwerveSubsystem.drive(0.2, 0, 0, false);
       }
+    }else{
+      LEDConstants.hasNoteInSight = false;
+      LEDConstants.LEDFlag = true;
     }
   }
 
@@ -53,9 +60,9 @@ public class TrackNote extends Command {
   @Override
   public void end(boolean interrupted) {
     m_SwerveSubsystem.stopModules();
-    if (LEDConstants.hasNote) {
-      
-    }
+    LEDConstants.trackingNote = false;
+    LEDConstants.hasNoteInSight = false;
+    LEDConstants.LEDFlag = true;
   }
 
   // Returns true when the command should end.

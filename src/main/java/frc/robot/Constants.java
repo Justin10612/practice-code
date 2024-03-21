@@ -30,16 +30,16 @@ public final class Constants {
     // CanCoder ID
     public static final int kIntakePivotCancoderID = 45;
     // Cancoder Setting
-    public static final double kIntakePivotCancoderOffset = 0.443;
+    public static final double kIntakePivotCancoderOffset = -0.239; //0.443
     // Pivot Angle
-    public static final double kIntakingAngle = -100;
-    public static final double kIntakeIdleAngle = 1.58;
+    public static final double kIntakingAngle = -112;
+    public static final double kIntakeIdleAngle = -0.25;
     // Motor ID
     public static final int kIntakePivotMotorID = 27;
     public static final int kIntakeMotorID = 32;
     // Motor Setting 
     public static final double kPivotMaxOutput = 0.12;
-    public static final double kIntakingMotorVoltage = 4; //8
+    public static final double kIntakingMotorVoltage = 8; //8
     public static final double kEjectingMotorVoltage = -6.5;
     // Pivot PID
     public static final double kp = 0.003;
@@ -71,8 +71,7 @@ public final class Constants {
     public static final double kShooterKd = 0;
     // Indexer Speed
     public static final double kIndexerNormalVolt = 4;
-    public static final double kIndexerFastVolt = 4;
-    public static final double kIndexerSlowlVolt = 0;
+    public static final double kIndexerFastVolt = 5.5;
 
     public static boolean shouldShoot = false;
   }
@@ -99,8 +98,19 @@ public final class Constants {
     public static final int kCANdleID = 46;
     public static final int kLedNum = 19;
 
+    public static boolean LEDFlag = false;
     public static boolean hasNote = false;
-    public static int state = 0;
+    public static boolean intaking = false;
+    public static boolean trackingNote = false;
+    public static boolean hasNoteInSight = false;
+    public static boolean prepSPEAKER = false;
+    public static boolean prepAMP = false;
+    public static boolean speedReadySPEAKER = false;
+    public static boolean speedReadyAMP = false;
+    public static boolean aimingAMP = false;
+    public static boolean aimReadyAMP = false;
+    public static boolean haveApriltag = false;
+    public static boolean playing = false;
 
     public static final int[] kHaveNoteRGBValue = {255, 0, 0};
     public static final int[] kIntakeTurningRGBValue = {20, 0, 0};
@@ -116,20 +126,20 @@ public final class Constants {
    */
   public static final class VisionConstants{
     // X Aiming PID
-    public static final double XmoveKp = 0; 
-    public static final double XmoveKi = 0;
+    public static final double XmoveKp = 0.01; 
+    public static final double XmoveKi = 0.001;
     public static final double XmoveKd = 0;
     // Y Aiming PID
-    public static final double YmoveKp = 0;
+    public static final double YmoveKp = 0.01;
     public static final double YmoveKi = 0;
     public static final double YmoveKd = 0;
     // Z Aiming PID
-    public static final double ZRotationKp = 0;
+    public static final double ZRotationKp = 0.01;
     public static final double ZRotationKi = 0;
     public static final double ZRotationKd = 0;
     // Target Setpoints
     public static final double[] TRAP_Setpoint = {1, 0, 0};
-    public static final double[] AMP_Setpoint = {1, 0, 0};
+    public static final double[] AMP_Setpoint = {0.932, 0, 0};
 
     public static double[] getTargetSetpoint(int targetID){
       switch (targetID) {

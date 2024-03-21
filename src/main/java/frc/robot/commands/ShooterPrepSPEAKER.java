@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -19,7 +20,10 @@ public class ShooterPrepSPEAKER extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    LEDConstants.prepSPEAKER = true;
+    LEDConstants.LEDFlag = true;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

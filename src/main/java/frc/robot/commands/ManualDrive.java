@@ -73,6 +73,11 @@ public class ManualDrive extends Command {
     m_swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, true);
   }
 
+  @Override
+  public void end(boolean interrupted){
+    m_swerveSubsystem.drive(0, 0, 0, false);
+  }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

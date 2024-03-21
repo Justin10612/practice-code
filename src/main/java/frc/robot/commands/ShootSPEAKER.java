@@ -9,24 +9,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootSPEAKER extends Command {
   /** Creates a new ShooterPreparingCommand. */
   private final ShooterSubsystem m_shooterSubsystem;
   private final IndexerSubsystem m_IndexerSubsystem;
-  private final LEDSubsystem m_LedSubsystem;
   private final boolean m_isAuto;
   private final BooleanSupplier m_feedBtnFunc;
 
-  public ShootSPEAKER(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem, LEDSubsystem ledSubsystem, BooleanSupplier btnFunc, boolean isAuto) {
+  public ShootSPEAKER(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem, BooleanSupplier btnFunc, boolean isAuto) {
     this.m_shooterSubsystem = shooterSubsystem;
     this.m_IndexerSubsystem = indexerSubsystem;
-    this.m_LedSubsystem = ledSubsystem;
     this.m_feedBtnFunc = btnFunc;
     this.m_isAuto = isAuto;
-    addRequirements(m_shooterSubsystem, m_IndexerSubsystem, m_LedSubsystem);
+    addRequirements(m_shooterSubsystem, m_IndexerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -40,11 +37,23 @@ public class ShootSPEAKER extends Command {
   public void execute() {
     boolean feedBtn = m_feedBtnFunc.getAsBoolean();
     if(m_isAuto){
-      if(m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_SPEAKER();
+      if(m_shooterSubsystem.achievedTargetSpeed()){
+        m_IndexerSubsystem.FeedWhenReady_SPEAKER();
+        LEDConstants.speedReadySPEAKER = true;
+        LEDConstants.LEDFlag = true;
+      } 
     }else{
       m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterSpeakerVoltageSetpoint, ShooterConstants.kShooterSpeakerRPMSetpoint);
       if(feedBtn && m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_SPEAKER();
-      else if(feedBtn == false && m_shooterSubsystem.achievedTargetSpeed()) m_LedSubsystem.setRGB(LEDConstants.kPrepToSpeakerRGBValue);
+      else if (m_shooterSubsystem.achievedTargetSpeed()){
+        LEDConstants.speedReadySPEAKER = true;
+        LEDConstants.LEDFlag = true;
+      } 
+      else {
+        LEDConstants.speedReadySPEAKER = false;
+        LEDConstants.prepSPEAKER = true;
+        LEDConstants.LEDFlag = true;
+      }
     }
   }
 
@@ -53,6 +62,15 @@ public class ShootSPEAKER extends Command {
   public void end(boolean interrupted) {
     m_shooterSubsystem.stopShooterMotor();
     m_IndexerSubsystem.StopIndexerMotor();
+    //
+    if(m_IndexerSubsystem.getBottomSwitchState()){
+      LEDConstants.hasNote = true;
+    }else{
+      LEDConstants.hasNote = false;
+    }
+    LEDConstants.speedReadySPEAKER = false;
+    LEDConstants.prepSPEAKER = false;
+    LEDConstants.LEDFlag = true;
   }
 
   // Returns true when the command should end.
