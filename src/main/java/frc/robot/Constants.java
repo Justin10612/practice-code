@@ -40,7 +40,7 @@ public final class Constants {
     // Motor Setting 
     public static final double kPivotMaxOutput = 0.12;
     public static final double kIntakingMotorVoltage = 8; //8
-    public static final double kEjectingMotorVoltage = -6.5;
+    public static final double kEjectingMotorVoltage = -8;
     // Pivot PID
     public static final double kp = 0.003;
     public static final double ki = 0;

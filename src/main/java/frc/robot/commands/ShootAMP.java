@@ -42,11 +42,13 @@ public class ShootAMP extends Command {
     if(m_isAuto){
       if(m_shooterSubsystem.achievedTargetSpeed()){
         m_IndexerSubsystem.FeedWhenReady_AMP();
-        LEDConstants.speedReadyAMP = true;
-        LEDConstants.LEDFlag = true;
+        // LEDConstants.speedReadyAMP = true;
+        // LEDConstants.LEDFlag = true;
       } 
     }else{
+      // Impl
       m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
+      // Feed
       if(feedBtn && m_shooterSubsystem.achievedTargetSpeed())
         m_IndexerSubsystem.FeedWhenReady_AMP();
       else if (m_shooterSubsystem.achievedTargetSpeed()) {

@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AimAMP;
 import frc.robot.commands.ClimbDown;
 import frc.robot.commands.ClimbManually;
 import frc.robot.commands.ClimberUp;
@@ -34,7 +33,6 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
-import frc.robot.subsystems.PhotonVisionSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 /**
@@ -45,7 +43,7 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer {
   private final LimeLightSubsystem m_limeLightSubsystem = new LimeLightSubsystem();
-  private final PhotonVisionSubsystem m_photonvisionSubsystem = new PhotonVisionSubsystem();
+  // private final PhotonVisionSubsystem m_photonvisionSubsystem = new PhotonVisionSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final IndexerSubsystem m_IndexerSubsystem = new IndexerSubsystem();
@@ -69,9 +67,9 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("LeftNoteInLeftSide", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(3));
 
-    NamedCommands.registerCommand("LeftNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(6));
+    NamedCommands.registerCommand("LeftNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(7));
 
-    NamedCommands.registerCommand("RightNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(4));
+    NamedCommands.registerCommand("RightNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(6));
     
     NamedCommands.registerCommand("RightNoteInRightSide", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(4));
 
@@ -98,7 +96,7 @@ public class RobotContainer {
       m_shooterSubsystem,
       m_IndexerSubsystem,
       feedBtn,
-      true).withTimeout(0.5));
+      true).withTimeout(1));
 
     NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_climbSubsystem).withTimeout(0.5));
     /* Create Chooser */
@@ -120,7 +118,7 @@ public class RobotContainer {
     DoubleSupplier xSpeedFunc = () -> DriverJoystick.getRawAxis(1);
     DoubleSupplier ySpeedFunc = () -> DriverJoystick.getRawAxis(0);
     DoubleSupplier zSppedFunc = () -> DriverJoystick.getRawAxis(4);
-    BooleanSupplier isSlowModeFunc = () -> DriverJoystick.getHID().getRightBumper();
+    BooleanSupplier isSlowModeFunc = () -> DriverJoystick.getHID().getRightTriggerAxis()>0.4;
     m_swerveSubsystem.setDefaultCommand(new ManualDrive(m_swerveSubsystem, xSpeedFunc, ySpeedFunc, zSppedFunc, isSlowModeFunc));
     /* Reset Gyro */
     DriverJoystick.b().whileTrue(

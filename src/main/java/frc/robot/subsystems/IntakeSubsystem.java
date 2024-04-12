@@ -97,6 +97,7 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Intake/isJam", isJam());
     SmartDashboard.putNumber("Intake/intakeMotorTemp", intakeMotor.getMotorTemperature());
     SmartDashboard.putNumber("Intake/pivotMotorTemp", intakePivotMotor.getMotorTemperature());
+    SmartDashboard.putNumber("Intake/Wheel", intakeMotor.getAppliedOutput());
     // Intake PID Calculation
     double PidOutput = intakePivotPID.calculate(getAngle(), PivotAngleSetpoint);
     // PID deadband
