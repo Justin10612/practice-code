@@ -30,7 +30,7 @@ public final class Constants {
     // CanCoder ID
     public static final int kIntakePivotCancoderID = 45;
     // Cancoder Setting
-    public static final double kIntakePivotCancoderOffset = -0.239; //0.443
+    public static final double kIntakePivotCancoderOffset = -0.0674; //0.443
     // Pivot Angle
     public static final double kIntakingAngle = -112;
     public static final double kIntakeIdleAngle = -0.25;
@@ -84,8 +84,8 @@ public final class Constants {
     public static final int kClimbRightMotorID = 31;
     public static final int kClimbLeftMotorID = 8;
     //limitSwitch Port
-    public static final int kRightLimitSwitchPort = 2;
-    public static final int kLeftLimitSwitchPort = 1;
+    public static final int kRightLimitSwitchPort = 1;
+    public static final int kLeftLimitSwitchPort = 2;
     // Encoder Value
     public static final int kRightEncoderLimit = 0;
     public static final int kLeftEncoderLimit = 0;
@@ -203,17 +203,17 @@ public final class Constants {
   }
   
   public static final class SwerveConstants{
-    public static final int leftFrontDriveID = 19;
-    public static final int leftFrontTurningID = 17;
-    public static final int rightFrontDriveID = 29;
-    public static final int rightFrontTurningID = 21;  
+    public static final int leftFrontDriveID = 29;
+    public static final int leftFrontTurningID = 21;
+    public static final int rightFrontDriveID = 19;
+    public static final int rightFrontTurningID = 17;  
     public static final int leftRearDriveID = 15;
     public static final int leftRearTurningID = 22;
     public static final int rightRearDriveID = 16;
     public static final int rightRearTurningID = 26;
 
-    public static final int leftFrontCANCoderID = 42;
-    public static final int rightFrontCANCoderID = 43;
+    public static final int leftFrontCANCoderID = 43;
+    public static final int rightFrontCANCoderID = 42;
     public static final int leftRearCANCoderID = 44;
     public static final int rightRearCANCoderID = 41;
 
@@ -228,8 +228,8 @@ public final class Constants {
     public static final boolean rightRearDriveMotorReversed = true;
     public static final boolean rightRearTurningMotorReversed = true;
 
-    public static final double leftFrontOffset = -0.0962;
-    public static final double rightFrontOffset = -0.348;
+    public static final double leftFrontOffset = -0.10756;
+    public static final double rightFrontOffset = -0.3397;
     public static final double leftRearOffset = 0.3986;
     public static final double rightRearOffset = -0.31;
 

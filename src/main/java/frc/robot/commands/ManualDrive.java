@@ -57,13 +57,13 @@ public class ManualDrive extends Command {
     zSpeed = MathUtil.applyDeadband(zSpeed, OperatorConstants.kJoystickDeadBand);
     // TurboModeSelect
     if(isSlowMode){
+      xSpeed = xSpeed*0.8;
+      ySpeed = ySpeed*0.8;
+      zSpeed = zSpeed*0.8;
+    }else{
       xSpeed = xSpeed*0.4;
       ySpeed = ySpeed*0.4;
       zSpeed = zSpeed*0.4;
-    }else{
-      xSpeed = xSpeed*0.95;
-      ySpeed = ySpeed*0.95;
-      zSpeed = zSpeed*0.95;
     }
     // SlewRate
     xSpeed = xLimiter.calculate(xSpeed);
