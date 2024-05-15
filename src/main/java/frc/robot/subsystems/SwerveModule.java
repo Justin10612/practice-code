@@ -100,6 +100,13 @@ public class SwerveModule extends SubsystemBase{
     turningMotor.set(anglePidOutput);
   }
 
+  public void setWheelAngle(double angle, SwerveModuleState state){
+    state = SwerveModuleState.optimize(state, getState().angle);
+    double anglePidOutput = turningPIDController.calculate(getState().angle.getDegrees(), angle);
+    anglePidOutput = Math.abs(turningPIDController.getPositionError())<1 ? 0 : anglePidOutput;
+    turningMotor.set(anglePidOutput);
+  }
+
   public void stopMotors(){
     driveMotor.set(0);
     turningMotor.set(0);

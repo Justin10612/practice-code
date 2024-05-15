@@ -27,6 +27,7 @@ import frc.robot.commands.ShooterPrepAMP;
 import frc.robot.commands.ShootAMP;
 import frc.robot.commands.ShootSPEAKER;
 import frc.robot.commands.ShooterPrepSPEAKER;
+import frc.robot.commands.StopBase;
 import frc.robot.commands.TrackNote;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -125,6 +126,8 @@ public class RobotContainer {
       Commands.runOnce(()->{
         m_swerveSubsystem.resetGyro();
     }));
+    /* Stop Base */
+    DriverJoystick.x().whileTrue(new StopBase(m_swerveSubsystem));
     /* Aiming Note */
     DriverJoystick.leftTrigger(0.4).and(OperatorJoystick.x()).whileTrue(new TrackNote(m_swerveSubsystem, m_limeLightSubsystem));
     /* Aiming Amp */
