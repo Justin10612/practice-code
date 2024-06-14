@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
 
 public class ClimbDown extends Command {
-  private final ClimbSubsystem m_climbSubsystem;
+  private final ClimbSubsystem m_ClimbSubsystem;
   
   /** Creates a new ClimbBackCommand. */
   public ClimbDown(ClimbSubsystem climbSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_climbSubsystem = climbSubsystem;
-    addRequirements(m_climbSubsystem);
+    this.m_ClimbSubsystem = climbSubsystem;
+    addRequirements(m_ClimbSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -24,19 +24,19 @@ public class ClimbDown extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climbSubsystem.rightClimbBack();
-    m_climbSubsystem.leftClimbBack();
+    m_ClimbSubsystem.rightClimbBack();
+    m_ClimbSubsystem.leftClimbBack();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_climbSubsystem.StopMotors();
+    m_ClimbSubsystem.StopMotors();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_climbSubsystem.getLeftLimitState() && m_climbSubsystem.getRightLimitState();
+    return m_ClimbSubsystem.getLeftLimitState() && m_ClimbSubsystem.getRightLimitState();
   }
 }

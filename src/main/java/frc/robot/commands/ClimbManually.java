@@ -12,7 +12,7 @@ import java.util.function.DoubleSupplier;
 
 public class ClimbManually extends Command {
   /** Creates a new ClimbCommand. */
-  private final ClimbSubsystem m_climbSubsystem;
+  private final ClimbSubsystem m_ClimbSubsystem;
   private final DoubleSupplier m_leftFunc;
   private final DoubleSupplier m_rightFunc;
   private final BooleanSupplier m_enableBtnFunc;
@@ -22,11 +22,11 @@ public class ClimbManually extends Command {
   private boolean enable; 
 
   public ClimbManually(ClimbSubsystem climbSubsystem, DoubleSupplier leftFunc, DoubleSupplier rightFunc, BooleanSupplier enableBtn) {
-    this.m_climbSubsystem = climbSubsystem;
+    this.m_ClimbSubsystem = climbSubsystem;
     this.m_leftFunc= leftFunc;
     this.m_rightFunc = rightFunc;
     this.m_enableBtnFunc = enableBtn;
-    addRequirements(m_climbSubsystem);
+    addRequirements(m_ClimbSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -42,17 +42,17 @@ public class ClimbManually extends Command {
     enable = m_enableBtnFunc.getAsBoolean();
     // Output
     if(enable){
-      m_climbSubsystem.setRightMotor(rightInputVal);
-      m_climbSubsystem.setLeftMotor(leftInputVal);
+      m_ClimbSubsystem.setRightMotor(rightInputVal);
+      m_ClimbSubsystem.setLeftMotor(leftInputVal);
     }else{
-      m_climbSubsystem.StopMotors();
+      m_ClimbSubsystem.StopMotors();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_climbSubsystem.StopMotors();
+    m_ClimbSubsystem.StopMotors();
   }
 
   // Returns true when the command should end.

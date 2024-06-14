@@ -91,11 +91,10 @@ public class LEDSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     if(LEDConstants.LEDFlag){
       if(LEDConstants.playing == false) stopLED();
-      else if(LEDConstants.aimReadyAMP && LEDConstants.speedReadyAMP && LEDConstants.haveApriltag) blueSolid();
+      else if(LEDConstants.speedReadyAMP) blueSolid();
       else if(LEDConstants.speedReadySPEAKER) purpleSolid();
       else if(LEDConstants.prepSPEAKER) purpleBlink();
-      else if(LEDConstants.aimingAMP || LEDConstants.speedReadyAMP && LEDConstants.haveApriltag) orangeBlink();
-      else if(LEDConstants.aimingAMP || LEDConstants.prepAMP && LEDConstants.haveApriltag == false) yellowBlink();
+      else if(LEDConstants.prepAMP) orangeBlink();
       else if(LEDConstants.hasNoteInSight && LEDConstants.trackingNote) orangeBlink();
       else if(LEDConstants.hasNoteInSight == false && LEDConstants.trackingNote) redBlink();
       else if(LEDConstants.intaking) redBlink();
@@ -103,5 +102,6 @@ public class LEDSubsystem extends SubsystemBase {
       else if(LEDConstants.hasNote == false) redSolid();
     }
     SmartDashboard.putBoolean("change", LEDConstants.aimingAMP);
+    SmartDashboard.putBoolean("readyAMP", LEDConstants.speedReadyAMP);
   }
 }

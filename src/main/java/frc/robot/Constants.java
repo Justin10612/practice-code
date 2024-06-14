@@ -107,9 +107,9 @@ public final class Constants {
     public static boolean prepAMP = false;
     public static boolean speedReadySPEAKER = false;
     public static boolean speedReadyAMP = false;
-    public static boolean aimingAMP = false;
+    public static boolean aimingAMP = true;
     public static boolean aimReadyAMP = false;
-    public static boolean haveApriltag = false;
+    public static boolean haveApriltag = true ;
     public static boolean playing = false;
 
     public static final int[] kHaveNoteRGBValue = {255, 0, 0};

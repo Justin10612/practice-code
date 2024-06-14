@@ -13,17 +13,17 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootSPEAKER extends Command {
   /** Creates a new ShooterPreparingCommand. */
-  private final ShooterSubsystem m_shooterSubsystem;
+  private final ShooterSubsystem m_ShooterSubsystem;
   private final IndexerSubsystem m_IndexerSubsystem;
   private final boolean m_isAuto;
   private final BooleanSupplier m_feedBtnFunc;
 
   public ShootSPEAKER(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem, BooleanSupplier btnFunc, boolean isAuto) {
-    this.m_shooterSubsystem = shooterSubsystem;
+    this.m_ShooterSubsystem = shooterSubsystem;
     this.m_IndexerSubsystem = indexerSubsystem;
     this.m_feedBtnFunc = btnFunc;
     this.m_isAuto = isAuto;
-    addRequirements(m_shooterSubsystem, m_IndexerSubsystem);
+    addRequirements(m_ShooterSubsystem, m_IndexerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -37,15 +37,15 @@ public class ShootSPEAKER extends Command {
   public void execute() {
     boolean feedBtn = m_feedBtnFunc.getAsBoolean();
     if(m_isAuto){
-      if(m_shooterSubsystem.achievedTargetSpeed()){
+      if(m_ShooterSubsystem.achievedTargetSpeed()){
         m_IndexerSubsystem.FeedWhenReady_SPEAKER();
         LEDConstants.speedReadySPEAKER = true;
         LEDConstants.LEDFlag = true;
       } 
     }else{
-      m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterSpeakerVoltageSetpoint, ShooterConstants.kShooterSpeakerRPMSetpoint);
-      if(feedBtn && m_shooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_SPEAKER();
-      else if (m_shooterSubsystem.achievedTargetSpeed()){
+      m_ShooterSubsystem.EnableShooter(ShooterConstants.kShooterSpeakerVoltageSetpoint, ShooterConstants.kShooterSpeakerRPMSetpoint);
+      if(feedBtn && m_ShooterSubsystem.achievedTargetSpeed()) m_IndexerSubsystem.FeedWhenReady_SPEAKER();
+      else if (m_ShooterSubsystem.achievedTargetSpeed()){
         LEDConstants.speedReadySPEAKER = true;
         LEDConstants.LEDFlag = true;
       } 
@@ -60,7 +60,7 @@ public class ShootSPEAKER extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stopShooterMotor();
+    m_ShooterSubsystem.stopShooterMotor();
     m_IndexerSubsystem.StopIndexerMotor();
     //
     if(m_IndexerSubsystem.getBottomSwitchState()){

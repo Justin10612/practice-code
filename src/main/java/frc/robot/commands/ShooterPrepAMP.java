@@ -9,12 +9,12 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterPrepAMP extends Command {
-  private final ShooterSubsystem m_shooterSubsystem;
+  private final ShooterSubsystem m_ShooterSubsystem;
 
   public ShooterPrepAMP(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_shooterSubsystem = shooterSubsystem;
-    addRequirements(m_shooterSubsystem);
+    this.m_ShooterSubsystem = shooterSubsystem;
+    addRequirements(m_ShooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +27,7 @@ public class ShooterPrepAMP extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
+    m_ShooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
   }
 
   // Called once the command ends or is interrupted.

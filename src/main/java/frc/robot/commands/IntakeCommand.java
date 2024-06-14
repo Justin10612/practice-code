@@ -11,19 +11,19 @@ import frc.robot.subsystems.IndexerSubsystem;
 
 public class IntakeCommand extends Command {
   /** Creates a new IntakeCommand. */
-  private final IntakeSubsystem m_intakeSubsystem;
+  private final IntakeSubsystem m_IntakeSubsystem;
   private final IndexerSubsystem m_IndexerSubsystem;
   
   public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem) {
-    this.m_intakeSubsystem = intakeSubsystem;
+    this.m_IntakeSubsystem = intakeSubsystem;
     this.m_IndexerSubsystem = indexerSubsystem;
-    addRequirements(m_intakeSubsystem, m_IndexerSubsystem);
+    addRequirements(m_IntakeSubsystem, m_IndexerSubsystem);
   }
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intakeSubsystem.setIntakeAngle();
-    m_intakeSubsystem.WheelIntaking();
+    m_IntakeSubsystem.setIntakeAngle();
+    m_IntakeSubsystem.WheelIntaking();
     m_IndexerSubsystem.Intaking();
     LEDConstants.intaking = true;
     LEDConstants.LEDFlag = true;
@@ -35,8 +35,8 @@ public class IntakeCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intakeSubsystem.setIdleAngle();
-    m_intakeSubsystem.WheelStop();
+    m_IntakeSubsystem.setIdleAngle();
+    m_IntakeSubsystem.WheelStop();
     m_IndexerSubsystem.StopIndexerMotor();
     // LED
     if(m_IndexerSubsystem.getBottomSwitchState()){

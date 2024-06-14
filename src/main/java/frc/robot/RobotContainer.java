@@ -28,12 +28,15 @@ import frc.robot.commands.ShootAMP;
 import frc.robot.commands.ShootSPEAKER;
 import frc.robot.commands.ShooterPrepSPEAKER;
 import frc.robot.commands.StopBase;
-import frc.robot.commands.TrackNote;
+import frc.robot.commands.TrackNote_LimeLight;
+import frc.robot.commands.TrackNote_PhotonVision;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.NoteDetectionSubsystem;
+import frc.robot.subsystems.PhotonVisionSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 /**
@@ -43,14 +46,15 @@ import frc.robot.subsystems.SwerveSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  private final LimeLightSubsystem m_limeLightSubsystem = new LimeLightSubsystem();
   // private final PhotonVisionSubsystem m_photonvisionSubsystem = new PhotonVisionSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  // private final NoteDetectionSubsystem m_photonvisionSubsystem = new NoteDetectionSubsystem();
+  private final LimeLightSubsystem m_LimeLightSubsystem = new LimeLightSubsystem();
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
   private final IndexerSubsystem m_IndexerSubsystem = new IndexerSubsystem();
-  private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
-  private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
-  private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
+  private final SwerveSubsystem m_SwerveSubsystem = new SwerveSubsystem();
+  private final ClimbSubsystem m_ClimbSubsystem = new ClimbSubsystem();
+  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   
   private final SendableChooser<Command> autoChooser;
 
@@ -58,48 +62,48 @@ public class RobotContainer {
   private final CommandXboxController OperatorJoystick = new CommandXboxController(OperatorConstants.kOperatorJoystickPort);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {    
-    NamedCommands.registerCommand("ClimbBack", new ClimbDown(m_climbSubsystem).withTimeout(0.5));
+    NamedCommands.registerCommand("ClimbBack", new ClimbDown(m_ClimbSubsystem).withTimeout(0.5));
 
-    NamedCommands.registerCommand("TrackNote", new TrackNote(m_swerveSubsystem, m_limeLightSubsystem).withTimeout(3));
+    // NamedCommands.registerCommand("TrackNote", new TrackNote(m_SwerveSubsystem, m).withTimeout(3));
 
-    NamedCommands.registerCommand("ShooterTurnSPEAKER", new ShooterPrepSPEAKER(m_shooterSubsystem).withTimeout(0.2));
+    NamedCommands.registerCommand("ShooterTurnSPEAKER", new ShooterPrepSPEAKER(m_ShooterSubsystem).withTimeout(0.2));
 
-    NamedCommands.registerCommand("ShooterTurnAMP", new ShooterPrepAMP(m_shooterSubsystem).withTimeout(0.2));
+    NamedCommands.registerCommand("ShooterTurnAMP", new ShooterPrepAMP(m_ShooterSubsystem).withTimeout(0.2));
 
-    NamedCommands.registerCommand("LeftNoteInLeftSide", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(3));
+    NamedCommands.registerCommand("LeftNoteInLeftSide", new IntakeCommand(m_IntakeSubsystem, m_IndexerSubsystem).withTimeout(3));
 
-    NamedCommands.registerCommand("LeftNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(7));
+    NamedCommands.registerCommand("LeftNoteInCenter", new IntakeCommand(m_IntakeSubsystem, m_IndexerSubsystem).withTimeout(7));
 
-    NamedCommands.registerCommand("RightNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(6));
+    NamedCommands.registerCommand("RightNoteInCenter", new IntakeCommand(m_IntakeSubsystem, m_IndexerSubsystem).withTimeout(6));
     
-    NamedCommands.registerCommand("RightNoteInRightSide", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(4));
+    NamedCommands.registerCommand("RightNoteInRightSide", new IntakeCommand(m_IntakeSubsystem, m_IndexerSubsystem).withTimeout(4));
 
-    NamedCommands.registerCommand("CenterNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(4));
+    NamedCommands.registerCommand("CenterNoteInCenter", new IntakeCommand(m_IntakeSubsystem, m_IndexerSubsystem).withTimeout(4));
 
-    NamedCommands.registerCommand("CenterLeftFirstNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(5));
+    NamedCommands.registerCommand("CenterLeftFirstNoteInCenter", new IntakeCommand(m_IntakeSubsystem, m_IndexerSubsystem).withTimeout(5));
 
-    NamedCommands.registerCommand("CenterCenterNoteInCenter", new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem).withTimeout(7));
+    NamedCommands.registerCommand("CenterCenterNoteInCenter", new IntakeCommand(m_IntakeSubsystem, m_IndexerSubsystem).withTimeout(7));
     
     BooleanSupplier feedBtn = () -> OperatorJoystick.rightBumper().getAsBoolean();
     NamedCommands.registerCommand("NoteShootSPEAKER", new ShootSPEAKER(
-      m_shooterSubsystem,
+      m_ShooterSubsystem,
       m_IndexerSubsystem,
       feedBtn,
       true).withTimeout(0.5));
 
     NamedCommands.registerCommand("NoteShootSPEAKERForEnd", new ShootSPEAKER(
-      m_shooterSubsystem,
+      m_ShooterSubsystem,
       m_IndexerSubsystem,
       feedBtn,
       true));
 
     NamedCommands.registerCommand("NoteShootAMP", new ShootAMP(
-      m_shooterSubsystem,
+      m_ShooterSubsystem,
       m_IndexerSubsystem,
       feedBtn,
       true).withTimeout(1));
 
-    NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_climbSubsystem).withTimeout(0.5));
+    NamedCommands.registerCommand("ClimbUp", new ClimberUp(m_ClimbSubsystem).withTimeout(0.5));
     /* Create Chooser */
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto mode", autoChooser);
@@ -120,18 +124,18 @@ public class RobotContainer {
     DoubleSupplier ySpeedFunc = () -> DriverJoystick.getRawAxis(0);
     DoubleSupplier zSppedFunc = () -> DriverJoystick.getRawAxis(4);
     BooleanSupplier isSlowModeFunc = () -> DriverJoystick.getHID().getRightTriggerAxis()>0.4;
-    m_swerveSubsystem.setDefaultCommand(new ManualDrive(m_swerveSubsystem, xSpeedFunc, ySpeedFunc, zSppedFunc, isSlowModeFunc));
+    m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSppedFunc, isSlowModeFunc));
     /* Reset Gyro */
     DriverJoystick.b().whileTrue(
       Commands.runOnce(()->{
-        m_swerveSubsystem.resetGyro();
+        m_SwerveSubsystem.resetGyro();
     }));
     /* Stop Base */
-    DriverJoystick.x().whileTrue(new StopBase(m_swerveSubsystem));
+    DriverJoystick.x().whileTrue(new StopBase(m_SwerveSubsystem));
     /* Aiming Note */
-    DriverJoystick.leftTrigger(0.4).and(OperatorJoystick.x()).whileTrue(new TrackNote(m_swerveSubsystem, m_limeLightSubsystem));
+    DriverJoystick.leftTrigger(0.4).and(OperatorJoystick.x()).whileTrue(new TrackNote_LimeLight(m_SwerveSubsystem, m_LimeLightSubsystem));
     /* Aiming Amp */
-    // DriverJoystick.rightTrigger(0.4).whileTrue(new AimAMP(m_photonvisionSubsystem, m_swerveSubsystem)); 
+    // DriverJoystick.rightTrigger(0.4).whileTrue(new AimAMP(m_photonvisionSubsystem, m_SwerveSubsystem)); 
 
     /* ===========
      *   Operator 
@@ -142,27 +146,27 @@ public class RobotContainer {
     DoubleSupplier lInputFunc = () -> OperatorJoystick.getLeftY();
     DoubleSupplier rInputFunc = () -> OperatorJoystick.getRightY();
     BooleanSupplier enableFunc = () -> OperatorJoystick.getHID().getLeftBumper();
-    m_climbSubsystem.setDefaultCommand(new ClimbManually(m_climbSubsystem, lInputFunc, rInputFunc, enableFunc));
+    m_ClimbSubsystem.setDefaultCommand(new ClimbManually(m_ClimbSubsystem, lInputFunc, rInputFunc, enableFunc));
     /* Intake Note */
     OperatorJoystick.x().whileTrue(
-      new IntakeCommand(m_intakeSubsystem, m_IndexerSubsystem));
+      new IntakeCommand(m_IntakeSubsystem, m_IndexerSubsystem));
     /* Eject Note when Intake is at down position. */
-    OperatorJoystick.a().whileTrue(new EjectNoteIntakePose(m_intakeSubsystem, m_IndexerSubsystem));
+    OperatorJoystick.a().whileTrue(new EjectNoteIntakePose(m_IntakeSubsystem, m_IndexerSubsystem));
     /* Eject Note when Intake is at idle position. */
-    OperatorJoystick.b().whileTrue(new EjectNoteIdlePose(m_intakeSubsystem, m_IndexerSubsystem));
+    OperatorJoystick.b().whileTrue(new EjectNoteIdlePose(m_IntakeSubsystem, m_IndexerSubsystem));
     /* Move Note backward */
     OperatorJoystick.y().whileTrue(new ShooterEjectNote(m_IndexerSubsystem));
     /* Spin Shooter for Speaker */
     OperatorJoystick.rightTrigger(0.4).whileTrue(
       new ShootSPEAKER(
-        m_shooterSubsystem,
+        m_ShooterSubsystem,
         m_IndexerSubsystem,
         feedBtn,
         false));
     /* Spin Shooter for AMP */
     OperatorJoystick.leftTrigger(0.4).whileTrue(
       new ShootAMP(
-        m_shooterSubsystem,
+        m_ShooterSubsystem,
         m_IndexerSubsystem,
         feedBtn,
         false));

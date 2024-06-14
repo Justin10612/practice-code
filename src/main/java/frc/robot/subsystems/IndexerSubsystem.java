@@ -47,6 +47,7 @@ public class IndexerSubsystem extends SubsystemBase {
    */
   public boolean getBottomSwitchState(){
     return !BottomLimitSwitch.get();
+    
   }
 
   @Override

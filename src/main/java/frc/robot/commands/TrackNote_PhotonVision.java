@@ -7,23 +7,22 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LEDConstants;
-import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.NoteDetectionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class TrackNote extends Command {
-  /** Creates a new TrackNote. */
+public class TrackNote_PhotonVision extends Command {
+  /** Creates a new TrackNote_PhotonVision. */
+  private final NoteDetectionSubsystem m_NoteDetectionSubsystem;
   private final SwerveSubsystem m_SwerveSubsystem;
-  private final LimeLightSubsystem m_LimeLightSubsystem;
-  /* PID Controller */
-  private final PIDController m_pid;
+  private final PIDController m_PidController;
   private double pidOutput;
   private double inputValue;
-
-  public TrackNote(SwerveSubsystem swerveSubsystem, LimeLightSubsystem lightSubsystem) {
+  public TrackNote_PhotonVision(NoteDetectionSubsystem noteDetectionSubsystem, SwerveSubsystem swerveSubsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.m_NoteDetectionSubsystem = noteDetectionSubsystem;
     this.m_SwerveSubsystem = swerveSubsystem;
-    this.m_LimeLightSubsystem = lightSubsystem;
-    m_pid = new PIDController(0.02, 0, 0);
-    addRequirements(m_LimeLightSubsystem, m_SwerveSubsystem);
+    m_PidController = new PIDController(0.02, 0, 0);
+    addRequirements(m_NoteDetectionSubsystem, m_SwerveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -39,13 +38,13 @@ public class TrackNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    inputValue = m_LimeLightSubsystem.getNoteX();
-    pidOutput = m_pid.calculate(inputValue, 0);
+    inputValue = m_NoteDetectionSubsystem.getNoteAngle();
+    pidOutput = m_PidController.calculate(inputValue, 0);
     pidOutput = Math.min(Math.max(pidOutput, -0.4), 0.4);
-    if(m_LimeLightSubsystem.hasNote()){
+    if(m_NoteDetectionSubsystem.hasTarget()){
       LEDConstants.hasNoteInSight = true;
       LEDConstants.LEDFlag = true;
-      if(Math.abs(m_pid.getPositionError())>5){
+      if(Math.abs(m_PidController.getPositionError())>5){
         m_SwerveSubsystem.drive(0, 0, pidOutput, false);
       }else{
         m_SwerveSubsystem.drive(0.2, 0, 0, false);

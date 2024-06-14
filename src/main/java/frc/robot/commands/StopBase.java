@@ -9,17 +9,17 @@ import frc.robot.subsystems.SwerveSubsystem;
 
 public class StopBase extends Command {
   /** Creates a new StopBase. */
-  private final SwerveSubsystem m_swerveSubsystem;
+  private final SwerveSubsystem m_SwerveSubsystem;
   public StopBase(SwerveSubsystem swerveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_swerveSubsystem = swerveSubsystem;
-    addRequirements(m_swerveSubsystem);
+    this.m_SwerveSubsystem = swerveSubsystem;
+    addRequirements(m_SwerveSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_swerveSubsystem.baseBrake();
+    m_SwerveSubsystem.baseBrake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -29,7 +29,7 @@ public class StopBase extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_swerveSubsystem.drive(0, 0, 0, false);
+    m_SwerveSubsystem.drive(0, 0, 0, false);
   }
 
   // Returns true when the command should end.

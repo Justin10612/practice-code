@@ -14,18 +14,18 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootAMP extends Command {
   /** Creates a new ShooterPreparingFrAMPCommand. */
-  private final ShooterSubsystem m_shooterSubsystem;
+  private final ShooterSubsystem m_ShooterSubsystem;
   private final IndexerSubsystem m_IndexerSubsystem;
   private final boolean m_isAuto;
-  private final BooleanSupplier m_feedBtnFunc;
+  private final BooleanSupplier m_FeedBtnFunc;
   
   public ShootAMP(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem, BooleanSupplier btnFunc, boolean isAuto) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_shooterSubsystem = shooterSubsystem;
+    this.m_ShooterSubsystem = shooterSubsystem;
     this.m_IndexerSubsystem = indexerSubsystem;
-    this.m_feedBtnFunc = btnFunc;
+    this.m_FeedBtnFunc = btnFunc;
     this.m_isAuto = isAuto;
-    addRequirements(m_shooterSubsystem, m_IndexerSubsystem);
+    addRequirements(m_ShooterSubsystem, m_IndexerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -38,20 +38,20 @@ public class ShootAMP extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    boolean feedBtn = m_feedBtnFunc.getAsBoolean();
+    boolean feedBtn = m_FeedBtnFunc.getAsBoolean();
     if(m_isAuto){
-      if(m_shooterSubsystem.achievedTargetSpeed()){
+      if(m_ShooterSubsystem.achievedTargetSpeed()){
         m_IndexerSubsystem.FeedWhenReady_AMP();
         // LEDConstants.speedReadyAMP = true;
         // LEDConstants.LEDFlag = true;
       } 
     }else{
       // Impl
-      m_shooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
+      m_ShooterSubsystem.EnableShooter(ShooterConstants.kShooterAMP_VoltageSetpoint, ShooterConstants.kShooterAMP_RPMSetpoint);
       // Feed
-      if(feedBtn && m_shooterSubsystem.achievedTargetSpeed())
-        m_IndexerSubsystem.FeedWhenReady_AMP();
-      else if (m_shooterSubsystem.achievedTargetSpeed()) {
+      if(feedBtn && m_ShooterSubsystem.achievedTargetSpeed())
+        m_IndexerSubsystem.FeedWhenReady_AMP(); 
+      else if (m_ShooterSubsystem.achievedTargetSpeed()) {
         LEDConstants.speedReadyAMP = true;
         LEDConstants.LEDFlag = true;
       }else {
@@ -65,7 +65,7 @@ public class ShootAMP extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stopShooterMotor();
+    m_ShooterSubsystem.stopShooterMotor();
     m_IndexerSubsystem.StopIndexerMotor();
     if(m_IndexerSubsystem.getBottomSwitchState()){
       LEDConstants.hasNote = true;

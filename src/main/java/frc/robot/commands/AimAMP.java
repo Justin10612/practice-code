@@ -16,7 +16,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class AimAMP extends Command {
   /** Creates a new AimAMPCommand. */
   private final PhotonVisionSubsystem m_PhotonVisionSubsystem;
-  private final SwerveSubsystem m_swerveSubsystem;
+  private final SwerveSubsystem m_SwerveSubsystem;
   // PID Controller
   private final PIDController yMovePID;
   private final PIDController xMovePID;
@@ -32,12 +32,12 @@ public class AimAMP extends Command {
 
   public AimAMP(PhotonVisionSubsystem photonVisionSubsystem, SwerveSubsystem swerveSubsystem) {
     this.m_PhotonVisionSubsystem = photonVisionSubsystem;
-    this.m_swerveSubsystem = swerveSubsystem;
+    this.m_SwerveSubsystem = swerveSubsystem;
     // PID Controller
     xMovePID = new PIDController(VisionConstants.XmoveKp, VisionConstants.XmoveKi, VisionConstants.XmoveKd);
     yMovePID = new PIDController(VisionConstants.YmoveKp, VisionConstants.YmoveKi, VisionConstants.YmoveKd);
     turnPID = new PIDController(VisionConstants.ZRotationKp, VisionConstants.ZRotationKi, VisionConstants.ZRotationKd);
-    addRequirements(m_PhotonVisionSubsystem, m_swerveSubsystem);
+    addRequirements(m_PhotonVisionSubsystem, m_SwerveSubsystem);
   }
 
   @Override
@@ -64,16 +64,16 @@ public class AimAMP extends Command {
       output[1] = Constants.setMaxOutput(yMovePIDOutput, maxYMovePIDOutput);
       output[2] = Constants.setMaxOutput(zTurnPIDOutput, maxTurnPIDOutput);
       // Impl
-      m_swerveSubsystem.drive(output[0], output[1], output[2], false);
+      m_SwerveSubsystem.drive(output[0], output[1], output[2], false);
       // LED
       LEDConstants.haveApriltag = true;
       LEDConstants.aimReadyAMP = Math.abs(xMovePID.getPositionError())<2 && Math.abs(yMovePID.getPositionError())<2 && Math.abs(turnPID.getPositionError())<2;
       LEDConstants.LEDFlag = true;
     }else{
       // Impl
-      m_swerveSubsystem.drive(0, 0, 0, false);
+      m_SwerveSubsystem.drive(0, 0, 0, false);
       // LED
-      LEDConstants.haveApriltag = false;
+      LEDConstants.haveApriltag = true;
       LEDConstants.LEDFlag = true;
     }
     // Print Output
@@ -84,7 +84,7 @@ public class AimAMP extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    LEDConstants.aimingAMP = false;
+    LEDConstants.aimingAMP = true;
     LEDConstants.aimReadyAMP = false;
     LEDConstants.LEDFlag = true;
   }
