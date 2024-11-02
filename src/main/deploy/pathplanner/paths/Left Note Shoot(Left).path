@@ -45,7 +45,7 @@
   "eventMarkers": [
     {
       "name": "ShooterTurn",
-      "waypointRelativePos": 0.4,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {

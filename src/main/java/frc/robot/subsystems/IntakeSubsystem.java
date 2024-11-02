@@ -9,11 +9,9 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.FaultID;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,27 +23,21 @@ public class IntakeSubsystem extends SubsystemBase {
   private final CANSparkMax intakeMotor; 
   private final CANSparkMax intakePivotMotor;
   
-  private final RelativeEncoder intakePivotEncoder;
-
   private final CANcoder intakPivotCancoder;
   private final CANcoderConfiguration intakePivotCancoderCofig;
 
   private final PIDController intakePivotPID;
-  private final ArmFeedforward intakePivotFeedforward;
 
   private double PivotAngleSetpoint = IntakeConstants.kIntakeIdleAngle;
 
   public IntakeSubsystem() {
-    intakePivotPID = new PIDController(0.003, 0, 0);
-    intakePivotFeedforward = new ArmFeedforward(0, 0, 0);
+    intakePivotPID = new PIDController(IntakeConstants.kp, IntakeConstants.ki, IntakeConstants.kd);
     // CAN coder
     intakPivotCancoder = new CANcoder(IntakeConstants.kIntakePivotCancoderID);
     intakePivotCancoderCofig = new CANcoderConfiguration();
     // Motor Controllers
     intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
     intakePivotMotor = new CANSparkMax(IntakeConstants.kIntakePivotMotorID, MotorType.kBrushless);
-    //Relative Encoder
-    intakePivotEncoder = intakePivotMotor.getEncoder();
     
     intakeMotor.restoreFactoryDefaults();
     intakePivotMotor.restoreFactoryDefaults();
@@ -97,21 +89,25 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean isJam(){
     return !intakeMotor.getFault(FaultID.kOvercurrent);
   }
+
   @Override
   public void periodic() {
     // Display Data
-    SmartDashboard.putNumber("intakeAngle", getAngle());
+    SmartDashboard.putNumber("Intake/intakeAngle", getAngle());
+    SmartDashboard.putBoolean("Intake/isJam", isJam());
+    SmartDashboard.putNumber("Intake/intakeMotorTemp", intakeMotor.getMotorTemperature());
+    SmartDashboard.putNumber("Intake/pivotMotorTemp", intakePivotMotor.getMotorTemperature());
+    SmartDashboard.putNumber("Intake/Wheel", intakeMotor.getAppliedOutput());
     // Intake PID Calculation
     double PidOutput = intakePivotPID.calculate(getAngle(), PivotAngleSetpoint);
     // PID deadband
     PidOutput = Constants.setMaxOutput(PidOutput, IntakeConstants.kPivotMaxOutput);
     // Implement
-    if(Math.abs(intakePivotPID.getPositionError())<2){
-      intakePivotMotor.set(0);
-    }else{
-      intakePivotMotor.set(PidOutput);
-    }
-    // intakePivotMotor.set(PidOutput);
-    SmartDashboard.putBoolean("isJam", isJam());
+    // if(Math.abs(intakePivotPID.getPositionError())<2){
+    //   intakePivotMotor.set(0);
+    // }else{
+    //   intakePivotMotor.set(PidOutput);
+    // }
+    intakePivotMotor.set(PidOutput);
   }
 }

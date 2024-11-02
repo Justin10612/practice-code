@@ -55,6 +55,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "TrackNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Right Note Shoot(Right)"
@@ -63,13 +69,7 @@
         {
           "type": "named",
           "data": {
-            "name": "NoteShootSPEAKER"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "NoteShootSPEAKERForEnd"
           }
         }
       ]

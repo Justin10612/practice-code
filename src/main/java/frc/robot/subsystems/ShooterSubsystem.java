@@ -40,7 +40,6 @@ public class ShooterSubsystem extends SubsystemBase {
     RpmSetpoint = targetRPM;
     // Implement
     shooterMotor.setVoltage(targetVoltage);
-    SmartDashboard.putNumber("shooterRPMSetpoint", targetRPM);
   }
 
   public void stopShooterMotor(){
@@ -59,8 +58,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("ShooterMeasure", getShooterSpeed());
-    // SmartDashboard.putBoolean("canShoot", achievedTargetSpeed());
-    // SmartDashboard.putNumber("Shooter / Voltage",shooterMotor.getBusVoltage());
+    SmartDashboard.putNumber("Shooter/Measure", getShooterSpeed());
+    SmartDashboard.putBoolean("Shooter/AchievedSpeed", achievedTargetSpeed());
+    SmartDashboard.putNumber("Shooter/Output",shooterMotor.getAppliedOutput());
   }
 }

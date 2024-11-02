@@ -43,21 +43,34 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "NoteShootAMP"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ClimbBack"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "NoteShootAMP"
+                }
+              }
+            ]
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "AMP To Out"
+            "name": "AllStop"
           }
         }
       ]

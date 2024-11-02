@@ -4,29 +4,30 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.LimelightHelpers;
 
 public class LimeLightSubsystem extends SubsystemBase {
   /** Creates a new LimeLightSubsystem. */
-  private final LimelightHelpers m_limeLightHelpers;
+  private final NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
+
   public LimeLightSubsystem() {
-    m_limeLightHelpers = new LimelightHelpers();
-    m_limeLightHelpers.setCameraMode_Driver("limelight");
+    
   }
 
-  // public double getNoteAngel(){
-  //   return tx.getDouble(0);
-  // }
+  public double getNoteX(){
+    return m_table.getEntry("tx").getDouble(0);
+  }
 
-  // public double getTurnPIDOutput(){
-  //   return turnPIDOutput;
-  // }
+  public boolean hasNote(){
+    return !(m_table.getEntry("tx").getDouble(0)==0.0);
+  }
+
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    // getNoteAngel();
-    // turnPIDOutput = turnPID.calculate(getNoteAngel(), 0);
-    // SmartDashboard.putNumber("NoteAngle", getNoteAngel());
+    SmartDashboard.putNumber("Limelight/targetX", getNoteX());
+    SmartDashboard.putBoolean("Limelight/hasTarget", hasNote());
   }
 }

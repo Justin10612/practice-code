@@ -73,7 +73,6 @@ public class SwerveModule extends SubsystemBase{
 
   public void resetEncoders(){
     driveEncoder.setPosition(0);
-    // turningEncoder.setPosition(0);
   }
   public SwerveModuleState getState(){
     return new SwerveModuleState(getDriveVelocity(), Rotation2d.fromDegrees(getTurningPosition()));
@@ -97,6 +96,13 @@ public class SwerveModule extends SubsystemBase{
     driveMotor.set(state.speedMetersPerSecond/SwerveModuleConstants.maxDriveMotorSpeed);
     // Angle Motor pid
     double anglePidOutput = turningPIDController.calculate(getState().angle.getDegrees(), state.angle.getDegrees());
+    anglePidOutput = Math.abs(turningPIDController.getPositionError())<1 ? 0 : anglePidOutput;
+    turningMotor.set(anglePidOutput);
+  }
+
+  public void setWheelAngle(double angle, SwerveModuleState state){
+    state = SwerveModuleState.optimize(state, getState().angle);
+    double anglePidOutput = turningPIDController.calculate(getState().angle.getDegrees(), angle);
     anglePidOutput = Math.abs(turningPIDController.getPositionError())<1 ? 0 : anglePidOutput;
     turningMotor.set(anglePidOutput);
   }

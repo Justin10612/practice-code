@@ -5,35 +5,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.LEDConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 
-public class ShooterPrepSPEAKER extends Command {
-  private final ShooterSubsystem m_ShooterSubsystem;
-  /** Creates a new ShooterPrepSPEAKER. */
-  public ShooterPrepSPEAKER(ShooterSubsystem shooterSubsystem) {
+public class StopBase extends Command {
+  /** Creates a new StopBase. */
+  private final SwerveSubsystem m_SwerveSubsystem;
+  public StopBase(SwerveSubsystem swerveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_ShooterSubsystem = shooterSubsystem;
-    addRequirements(m_ShooterSubsystem);
+    this.m_SwerveSubsystem = swerveSubsystem;
+    addRequirements(m_SwerveSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    LEDConstants.prepSPEAKER = true;
-    LEDConstants.LEDFlag = true;
+    m_SwerveSubsystem.baseBrake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_ShooterSubsystem.EnableShooter(ShooterConstants.kShooterSpeakerVoltageSetpoint_Auto, ShooterConstants.kShooterSpeakerRPMSetpoint);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_SwerveSubsystem.drive(0, 0, 0, false);
+  }
 
   // Returns true when the command should end.
   @Override

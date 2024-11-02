@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.0,
-        "y": 6.99
+        "x": 2.73,
+        "y": 7.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1,
-        "y": 6.99
+        "x": 2.83,
+        "y": 7.2
       },
       "isLocked": false,
       "linkedName": null
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.6,
+      "minWaypointRelativePos": 0.7,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.0,
@@ -45,7 +45,7 @@
   "eventMarkers": [
     {
       "name": "ShooterTurn",
-      "waypointRelativePos": 0.45,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {

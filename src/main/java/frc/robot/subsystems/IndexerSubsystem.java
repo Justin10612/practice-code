@@ -14,7 +14,6 @@ import frc.robot.Constants.ShooterConstants;
 public class IndexerSubsystem extends SubsystemBase {
   private final TalonFX indexerMotor;
   private final DigitalInput BottomLimitSwitch;
-  private final DigitalInput TopLimitSwitch;
 
 
   public IndexerSubsystem() {
@@ -22,7 +21,6 @@ public class IndexerSubsystem extends SubsystemBase {
     indexerMotor.setInverted(true);
     // Note Sensor
     BottomLimitSwitch = new DigitalInput(ShooterConstants.kBottomLimitSwitchPort);
-    TopLimitSwitch = new DigitalInput(ShooterConstants.kUpLimitSwitchPort);
   }
 
   /**
@@ -43,23 +41,18 @@ public class IndexerSubsystem extends SubsystemBase {
   public void StopIndexerMotor(){
     indexerMotor.setVoltage(0);
   }
-  /**
-   * @return True when there is a Note.
-   */
-  public boolean getTopSwitchState(){
-    return !TopLimitSwitch.get();
-  }
 
   /**
    * @return True when there is a Note.
    */
   public boolean getBottomSwitchState(){
     return !BottomLimitSwitch.get();
+    
   }
 
   @Override
   public void periodic() {
-    // SmartDashboard.putBoolean("TopSW", getTopSwitchState());
-    SmartDashboard.putBoolean("BottomSW", getBottomSwitchState());
+    SmartDashboard.putBoolean("Indexer/BottomSW", getBottomSwitchState());
+    SmartDashboard.putNumber("Indexer/MotorTemp", indexerMotor.getDeviceTemp().getValueAsDouble());
   }
 }

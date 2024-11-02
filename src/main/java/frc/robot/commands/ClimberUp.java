@@ -9,11 +9,11 @@ import frc.robot.subsystems.ClimbSubsystem;
 
 public class ClimberUp extends Command {
   /** Creates a new ClimUpCommand. */
-  private final ClimbSubsystem m_climbSubsystem;
+  private final ClimbSubsystem m_ClimbSubsystem;
   public ClimberUp(ClimbSubsystem climbSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_climbSubsystem = climbSubsystem;
-    addRequirements(m_climbSubsystem);
+    this.m_ClimbSubsystem = climbSubsystem;
+    addRequirements(m_ClimbSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -23,14 +23,14 @@ public class ClimberUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climbSubsystem.leftClimbOut();
-    m_climbSubsystem.rightClimbOut();
+    m_ClimbSubsystem.leftClimbOut();
+    m_ClimbSubsystem.rightClimbOut();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_climbSubsystem.StopMotors();
+    m_ClimbSubsystem.StopMotors();
   }
 
   // Returns true when the command should end.
