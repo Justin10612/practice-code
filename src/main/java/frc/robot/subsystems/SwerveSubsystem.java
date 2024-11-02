@@ -31,9 +31,9 @@ public class SwerveSubsystem extends SubsystemBase{
   private final Pigeon2 gyro = new Pigeon2(SwerveConstants.gyroID);
   private final Pigeon2Configuration gyroConfig = new Pigeon2Configuration();
   // Odometer
-  private SwerveDriveOdometry m_odometer;
+  private final SwerveDriveOdometry m_odometer;
   // Field
-  private Field2d field = new Field2d();
+  private final Field2d field = new Field2d();
   // Testing
   ChassisSpeeds targetSpeeds = new ChassisSpeeds(0, 0, 0);
 
